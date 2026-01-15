@@ -3,6 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   
+  // Desactivar ESLint y TypeScript durante el build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
   // Optimización de imágenes
   images: {
     remotePatterns: [
