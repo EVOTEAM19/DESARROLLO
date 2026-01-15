@@ -1,0 +1,577 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== CSS RESET ==================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ==================== VARIABLES CSS FASTIA ==================== */
+:root {
+  /* Colores de fondo oscuros FastIA */
+  --background: #1A1A1A;
+  --background-secondary: #2D2D2D;
+  --background-tertiary: #4A4A4A;
+  
+  /* Colores de texto FastIA */
+  --foreground: #E5E5E5;
+  --foreground-secondary: #FFFFFF;
+  --foreground-muted: #9CA3AF;
+  
+  /* Acentos naranja FastIA */
+  --accent: #FF6B35;
+  --accent-light: #FF8C5A;
+  --accent-dark: #E55525;
+  
+  /* Colores naranja FastIA */
+  --color-primary: #FF6B35;
+  --color-primary-hover: #FF8C5A;
+  --color-primary-dark: #E55525;
+  --accent-orange-500: #FF6B35;
+  --accent-orange-600: #FF8C5A;
+  --accent-orange-700: #E55525;
+  
+  /* Colores gris FastIA */
+  --color-bg-dark: #1A1A1A;
+  --color-bg-medium: #2D2D2D;
+  --color-bg-light: #4A4A4A;
+  
+  /* Fuentes */
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', 'Courier New', monospace;
+  
+  /* Espaciado */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
+  
+  /* Transiciones */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modo claro (opcional, si quieres soportar ambos) */
+.light {
+  --background: #ffffff;
+  --background-secondary: #f9fafb;
+  --background-tertiary: #f3f4f6;
+  --foreground: #111827;
+  --foreground-secondary: #374151;
+  --foreground-muted: #6b7280;
+}
+
+/* ==================== ESTILOS BASE ==================== */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* ==================== SCROLLBAR PERSONALIZADO FASTIA ==================== */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-orange-700), var(--accent-orange-500));
+  border-radius: 10px;
+  border: 2px solid var(--background-secondary);
+  transition: background var(--transition-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-orange-600), var(--accent-orange-500));
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-orange-600) var(--background-secondary);
+}
+
+/* ==================== KEYFRAMES PERSONALIZADOS ==================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ==================== ANIMACIONES HERO (FLOAT / SPIN) ==================== */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(255, 107, 53, 0.5),
+      0 0 80px rgba(255, 107, 53, 0.3),
+      0 0 120px rgba(255, 107, 53, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 60px rgba(255, 107, 53, 0.8),
+      0 0 120px rgba(255, 107, 53, 0.5),
+      0 0 180px rgba(255, 107, 53, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) translateX(15px);
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) translateX(150px) rotate(-360deg);
+  }
+}
+
+@keyframes explode {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx, 0vw)), calc(-50% + var(--ty, 0vh))) scale(0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse linear infinite;
+}
+
+.animate-orbit {
+  animation: orbit linear infinite;
+}
+
+.animate-explode {
+  animation: explode 1s ease-out forwards;
+}
+
+/* Gradiente radial para Tailwind stops */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==================== CLASES UTILITARIAS PERSONALIZADAS FASTIA ==================== */
+@layer utilities {
+  /* Texto */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, #FF6B35, #FF8C5A, #E55525);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+  
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #FF8C5A, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Fondos */
+  .bg-mesh {
+    background: radial-gradient(at 0% 0%, rgba(255, 107, 53, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(255, 140, 90, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(229, 85, 37, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(255, 107, 53, 0.1) 0px, transparent 50%);
+  }
+  
+  .bg-glass {
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Bordes */
+  .border-gradient {
+    border-image: linear-gradient(135deg, #FF6B35, #FF8C5A, #E55525) 1;
+  }
+  
+  /* Efectos hover */
+  .hover-glow {
+    transition: box-shadow var(--transition-base);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+  }
+  
+  .hover-lift {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Scroll reveal */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Shimmer effect */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  
+  /* Glow effects */
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+  }
+  
+  /* Focus states */
+  .focus-ring {
+    outline: none;
+    transition: box-shadow var(--transition-fast);
+  }
+  
+  .focus-ring:focus {
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+  }
+  
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: all var(--transition-base);
+  }
+  
+  .transition-fast {
+    transition: all var(--transition-fast);
+  }
+  
+  .transition-slow {
+    transition: all var(--transition-slow);
+  }
+}
+
+/* ==================== COMPONENTES PERSONALIZADOS FASTIA ==================== */
+@layer components {
+  /* Botones */
+  .btn-primary {
+    @apply px-6 py-3 bg-accent-orange-500 text-white font-semibold rounded-lg;
+    @apply hover:bg-accent-orange-600 transition-colors;
+    @apply focus-ring;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-background-secondary text-foreground font-semibold rounded-lg;
+    @apply hover:bg-background-tertiary transition-colors;
+    @apply border border-accent-orange-500 text-accent-orange-500;
+    @apply hover:bg-accent-orange-500 hover:text-white;
+    @apply focus-ring;
+  }
+  
+  /* Cards */
+  .card {
+    @apply bg-background-secondary rounded-xl p-6 border transition-smooth;
+    border-color: rgb(163 163 163 / 0.2);
+  }
+  
+  .card-hover {
+    @apply card hover:border-accent-orange-500/50 hover:shadow-glow;
+    @apply hover-lift;
+  }
+  
+  /* Inputs */
+  .input {
+    @apply w-full px-4 py-2 bg-background-secondary border rounded-lg;
+    border-color: rgb(163 163 163 / 0.2);
+    @apply text-foreground placeholder:text-foreground-muted;
+    @apply focus:border-accent-orange-500 focus:ring-2 focus:ring-accent-orange-500/20;
+    @apply transition-smooth;
+  }
+  
+  /* Links */
+  .link {
+    @apply text-accent-orange-500 hover:text-accent-orange-600;
+    @apply transition-colors underline-offset-4 hover:underline;
+  }
+}
+
+/* ==================== SMOOTH SCROLL BEHAVIOR ==================== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ==================== ANIMACIONES PERSONALIZADAS ==================== */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
