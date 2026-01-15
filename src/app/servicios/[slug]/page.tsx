@@ -6,7 +6,7 @@ import { ShareButtons } from '@/components/ui/ShareButtons'
 import { TrackedLink } from '@/components/ui/TrackedLink'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { Metadata } from 'next'
-import { generateServiceSchema } from '@/components/StructuredData'
+import { generateServiceSchema } from '@/lib/schemas'
 
 export const revalidate = 3600
 

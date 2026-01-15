@@ -188,7 +188,7 @@ export function Header() {
           {/* Botón Contacto - DERECHA */}
           <Link 
             href="/contacto"
-            className="hidden lg:block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-orange-500/50"
+            className="hidden lg:block px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-orange-500/50 absolute right-0"
           >
             Contacto
           </Link>

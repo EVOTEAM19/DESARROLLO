@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { getBlogPosts } from '@/lib/api'
 import { Calendar, User, Clock, ArrowLeft, Share2, Tag } from 'lucide-react'
 import type { Metadata } from 'next'
-import { generateArticleSchema } from '@/components/StructuredData'
+import { generateArticleSchema } from '@/lib/schemas'
 import { TrackedLink } from '@/components/ui/TrackedLink'
 
 export const revalidate = 3600
