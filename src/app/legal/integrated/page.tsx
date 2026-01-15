@@ -65,7 +65,8 @@ export default function IntegratedPage() {
             <h2 className="text-2xl font-bold text-foreground mb-4">Contacto</h2>
             <p>
               Si tienes preguntas sobre cualquiera de estas políticas, puedes contactarnos a través de
-              nuestro <Link href="/contacto" className="text-accent-blue-500 hover:underline">formulario de contacto</Link>.
+              nuestro <Link href="/contacto" className="text-accent-blue-500 hover:underline">formulario de contacto</Link> o 
+              enviando un correo a <a href="mailto:hola@fastia.es" className="text-accent-blue-500 hover:underline">hola@fastia.es</a>.
             </p>
           </section>
         </div>

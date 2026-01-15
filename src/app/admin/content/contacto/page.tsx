@@ -51,7 +51,7 @@ export default function ContactoPageContent() {
         subtitle: 'Respondemos en menos de 24h. Sin comerciales pesados, solo una conversación honesta.',
       },
       contact_info: {
-        email: 'hola@fastia.com',
+        email: 'hola@fastia.es',
         phone: '+34 910 123 456',
         address_madrid: 'Calle Columela, 9 28001 Madrid',
         address_barcelona: 'Barcelona',

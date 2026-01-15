@@ -43,7 +43,7 @@ export const organizationSchema = {
     '@type': 'ContactPoint',
     telephone: '+34-910-123-456',
     contactType: 'Sales',
-    email: 'hola@fastia.com',
+    email: 'hola@fastia.es',
     areaServed: 'ES',
     availableLanguage: ['Spanish', 'English'],
   },

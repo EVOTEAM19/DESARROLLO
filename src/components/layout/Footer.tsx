@@ -91,8 +91,8 @@ export function Footer() {
               
               <div className="flex items-center gap-3 text-gray-400">
                 <Mail className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <a href="mailto:hola@fastia.com" className="hover:text-orange-500 transition-colors">
-                  hola@fastia.com
+                <a href="mailto:hola@fastia.es" className="hover:text-orange-500 transition-colors">
+                  hola@fastia.es
                 </a>
               </div>
             </div>
@@ -138,8 +138,8 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Recursos</h3>
             <ul className="space-y-3 text-sm">
               <li><Link href="/reflexiones" className="text-gray-400 hover:text-orange-500 transition-colors">Reflexiones</Link></li>
-              <li><Link href="/legal/aviso-legal" className="text-gray-400 hover:text-orange-500 transition-colors">Aviso Legal</Link></li>
-              <li><Link href="/legal/privacidad" className="text-gray-400 hover:text-orange-500 transition-colors">Privacidad</Link></li>
+              <li><Link href="/legal/terms" className="text-gray-400 hover:text-orange-500 transition-colors">Aviso Legal</Link></li>
+              <li><Link href="/legal/privacy" className="text-gray-400 hover:text-orange-500 transition-colors">Privacidad</Link></li>
               <li><Link href="/legal/cookies" className="text-gray-400 hover:text-orange-500 transition-colors">Cookies</Link></li>
             </ul>
           </div>

@@ -119,7 +119,7 @@ export function ContactForm() {
   const errorMessageText = content?.form?.error_message || 'Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.'
   
   const contactInfo = content?.contact_info || {
-    email: 'hola@fastia.com',
+    email: 'hola@fastia.es',
     phone: '+34 910 123 456',
     address_madrid: 'Calle Columela, 9 28001 Madrid',
     address_barcelona: 'Barcelona',
@@ -173,6 +173,20 @@ export function ContactForm() {
 
       if (error) {
         throw error
+      }
+
+      // Enviar notificación por correo (opcional, no bloquea el éxito del formulario)
+      try {
+        await fetch('/api/contact/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sanitizedData),
+        })
+      } catch (emailError) {
+        // No lanzamos error si falla el envío de email, el mensaje ya está guardado
+        console.warn('No se pudo enviar notificación por correo:', emailError)
       }
 
       // Éxito

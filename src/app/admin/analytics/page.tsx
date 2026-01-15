@@ -12,7 +12,10 @@ import {
   Calendar,
   Loader2,
   RefreshCw,
+  AlertCircle,
+  CheckCircle,
 } from 'lucide-react'
+import { getGA4Metrics, getGA4TopPages, getGA4Referrers, getGA4Devices } from '@/lib/ga4-api'
 
 interface AnalyticsData {
   pageViews: number
@@ -28,7 +31,10 @@ interface AnalyticsData {
 export default function AnalyticsDashboard() {
   const [data, setData] = useState<AnalyticsData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [dateRange, setDateRange] = useState('7d')
+  const [dateRange, setDateRange] = useState<'7d' | '30d' | '90d'>('7d')
+  const [isGA4Configured, setIsGA4Configured] = useState<boolean | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [metricsResponse, setMetricsResponse] = useState<any>(null)
 
   useEffect(() => {
     loadAnalytics()
@@ -37,10 +43,51 @@ export default function AnalyticsDashboard() {
   const loadAnalytics = async () => {
     try {
       setIsLoading(true)
-      // TODO: Conectar con Google Analytics API
-      // Por ahora, datos de ejemplo
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      setError(null)
       
+      // Intentar obtener datos reales de GA4
+      const metrics = await getGA4Metrics(dateRange)
+      const pages = await getGA4TopPages(dateRange, 10)
+      const referrers = await getGA4Referrers(dateRange, 10)
+      const devices = await getGA4Devices(dateRange)
+
+      setMetricsResponse(metrics)
+
+      // Verificar estado de configuración desde API
+      try {
+        const statusResponse = await fetch('/api/analytics/status')
+        const status = await statusResponse.json()
+        setIsGA4Configured(status.configured)
+      } catch (error) {
+        // Si no se puede verificar, asumir que no está configurado si hay mensaje
+        setIsGA4Configured(metrics && !metrics.message && metrics.pageViews !== undefined)
+      }
+
+      // Si hay datos reales y no es mensaje de configuración, usarlos
+      if (metrics && metrics.pageViews !== undefined && metrics.pageViews > 0 && !metrics.message) {
+        setData({
+          pageViews: metrics.pageViews || 0,
+          uniqueVisitors: metrics.uniqueVisitors || 0,
+          bounceRate: metrics.bounceRate || 0,
+          avgSessionDuration: metrics.avgSessionDuration || 0,
+          topPages: pages?.pages?.map((p: any) => ({
+            path: p.path || p.pagePath || '/',
+            views: parseInt(p.views || p.screenPageViews || '0'),
+          })) || [],
+          topReferrers: referrers?.referrers?.map((r: any) => ({
+            source: r.source || r.sessionSource || 'Directo',
+            visits: parseInt(r.visits || r.sessions || '0'),
+          })) || [],
+          deviceBreakdown: devices?.devices?.map((d: any) => ({
+            device: d.device || 'Unknown',
+            percentage: parseFloat(d.percentage || '0'),
+          })) || [],
+          trafficGrowth: metrics.trafficGrowth || 0,
+        })
+        return
+      }
+
+      // Si no hay datos reales, usar datos de ejemplo
       setData({
         pageViews: 12450,
         uniqueVisitors: 8230,
@@ -66,8 +113,21 @@ export default function AnalyticsDashboard() {
         ],
         trafficGrowth: 12.5,
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error cargando analytics:', error)
+      setError(error.message || 'Error cargando métricas')
+      
+      // En caso de error, mostrar datos de ejemplo
+      setData({
+        pageViews: 0,
+        uniqueVisitors: 0,
+        bounceRate: 0,
+        avgSessionDuration: 0,
+        topPages: [],
+        topReferrers: [],
+        deviceBreakdown: [],
+        trafficGrowth: 0,
+      })
     } finally {
       setIsLoading(false)
     }
@@ -274,13 +334,51 @@ export default function AnalyticsDashboard() {
         </motion.div>
       </div>
 
-      {/* Note */}
-      <div className="p-4 bg-blue-500/10 border border-blue-500/50 rounded-lg">
-        <p className="text-sm text-blue-400">
-          💡 <strong>Nota:</strong> Para conectar con Google Analytics real, necesitas configurar la API de Google Analytics 4 
-          y añadir las credenciales en las variables de entorno. Actualmente se muestran datos de ejemplo.
-        </p>
+      {/* Status & Configuration */}
+      <div className={`p-4 rounded-lg border ${
+        isGA4Configured 
+          ? 'bg-green-500/10 border-green-500/50' 
+          : 'bg-yellow-500/10 border-yellow-500/50'
+      }`}>
+        <div className="flex items-start gap-3">
+          {isGA4Configured ? (
+            <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+          ) : (
+            <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
+          )}
+          <div className="flex-1">
+            <p className={`text-sm font-semibold mb-1 ${
+              isGA4Configured ? 'text-green-400' : 'text-yellow-400'
+            }`}>
+              {isGA4Configured 
+                ? '✅ Google Analytics configurado' 
+                : '⚠️ Google Analytics no configurado'}
+            </p>
+            {!isGA4Configured && (
+              <p className="text-sm text-yellow-300">
+                Para ver métricas reales, configura <code className="bg-yellow-500/20 px-1 rounded">GA4_PROPERTY_ID</code> y <code className="bg-yellow-500/20 px-1 rounded">GA4_SERVICE_ACCOUNT_KEY</code> en las variables de entorno. 
+                Consulta <code className="bg-yellow-500/20 px-1 rounded">GA4_SETUP.md</code> para instrucciones.
+              </p>
+            )}
+            {isGA4Configured && metricsResponse?.message && (
+              <p className="text-sm text-green-300 mt-1">
+                {metricsResponse.message}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
+
+      {error && (
+        <div className="p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-red-500" />
+            <p className="text-sm text-red-400">
+              <strong>Error:</strong> {error}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
