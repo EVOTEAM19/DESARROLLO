@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-import { ArrowRight, Zap } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getHomeContent } from '@/lib/content'
 
@@ -87,17 +87,6 @@ export function HeroContent() {
       transition={{ duration: 0.5 }}
     >
       <div className="relative max-w-6xl mx-auto px-4 lg:px-6 text-center">
-        {/* Badge animado */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium shadow-lg"
-        >
-          <Zap className="w-4 h-4 text-accent-orange-500" />
-          <span>{heroData.badge || 'FastIA'}</span>
-        </motion.div>
-
         {/* Título con animación letra por letra */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
           {titleWords.map((word, i) => (
