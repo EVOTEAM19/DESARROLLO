@@ -7,3 +7,9 @@ dist/
 build/
 .vercel
 .env*.local
+
+# Service Account Keys (sensibles - NO subir a Git)
+service-account-key.json
+*-service-account-key.json
+*.service-account.json
+**/service-account*.json

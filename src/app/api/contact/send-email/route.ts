@@ -9,8 +9,17 @@ import { Resend } from 'resend'
 // Email de destino para todos los correos
 const CONTACT_EMAIL = 'hola@fastia.es'
 
-// Inicializar Resend
-const resend = new Resend(process.env.RESEND_API_KEY)
+/**
+ * Obtiene una instancia de Resend (lazy initialization)
+ * Solo se crea cuando se necesita y si hay API key configurada
+ */
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    return null
+  }
+  return new Resend(apiKey)
+}
 
 interface ContactMessage {
   name: string
@@ -132,7 +141,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Verificar si Resend está configurado
-    if (!process.env.RESEND_API_KEY) {
+    const resend = getResendClient()
+    
+    if (!resend) {
       console.warn('⚠️ RESEND_API_KEY no configurada. Los correos no se enviarán.')
       console.log('📧 Nuevo mensaje de contacto recibido (no enviado por email):')
       console.log({

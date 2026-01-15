@@ -63,8 +63,16 @@ export default function AnalyticsDashboard() {
         setIsGA4Configured(metrics && !metrics.message && metrics.pageViews !== undefined)
       }
 
-      // Si hay datos reales y no es mensaje de configuración, usarlos
-      if (metrics && metrics.pageViews !== undefined && metrics.pageViews > 0 && !metrics.message) {
+      // Si hay datos reales y no es mensaje de configuración, usarlos (incluso si son 0)
+      // Verificamos que pageViews esté definido (no undefined) y que no haya mensaje de error
+      if (metrics && metrics.pageViews !== undefined && !metrics.message && !metrics.error) {
+        console.log('[Analytics Dashboard] Mostrando datos REALES de GA4:', {
+          pageViews: metrics.pageViews,
+          uniqueVisitors: metrics.uniqueVisitors,
+          bounceRate: metrics.bounceRate,
+          avgSessionDuration: metrics.avgSessionDuration,
+        })
+        
         setData({
           pageViews: metrics.pageViews || 0,
           uniqueVisitors: metrics.uniqueVisitors || 0,
@@ -84,7 +92,13 @@ export default function AnalyticsDashboard() {
           })) || [],
           trafficGrowth: metrics.trafficGrowth || 0,
         })
+        setIsGA4Configured(true)
         return
+      }
+      
+      // Si hay un error o mensaje, loguearlo para debugging
+      if (metrics && (metrics.message || metrics.error)) {
+        console.warn('[Analytics Dashboard] Respuesta con error/mensaje:', metrics.message || metrics.error)
       }
 
       // Si no hay datos reales, usar datos de ejemplo
@@ -360,8 +374,16 @@ export default function AnalyticsDashboard() {
                 Consulta <code className="bg-yellow-500/20 px-1 rounded">GA4_SETUP.md</code> para instrucciones.
               </p>
             )}
-            {isGA4Configured && metricsResponse?.message && (
+            {isGA4Configured && (
               <p className="text-sm text-green-300 mt-1">
+                {data?.pageViews === 0 
+                  ? '✅ Mostrando datos reales de GA4. No hay visitas registradas aún en el período seleccionado. Visita tu sitio para generar datos.'
+                  : `✅ Mostrando datos reales de GA4. ${data?.pageViews || 0} vistas en el período seleccionado.`
+                }
+              </p>
+            )}
+            {isGA4Configured && metricsResponse?.message && (
+              <p className="text-sm text-blue-300 mt-1">
                 {metricsResponse.message}
               </p>
             )}
