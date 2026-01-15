@@ -149,6 +149,13 @@ const sectors = [
     description: 'Custom AI models, research implementation, paper-to-production y advanced ML.',
     solutions: ['Custom models', 'Research impl', 'Paper-to-prod', 'Advanced ML'],
     color: 'purple'
+  },
+  {
+    icon: Briefcase,
+    name: 'Startups/CTO',
+    description: 'CTO as a Service, arquitectura escalable, team building y estrategia tecnológica con IA.',
+    solutions: ['CTO as a Service', 'Arquitectura escalable', 'Team building', 'Estrategia IA'],
+    color: 'orange'
   }
 ]
 
@@ -184,7 +191,7 @@ export default function SectoresPage() {
             </h1>
             
             <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-              11 años trabajando con empresas de 20+ sectores. Sabemos qué funciona en cada industria 
+              6 años trabajando con empresas de 20+ sectores. Sabemos qué funciona en cada industria 
               porque lo hemos implementado antes. Sin teoría, solo casos reales.
             </p>
           </motion.div>
@@ -257,7 +264,7 @@ export default function SectoresPage() {
               href="/contacto"
               className="inline-block px-12 py-6 bg-orange-500 hover:bg-orange-600 text-white text-lg rounded-lg font-semibold transition-all shadow-2xl hover:shadow-orange-500/50"
             >
-              Agendar consulta gratuita →
+              Demo gratuita 30min →
             </Link>
           </motion.div>
         </div>

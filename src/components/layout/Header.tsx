@@ -89,11 +89,11 @@ export function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo - Ocupa 80% de la altura (64px de 80px) */}
-          <Link href="/" className="flex items-center group">
+        <div className="flex items-center justify-between lg:justify-between h-20 relative">
+          {/* Logo - Centrado en móvil, izquierda en desktop */}
+          <Link href="/" className="flex items-center group absolute left-1/2 lg:left-0 transform -translate-x-1/2 lg:transform-none">
             {logoUrl ? (
-              <div className="relative w-72 h-16 rounded-lg overflow-hidden shadow-lg group-hover:shadow-orange-500/50 transition-all">
+              <div className="relative w-48 sm:w-72 h-12 sm:h-16 rounded-lg overflow-hidden shadow-lg group-hover:shadow-orange-500/50 transition-all">
                 <Image
                   src={logoUrl}
                   alt="FastIA Logo"
@@ -104,7 +104,7 @@ export function Header() {
                 />
               </div>
             ) : (
-              <div className="w-72 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center font-bold text-white text-8xl shadow-lg group-hover:shadow-orange-500/50 transition-all">
+              <div className="w-48 sm:w-72 h-12 sm:h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center font-bold text-white text-6xl sm:text-8xl shadow-lg group-hover:shadow-orange-500/50 transition-all">
                 F
               </div>
             )}
@@ -172,10 +172,6 @@ export function Header() {
               </AnimatePresence>
             </div>
             
-            <Link href="/synapse" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
-              Synapse
-            </Link>
-            
             <Link href="/sectores" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
               Sectores
             </Link>
@@ -197,9 +193,9 @@ export function Header() {
             Contacto
           </Link>
           
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Posición absoluta a la derecha */}
           <button
-            className="lg:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
+            className="lg:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors absolute right-0"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
@@ -236,14 +232,6 @@ export function Header() {
                   </Link>
                 ))}
               </div>
-              
-              <Link
-                href="/synapse"
-                className="block px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-orange-500 rounded-lg transition-all"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Synapse
-              </Link>
               
               <Link
                 href="/sectores"

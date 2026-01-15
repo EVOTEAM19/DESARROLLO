@@ -10,7 +10,7 @@ import {
   Calendar,
   Heart,
   Star,
-  Code2,
+  TrendingUp,
 } from 'lucide-react'
 import { getHomeContent } from '@/lib/content'
 
@@ -20,39 +20,12 @@ const iconMap: Record<string, any> = {
   Calendar,
   Heart,
   Star,
-  Code2,
+  TrendingUp,
 }
 
 const defaultStats = [
   {
     id: '1',
-    icon: Calendar,
-    value: 11,
-    prefix: '',
-    suffix: '',
-    label: 'Años de experiencia',
-    duration: 2,
-  },
-  {
-    id: '2',
-    icon: FolderKanban,
-    value: 200,
-    prefix: '+',
-    suffix: '',
-    label: 'Proyectos entregados',
-    duration: 2.5,
-  },
-  {
-    id: '3',
-    icon: Users,
-    value: 40,
-    prefix: '+',
-    suffix: '',
-    label: 'Desarrolladores',
-    duration: 2,
-  },
-  {
-    id: '4',
     icon: Heart,
     value: 98,
     prefix: '',
@@ -61,7 +34,7 @@ const defaultStats = [
     duration: 2.5,
   },
   {
-    id: '5',
+    id: '2',
     icon: Star,
     value: 4.9,
     prefix: '',
@@ -70,13 +43,13 @@ const defaultStats = [
     duration: 2.5,
   },
   {
-    id: '6',
-    icon: Code2,
-    value: 30,
-    prefix: '+',
-    suffix: '',
-    label: 'Tecnologías dominadas',
-    duration: 2,
+    id: '3',
+    icon: TrendingUp,
+    value: 100,
+    prefix: '',
+    suffix: '%',
+    label: 'Escalable',
+    duration: 2.5,
   },
 ]
 
@@ -94,7 +67,31 @@ export function StatsCounter() {
     try {
       const content = await getHomeContent()
       if (content?.stats && Array.isArray(content.stats) && content.stats.length > 0) {
-        const mappedStats = content.stats.map((stat: any, index: number) => ({
+        // Filtrar para mostrar solo "Satisfacción clientes", "Rating promedio" y "Escalable"
+        const filteredStats = content.stats.filter((stat: any) => {
+          const label = stat.label?.toLowerCase() || ''
+          return (
+            label.includes('satisfacción') || 
+            label.includes('satisfaccion') ||
+            (label.includes('rating') && label.includes('promedio')) ||
+            label.includes('escalable')
+          )
+        })
+        
+        // Ordenar: primero Satisfacción, luego Rating, luego Escalable
+        const sortedStats = filteredStats.sort((a: any, b: any) => {
+          const aLabel = a.label?.toLowerCase() || ''
+          const bLabel = b.label?.toLowerCase() || ''
+          if (aLabel.includes('satisfacción') || aLabel.includes('satisfaccion')) return -1
+          if (bLabel.includes('satisfacción') || bLabel.includes('satisfaccion')) return 1
+          if (aLabel.includes('rating') && aLabel.includes('promedio')) return 0
+          if (bLabel.includes('rating') && bLabel.includes('promedio')) return 0
+          if (aLabel.includes('escalable')) return 1
+          if (bLabel.includes('escalable')) return -1
+          return 0
+        })
+        
+        const mappedStats = sortedStats.map((stat: any, index: number) => ({
           id: String(index + 1),
           icon: iconMap[stat.icon] || Calendar,
           value: parseFloat(stat.value) || 0,
@@ -103,7 +100,25 @@ export function StatsCounter() {
           label: stat.label || '',
           duration: 2,
         }))
-        setStats(mappedStats)
+        
+        // Si encontramos los stats, usarlos (hasta 3); si no, usar defaultStats
+        if (mappedStats.length >= 3) {
+          setStats(mappedStats.slice(0, 3))
+        } else if (mappedStats.length >= 2) {
+          // Si faltan algunos, completar con defaultStats
+          const combined = [...mappedStats]
+          const defaultLabels = defaultStats.map(s => s.label.toLowerCase())
+          defaultStats.forEach(defaultStat => {
+            const labelLower = defaultStat.label.toLowerCase()
+            if (!combined.some(s => s.label.toLowerCase() === labelLower)) {
+              combined.push(defaultStat)
+            }
+          })
+          setStats(combined.slice(0, 3))
+        } else {
+          // Si no se encontraron suficientes, usar defaultStats
+          setStats(defaultStats)
+        }
       }
     } catch (error) {
       console.error('Error cargando stats:', error)
@@ -139,8 +154,8 @@ export function StatsCounter() {
       <div className="absolute inset-0 bg-mesh opacity-30" />
 
       <div className="relative container mx-auto px-4 lg:px-6">
-        {/* Grid de estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+        {/* Grid de estadísticas - Mostrar Satisfacción, Rating y Escalable, centrados */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
           {stats.map((stat, index) => {
             const Icon = stat.icon
             return (
@@ -155,12 +170,9 @@ export function StatsCounter() {
                 }}
                 className="relative flex flex-col items-center text-center"
               >
-                {/* Separador vertical (solo en desktop, no en el último de cada fila) */}
-                {index < stats.length - 3 && (
-                  <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 w-px h-16 bg-foreground/10" />
-                )}
-                {index === 1 && (
-                  <div className="hidden md:block lg:hidden absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-px h-16 bg-foreground/10" />
+                {/* Separadores verticales entre elementos (solo en desktop) */}
+                {index < stats.length - 1 && (
+                  <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 w-px h-16 bg-foreground/10" />
                 )}
 
                 {/* Ícono */}

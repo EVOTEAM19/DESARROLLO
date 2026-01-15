@@ -360,8 +360,8 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
             className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto"
           >
             {[
-              { value: 200, suffix: '+', label: 'proyectos entregados' },
-              { value: 11, suffix: '', label: 'años de experiencia' },
+              { value: 100, suffix: '+', label: 'proyectos entregados' },
+              { value: 6, suffix: '', label: 'años de experiencia' },
               { value: 40, suffix: '+', label: 'desarrolladores' },
               { value: 98, suffix: '%', label: 'clientes satisfechos' },
             ].map((stat, index) => (
@@ -375,14 +375,14 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
                 <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-lg">
                   {statsInView ? (
                     <>
-                      {stat.suffix === '+' && stat.value === 200 && (
+                      {stat.suffix === '+' && stat.value === 100 && (
                         <>
-                          <AnimatedCounter end={200} />+
+                          <AnimatedCounter end={100} />+
                         </>
                       )}
-                      {stat.suffix === '' && stat.value === 11 && (
+                      {stat.suffix === '' && stat.value === 6 && (
                         <>
-                          <AnimatedCounter end={11} />
+                          <AnimatedCounter end={6} />
                         </>
                       )}
                       {stat.suffix === '+' && stat.value === 40 && (

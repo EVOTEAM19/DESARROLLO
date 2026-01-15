@@ -46,12 +46,12 @@ export default function NosotrosContentPage() {
     resolver: zodResolver(nosotrosSchema),
     defaultValues: {
       hero: {
-        title: '11 años transformando ideas en productos que triunfan',
+        title: '6 años transformando ideas en productos que triunfan',
         subtitle: 'Somos FastIA. Un equipo de +40 desarrolladores especializados en IA, obsesionados con la calidad y la velocidad.',
       },
       stats: [
-        { value: '11', label: 'Años de experiencia', suffix: '' },
-        { value: '200', label: 'Proyectos entregados', suffix: '+' },
+        { value: '6', label: 'Años de experiencia', suffix: '' },
+        { value: '100', label: 'Proyectos entregados', suffix: '+' },
         { value: '40', label: 'Desarrolladores', suffix: '+' },
         { value: '98', label: 'Satisfacción clientes', suffix: '%' },
       ],

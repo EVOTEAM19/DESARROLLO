@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { trackCTAClickAll } from '@/lib/analytics'
 
 interface ServiceCTAProps {
   title: string
@@ -30,14 +31,18 @@ export function ServiceCTA({ title, description, primaryButton, secondaryButton 
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             {title}
           </h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 mb-4 max-w-2xl mx-auto">
             {description}
+          </p>
+          <p className="text-lg text-orange-400 mb-10 font-semibold max-w-2xl mx-auto">
+            ROI en 6 meses o devolvemos dinero
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href={primaryButton.href}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-orange-500 hover:bg-accent-orange-600 text-white rounded-lg font-semibold transition-colors"
+              onClick={() => trackCTAClickAll(primaryButton.text, 'Service CTA - Primary', primaryButton.href)}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-orange-500 hover:bg-accent-orange-600 text-white rounded-lg font-semibold transition-colors shadow-lg hover:shadow-accent-orange-500/50"
             >
               {primaryButton.text}
               <ArrowRight className="w-5 h-5" />
@@ -45,6 +50,7 @@ export function ServiceCTA({ title, description, primaryButton, secondaryButton 
             {secondaryButton && (
               <Link
                 href={secondaryButton.href}
+                onClick={() => trackCTAClickAll(secondaryButton!.text, 'Service CTA - Secondary', secondaryButton!.href)}
                 className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-gray-700 hover:border-gray-600 text-white rounded-lg font-semibold transition-colors"
               >
                 {secondaryButton.text}

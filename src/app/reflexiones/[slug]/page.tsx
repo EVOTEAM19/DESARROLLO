@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { getBlogPosts } from '@/lib/api'
 import { Calendar, User, Clock, ArrowLeft, Share2, Tag } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generateArticleSchema } from '@/components/StructuredData'
+import { TrackedLink } from '@/components/ui/TrackedLink'
 
 export const revalidate = 3600
 
@@ -94,8 +96,31 @@ export default async function ReflexionPostPage({ params }: PageProps) {
   const publishedDate = post.published_at || post.created_at
   const readTime = Math.ceil((post.content?.length || 0) / 200) || 5
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.fastia.es'
+  const articleUrl = `${baseUrl}/reflexiones/${post.slug}`
+  const articleImage = post.image_url || `${baseUrl}/og-image.jpg`
+
+  // Structured Data para Article
+  const articleSchema = generateArticleSchema({
+    headline: post.title,
+    description: post.excerpt || post.meta_description || '',
+    image: articleImage,
+    author: post.author || 'Equipo FastIA',
+    datePublished: publishedDate,
+    dateModified: post.updated_at || publishedDate,
+    url: articleUrl,
+    category: post.category || 'Tecnología',
+    keywords: post.tags || ['IA', 'Inteligencia Artificial'],
+  })
+
   return (
-    <div className="min-h-screen bg-gray-900">
+    <>
+      {/* Structured Data - Article */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <div className="min-h-screen bg-gray-900">
       {/* Header del artículo */}
       <article className="max-w-4xl mx-auto px-4 pt-32 pb-24">
         {/* Back button */}
@@ -204,17 +229,23 @@ export default async function ReflexionPostPage({ params }: PageProps) {
           <h3 className="text-2xl font-bold text-white mb-4">
             ¿Te gustaría implementar esto en tu empresa?
           </h3>
-          <p className="text-gray-400 mb-6">
-            Hablemos de cómo podemos ayudarte. Consulta gratuita de 30 minutos.
+          <p className="text-gray-400 mb-2">
+            Agendamos una sesión de 30 minutos gratis. Analizamos tu caso y te damos un presupuesto sin compromiso.
           </p>
-          <Link
+          <p className="text-lg text-orange-400 mb-6 font-semibold">
+            ROI en 6 meses o devolvemos dinero
+          </p>
+          <TrackedLink
             href="/contacto"
+            ctaName="Demo gratuita 30min - ROI garantizado"
+            location={`Blog Post - ${post.title}`}
             className="inline-block px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-orange-500/50"
           >
-            Agendar consulta →
-          </Link>
+            Demo gratuita 30min →
+          </TrackedLink>
         </div>
       </article>
-    </div>
+      </div>
+    </>
   )
 }

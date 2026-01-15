@@ -204,7 +204,7 @@ export default function SeguridadIAPage() {
         title="¿Quieres proteger tu negocio con IA?"
         description="Agenda una sesión de 60 minutos. Evaluamos tu seguridad actual y te mostramos cómo mejorarla."
         primaryButton={{
-          text: "Agendar sesión gratuita →",
+          text: "Demo gratuita 30min →",
           href: "/contacto"
         }}
         secondaryButton={{

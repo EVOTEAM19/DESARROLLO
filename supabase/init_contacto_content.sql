@@ -13,9 +13,9 @@ INSERT INTO public.site_settings (section, key, value) VALUES
   "contact_info": {
     "email": "hola@fastia.com",
     "phone": "+34 910 123 456",
-    "address_madrid": "Gran Vía 45, 3ª planta, 28013 Madrid",
-    "address_barcelona": "Passeig de Gràcia 21, 08007 Barcelona",
-    "address_sevilla": "Av. Constitución 18, 41001 Sevilla",
+    "address_madrid": "Calle Columela, 9 28001 Madrid",
+    "address_barcelona": "Barcelona",
+    "address_sevilla": "Sevilla",
     "hours": "Lunes a Viernes, 9:00 - 18:00h"
   },
   "form": {

@@ -16,7 +16,7 @@ import {
   Clock,
 } from 'lucide-react'
 import { createBrowserClient } from '@/lib/supabase'
-import { trackFormSubmit, trackConversion } from '@/lib/analytics'
+import { trackFormSubmit, trackConversion, trackMetaPixelEvent, trackLinkedInEvent } from '@/lib/analytics'
 import { getContactoContent } from '@/lib/content'
 
 // Schema de validación con Zod
@@ -121,9 +121,9 @@ export function ContactForm() {
   const contactInfo = content?.contact_info || {
     email: 'hola@fastia.com',
     phone: '+34 910 123 456',
-    address_madrid: 'Gran Vía 45, 3ª planta, 28013 Madrid',
-    address_barcelona: 'Passeig de Gràcia 21, 08007 Barcelona',
-    address_sevilla: 'Av. Constitución 18, 41001 Sevilla',
+    address_madrid: 'Calle Columela, 9 28001 Madrid',
+    address_barcelona: 'Barcelona',
+    address_sevilla: 'Sevilla',
     hours: 'Lunes a Viernes, 9:00 - 18:00h',
   }
 
@@ -179,12 +179,26 @@ export function ContactForm() {
       setFormState('success')
       reset()
 
-      // Tracking de analytics
+      // Tracking de analytics en todos los sistemas
       trackFormSubmit('contact_form', {
         project_type: sanitizedData.project_type,
         budget_range: sanitizedData.budget_range,
       })
       trackConversion('contact_form_submit', 1)
+      
+      // Meta Pixel - Lead event
+      trackMetaPixelEvent('Lead', {
+        content_name: 'Contact Form',
+        content_category: 'Form Submission',
+        value: 1,
+        currency: 'EUR',
+      })
+      
+      // LinkedIn - Lead conversion
+      trackLinkedInEvent('Lead', {
+        conversion_type: 'contact_form',
+        value: 1,
+      })
 
       // Resetear a idle después de 5 segundos
       setTimeout(() => {
@@ -241,9 +255,9 @@ export function ContactForm() {
                     Dirección
                   </h3>
                   <div className="text-base text-foreground space-y-1">
-                    <p><strong className="text-white">Madrid:</strong> {contactInfo.address_madrid}</p>
-                    <p><strong className="text-white">Barcelona:</strong> {contactInfo.address_barcelona}</p>
-                    <p><strong className="text-white">Sevilla:</strong> {contactInfo.address_sevilla}</p>
+                    <p><strong className="text-white">Madrid (Sede Central):</strong> {contactInfo.address_madrid}</p>
+                    <p><strong className="text-white">Barcelona</strong></p>
+                    <p><strong className="text-white">Sevilla</strong></p>
                   </div>
                 </div>
               </div>

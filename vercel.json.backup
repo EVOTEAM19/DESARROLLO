@@ -3,7 +3,7 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["mad1"],
+  "regions": ["cdg1"],
   "functions": {
     "src/app/**/*.tsx": {
       "maxDuration": 30

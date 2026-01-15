@@ -76,11 +76,11 @@ export const faqsCTO: FAQItem[] = [
 export const faqsGeneral: FAQItem[] = [
   {
     question: '¿Qué hace FastIA?',
-    answer: 'FastIA es una empresa de desarrollo de software especializada en inteligencia artificial. Creamos apps móviles, plataformas web, automatizaciones y ofrecemos consultoría tecnológica. Llevamos 11 años ayudando a startups y empresas a digitalizarse. Tenemos +40 desarrolladores especializados en Madrid.',
+    answer: 'FastIA es una empresa de desarrollo de software especializada en inteligencia artificial. Creamos apps móviles, plataformas web, automatizaciones y ofrecemos consultoría tecnológica. Llevamos 6 años ayudando a startups y empresas a digitalizarse. Tenemos +40 desarrolladores especializados en Madrid.',
   },
   {
     question: '¿Dónde está FastIA?',
-    answer: 'Nuestra oficina principal está en Gran Vía 45, 3ª planta, Madrid 28013. Trabajamos con clientes de toda España y Latinoamérica. También hacemos proyectos 100% remotos.',
+    answer: 'Nuestra oficina principal está en Calle Columela, 9 28001 Madrid. Trabajamos con clientes de toda España y Latinoamérica. También hacemos proyectos 100% remotos.',
   },
   {
     question: '¿Cuánto cuestan vuestros servicios?',

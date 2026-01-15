@@ -1,6 +1,6 @@
 # FastIA - Desarrollo de Software con IA
 
-Sitio web corporativo para FastIA, empresa líder en desarrollo de software con inteligencia artificial. 11 años de experiencia transformando empresas con soluciones innovadoras.
+Sitio web corporativo para FastIA, empresa líder en desarrollo de software con inteligencia artificial. 6 años de experiencia transformando empresas con soluciones innovadoras.
 
 ## 🚀 Características
 

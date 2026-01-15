@@ -127,7 +127,7 @@ export default function TheModalContentPage() {
         seo_title: 'SEO Técnico Avanzado',
         seo_description: 'Core Web Vitals, Schema.org, structured data y indexación perfecta.',
         apps_title: 'Especialistas en Apps Nativas e Híbridas',
-        apps_description: '11 años desarrollando apps móviles. Sabemos cuándo elegir nativo (Swift/Kotlin) y cuándo híbrido (Flutter/React Native). No te vendemos tecnología, te recomendamos la mejor para tu caso.',
+        apps_description: '6 años desarrollando apps móviles. Sabemos cuándo elegir nativo (Swift/Kotlin) y cuándo híbrido (Flutter/React Native). No te vendemos tecnología, te recomendamos la mejor para tu caso.',
       },
       cta: {
         title: '¿Listo para transformar tu idea?',

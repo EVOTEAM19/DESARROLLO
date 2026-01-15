@@ -57,10 +57,10 @@ export default function ProcesamientoDatosPage() {
             duration: "1-2 semanas",
             description: "Identificamos todas tus fuentes de datos y evaluamos su calidad.",
             deliverables: [
-              "Inventario de datos",
-              "Análisis de calidad",
-              "Gaps identificados",
-              "Roadmap de integración"
+              { text: "Inventario de datos" },
+              { text: "Análisis de calidad" },
+              { text: "Gaps identificados" },
+              { text: "Roadmap de integración" }
             ]
           },
           {
@@ -68,10 +68,10 @@ export default function ProcesamientoDatosPage() {
             duration: "2-3 semanas",
             description: "Diseñamos un data pipeline escalable y eficiente.",
             deliverables: [
-              "Arquitectura definida",
-              "Tech stack seleccionado",
-              "Plan de migración",
-              "Estimación de costes"
+              { text: "Arquitectura definida" },
+              { text: "Tech stack seleccionado" },
+              { text: "Plan de migración" },
+              { text: "Estimación de costes" }
             ]
           },
           {
@@ -79,10 +79,10 @@ export default function ProcesamientoDatosPage() {
             duration: "4-6 semanas",
             description: "Construimos pipelines que extraen, transforman y cargan datos automáticamente.",
             deliverables: [
-              "Pipeline funcional",
-              "Automatización completa",
-              "Monitoreo y alertas",
-              "Documentación técnica"
+              { text: "Pipeline funcional" },
+              { text: "Automatización completa" },
+              { text: "Monitoreo y alertas" },
+              { text: "Documentación técnica" }
             ]
           },
           {
@@ -90,10 +90,10 @@ export default function ProcesamientoDatosPage() {
             duration: "3-4 semanas",
             description: "Creamos un repositorio centralizado de datos listo para análisis.",
             deliverables: [
-              "Data warehouse/lake",
-              "Modelo de datos",
-              "Optimización de queries",
-              "Backup y recovery"
+              { text: "Data warehouse/lake" },
+              { text: "Modelo de datos" },
+              { text: "Optimización de queries" },
+              { text: "Backup y recovery" }
             ]
           },
           {
@@ -101,10 +101,10 @@ export default function ProcesamientoDatosPage() {
             duration: "2-3 semanas",
             description: "Construimos dashboards interactivos para visualizar insights.",
             deliverables: [
-              "Dashboards personalizados",
-              "Reportes automatizados",
-              "Alertas inteligentes",
-              "Acceso self-service"
+              { text: "Dashboards personalizados" },
+              { text: "Reportes automatizados" },
+              { text: "Alertas inteligentes" },
+              { text: "Acceso self-service" }
             ]
           }
         ]}
@@ -204,7 +204,7 @@ export default function ProcesamientoDatosPage() {
         title="¿Quieres transformar tus datos en ventaja competitiva?"
         description="Agenda una sesión de 60 minutos. Analizamos tus datos y te mostramos qué podemos hacer."
         primaryButton={{
-          text: "Agendar sesión gratuita →",
+          text: "Demo gratuita 30min →",
           href: "/contacto"
         }}
         secondaryButton={{

@@ -23,7 +23,7 @@ BEGIN
         ('general', 'site_name', '"FastIA"'),
         ('general', 'tagline', '"Transformamos ideas en soluciones inteligentes"'),
         ('general', 'location', '"Madrid, España"'),
-        ('general', 'experience_years', '11'),
+        ('general', 'experience_years', '6'),
         ('general', 'developers_count', '40'),
         ('general', 'contact_email', '"contacto@fastia.com"'),
         ('social', 'linkedin', '"https://linkedin.com/company/fastia"'),

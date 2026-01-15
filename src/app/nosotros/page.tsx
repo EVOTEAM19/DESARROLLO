@@ -37,8 +37,8 @@ const values = [
 ]
 
 const stats = [
-  { value: '11', label: 'Años de experiencia', suffix: '' },
-  { value: '200', label: 'Proyectos entregados', suffix: '+' },
+  { value: '6', label: 'Años de experiencia', suffix: '' },
+  { value: '100', label: 'Proyectos entregados', suffix: '+' },
   { value: '40', label: 'Desarrolladores', suffix: '+' },
   { value: '98', label: 'Satisfacción clientes', suffix: '%' }
 ]
@@ -186,8 +186,8 @@ export default function NosotrosPage() {
               Madrid, España
             </h2>
             <p className="text-xl text-gray-300 mb-4">
-              Gran Vía 45, 3ª planta<br />
-              28013 Madrid
+              Calle Columela, 9<br />
+              28001 Madrid
             </p>
             <p className="text-gray-400 mb-12">
               Remote-first: Equipos distribuidos en toda España

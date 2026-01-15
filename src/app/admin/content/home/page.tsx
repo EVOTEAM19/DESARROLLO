@@ -46,15 +46,15 @@ export default function HomePageContent() {
       hero: {
         badge: 'FastIA',
         title: 'Transformamos ideas en soluciones inteligentes',
-        subtitle: '11 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.',
+        subtitle: '6 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.',
         cta_primary_text: 'Hablemos de tu proyecto',
         cta_primary_link: '/contacto',
         cta_secondary_text: 'Ver servicios',
         cta_secondary_link: '/the-modal',
       },
       stats: [
-        { value: '11', label: 'Años de experiencia', suffix: '' },
-        { value: '200', label: 'Proyectos entregados', suffix: '+' },
+        { value: '6', label: 'Años de experiencia', suffix: '' },
+        { value: '100', label: 'Proyectos entregados', suffix: '+' },
         { value: '40', label: 'Desarrolladores', suffix: '+' },
         { value: '98', label: 'Satisfacción clientes', suffix: '%' },
       ],

@@ -201,7 +201,7 @@ export default function AutomatizacionIAPage() {
       <ServiceCTA
         title="¿Quieres automatizar tu operación con IA?"
         description="Dinos tu proceso y te devolvemos un plan con ROI estimado y roadmap de implementación."
-        primaryButton={{ text: 'Agendar sesión gratuita →', href: '/contacto' }}
+        primaryButton={{ text: 'Demo gratuita 30min →', href: '/contacto' }}
         secondaryButton={{ text: 'Ver otros servicios', href: '/servicios' }}
       />
     </>

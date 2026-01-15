@@ -102,7 +102,7 @@ INSERT INTO public.site_settings (section, key, value) VALUES
     "seo_title": "SEO Técnico Avanzado",
     "seo_description": "Core Web Vitals, Schema.org, structured data y indexación perfecta.",
     "apps_title": "Especialistas en Apps Nativas e Híbridas",
-    "apps_description": "11 años desarrollando apps móviles. Sabemos cuándo elegir nativo (Swift/Kotlin) y cuándo híbrido (Flutter/React Native). No te vendemos tecnología, te recomendamos la mejor para tu caso."
+    "apps_description": "6 años desarrollando apps móviles. Sabemos cuándo elegir nativo (Swift/Kotlin) y cuándo híbrido (Flutter/React Native). No te vendemos tecnología, te recomendamos la mejor para tu caso."
   },
   "cta": {
     "title": "¿Listo para transformar tu idea?",
@@ -209,7 +209,7 @@ ON CONFLICT (section, key) DO UPDATE SET value = EXCLUDED.value, updated_at = NO
 INSERT INTO public.site_settings (section, key, value) VALUES
 ('nosotros', 'content', '{
   "hero": {
-    "title": "11 años transformando ideas en productos que triunfan",
+    "title": "6 años transformando ideas en productos que triunfan",
     "subtitle": "Somos FastIA. Un equipo de +40 desarrolladores especializados en IA, obsesionados con la calidad y la velocidad."
   },
   "stats": [
@@ -219,7 +219,7 @@ INSERT INTO public.site_settings (section, key, value) VALUES
       "suffix": ""
     },
     {
-      "value": "200",
+      "value": "100",
       "label": "Proyectos entregados",
       "suffix": "+"
     },

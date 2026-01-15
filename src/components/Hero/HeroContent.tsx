@@ -29,7 +29,7 @@ export function HeroContent() {
         setHeroData({
           badge: 'FastIA',
           title: 'Transformamos ideas en soluciones inteligentes',
-          subtitle: '11 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.',
+          subtitle: '6 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.',
           cta_primary_text: 'Hablemos de tu proyecto',
           cta_primary_link: '/contacto',
           cta_secondary_text: 'Ver servicios',
@@ -41,7 +41,7 @@ export function HeroContent() {
       setHeroData({
         badge: 'FastIA',
         title: 'Transformamos ideas en soluciones inteligentes',
-        subtitle: '11 años desarrollando software con IA.',
+        subtitle: '6 años desarrollando software con IA.',
         cta_primary_text: 'Hablemos de tu proyecto',
         cta_primary_link: '/contacto',
         cta_secondary_text: 'Ver servicios',
@@ -121,7 +121,7 @@ export function HeroContent() {
           transition={{ duration: 1, delay: 1 }}
           className="text-xl sm:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed"
         >
-          <p>{heroData.subtitle || '11 años desarrollando software con IA.'}</p>
+          <p>{heroData.subtitle || '6 años desarrollando software con IA.'}</p>
         </motion.div>
 
         {/* CTAs */}
@@ -184,7 +184,7 @@ export function HeroContent() {
             className="text-center"
           >
             <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              +200
+              +100
             </div>
             <div className="text-sm text-gray-400">Proyectos</div>
           </motion.div>
@@ -195,7 +195,7 @@ export function HeroContent() {
             className="text-center"
           >
             <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              11
+              6
             </div>
             <div className="text-sm text-gray-400">Años</div>
           </motion.div>

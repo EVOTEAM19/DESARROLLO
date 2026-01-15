@@ -9,7 +9,7 @@ INSERT INTO public.site_settings (section, key, value) VALUES
   "hero": {
     "badge": "FastIA",
     "title": "Transformamos ideas en soluciones inteligentes",
-    "subtitle": "11 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.",
+    "subtitle": "6 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.",
     "cta_primary_text": "Hablemos de tu proyecto",
     "cta_primary_link": "/contacto",
     "cta_secondary_text": "Ver servicios",
@@ -23,7 +23,7 @@ INSERT INTO public.site_settings (section, key, value) VALUES
       "icon": "Calendar"
     },
     {
-      "value": "200",
+      "value": "100",
       "label": "Proyectos entregados",
       "suffix": "+",
       "icon": "FolderKanban"

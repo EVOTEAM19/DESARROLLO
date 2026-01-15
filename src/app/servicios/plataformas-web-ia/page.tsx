@@ -209,7 +209,7 @@ export default function PlataformasWebIAPage() {
       <ServiceCTA
         title="¿Quieres una plataforma web que no se rompa al escalar?"
         description="En 60 minutos te damos una propuesta de arquitectura + roadmap MVP, sin compromiso."
-        primaryButton={{ text: 'Agendar sesión gratuita →', href: '/contacto' }}
+        primaryButton={{ text: 'Demo gratuita 30min →', href: '/contacto' }}
         secondaryButton={{ text: 'Ver otros servicios', href: '/servicios' }}
       />
     </>

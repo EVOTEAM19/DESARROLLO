@@ -21,9 +21,17 @@ function ClientLogoImage({ src, alt }: { src: string; alt: string }) {
   useEffect(() => {
     setImgSrc(src)
     setImgError(false)
+    
+    // Detectar URLs problemáticas que sabemos que fallan (como via.placeholder.com con errores 502)
+    // Si la URL contiene via.placeholder.com, marcarla como error inmediatamente
+    if (src && src.includes('via.placeholder.com')) {
+      // Verificar si es una URL de placeholder que sabemos que falla
+      // En este caso, mejor mostrar el nombre de la empresa directamente
+      setImgError(true)
+    }
   }, [src])
 
-  // Si la imagen falla, mostrar placeholder
+  // Si la imagen falla o no hay src, mostrar placeholder con el nombre
   if (imgError || !imgSrc) {
     return (
       <div className="w-full h-16 flex items-center justify-center">
@@ -34,6 +42,11 @@ function ClientLogoImage({ src, alt }: { src: string; alt: string }) {
     )
   }
 
+  // Desactivar optimización para URLs problemáticas o rutas locales
+  const shouldUnoptimize = imgSrc.startsWith('/') || 
+                           imgSrc.includes('via.placeholder.com') ||
+                           imgSrc.includes('placeholder.com')
+
   return (
     <Image
       src={imgSrc}
@@ -42,9 +55,10 @@ function ClientLogoImage({ src, alt }: { src: string; alt: string }) {
       className="object-contain filter grayscale group-hover:grayscale-0 transition-all opacity-70 group-hover:opacity-100"
       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 16vw"
       onError={() => {
+        // Una vez que hay un error, no intentar cargar de nuevo
         setImgError(true)
       }}
-      unoptimized={imgSrc.startsWith('/')} // Desactivar optimización para rutas locales que pueden no existir
+      unoptimized={shouldUnoptimize}
     />
   )
 }
@@ -52,11 +66,43 @@ function ClientLogoImage({ src, alt }: { src: string; alt: string }) {
 export function ClientLogos() {
   const [clients, setClients] = useState<Client[]>([])
   const [loading, setLoading] = useState(true)
-  const supabase = createBrowserClient()
+  const [sectionEnabled, setSectionEnabled] = useState(true)
 
   useEffect(() => {
     async function fetchClients() {
       try {
+        const supabase = createBrowserClient()
+        
+        // Primero verificar si la sección está habilitada
+        const { data: setting, error: settingError } = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('section', 'general')
+          .eq('key', 'clients_section_enabled')
+          .single()
+        
+        let enabled = true // Por defecto está habilitada
+        if (!settingError && setting) {
+          // El valor puede estar como string JSON o como boolean
+          try {
+            enabled = typeof setting.value === 'string' 
+              ? JSON.parse(setting.value) 
+              : setting.value ?? true
+          } catch {
+            enabled = setting.value ?? true
+          }
+        }
+        
+        setSectionEnabled(enabled)
+        
+        // Si la sección está deshabilitada, no cargar clientes
+        if (!enabled) {
+          setClients([])
+          setLoading(false)
+          return
+        }
+        
+        // Cargar clientes solo si la sección está habilitada
         const { data, error } = await supabase
           .from('clients')
           .select('*')
@@ -83,7 +129,12 @@ export function ClientLogos() {
     }
     
     fetchClients()
-  }, [supabase])
+  }, [])
+
+  // Si la sección está deshabilitada, no renderizar nada
+  if (!sectionEnabled) {
+    return null
+  }
 
   if (loading) {
     return (
@@ -121,7 +172,7 @@ export function ClientLogos() {
             Empresas que confían en nosotros
           </h2>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            11 años transformando ideas en productos digitales que triunfan para empresas líderes.
+            6 años transformando ideas en productos digitales que triunfan para empresas líderes.
           </p>
         </motion.div>
 

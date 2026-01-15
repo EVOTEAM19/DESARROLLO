@@ -196,7 +196,7 @@ export default function CTOAsAServicePage() {
       <ServiceCTA
         title="¿Necesitas dirección tecnológica ya?"
         description="Te ayudamos a ordenar prioridades, reducir riesgo y acelerar entregas desde la primera semana."
-        primaryButton={{ text: 'Agendar sesión gratuita →', href: '/contacto' }}
+        primaryButton={{ text: 'Demo gratuita 30min →', href: '/contacto' }}
         secondaryButton={{ text: 'Ver otros servicios', href: '/servicios' }}
       />
     </>

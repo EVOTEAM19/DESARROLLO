@@ -19,6 +19,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
 // Usar window para persistir entre hot reloads en desarrollo
 let browserClient: SupabaseClient<Database> | null = null
 
+// Clave única para almacenamiento persistente
+const STORAGE_KEY = 'sb-thinkia-auth-token'
+const GLOBAL_CLIENT_KEY = '__SUPABASE_CLIENT__'
+
 /**
  * Cliente de Supabase para componentes del cliente (Client Components)
  * Usa cookies para mantener la sesión del usuario
@@ -27,14 +31,18 @@ let browserClient: SupabaseClient<Database> | null = null
 export function createBrowserClient(): SupabaseClient<Database> {
   // En el navegador, usar window para persistir entre hot reloads
   if (typeof window !== 'undefined') {
-    const globalKey = '__SUPABASE_CLIENT__'
-    if ((window as any)[globalKey]) {
-      return (window as any)[globalKey]
+    // Verificar si ya existe una instancia en window (persistente entre hot reloads)
+    if ((window as any)[GLOBAL_CLIENT_KEY]) {
+      return (window as any)[GLOBAL_CLIENT_KEY]
     }
   }
   
   // Si ya existe una instancia en memoria, reutilizarla
   if (browserClient) {
+    // Asegurarse de que también esté en window si estamos en el navegador
+    if (typeof window !== 'undefined') {
+      (window as any)[GLOBAL_CLIENT_KEY] = browserClient
+    }
     return browserClient
   }
   
@@ -75,8 +83,13 @@ export function createBrowserClient(): SupabaseClient<Database> {
   if (typeof window !== 'undefined') {
     // En el navegador, usar createClientComponentClient para sincronizar cookies
     // Esto maneja automáticamente las cookies que el middleware puede leer
+    // IMPORTANTE: createClientComponentClient tiene comportamiento singleton por defecto (isSingleton: true)
+    // pero aún así implementamos nuestro propio singleton para mayor seguridad
     // @ts-ignore - createClientComponentClient devuelve un tipo compatible pero TypeScript no lo reconoce
     browserClient = createClientComponentClient<Database>()
+    
+    // Guardar en window INMEDIATAMENTE después de crear para evitar que se cree otra instancia
+    ;(window as any)[GLOBAL_CLIENT_KEY] = browserClient
   } else {
     // En el servidor, usar createClient normal
     browserClient = createClient<Database>(url, key, {
@@ -84,7 +97,7 @@ export function createBrowserClient(): SupabaseClient<Database> {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
-        storageKey: 'sb-thinkia-auth-token',
+        storageKey: STORAGE_KEY,
       },
     })
   }
@@ -92,12 +105,6 @@ export function createBrowserClient(): SupabaseClient<Database> {
   // Asegurarse de que browserClient no sea null
   if (!browserClient) {
     throw new Error('Failed to create Supabase browser client')
-  }
-  
-  // Guardar en window para persistir entre hot reloads
-  if (typeof window !== 'undefined') {
-    const globalKey = '__SUPABASE_CLIENT__'
-    ;(window as any)[globalKey] = browserClient
   }
   
   return browserClient

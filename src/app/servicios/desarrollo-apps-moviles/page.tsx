@@ -215,7 +215,7 @@ export default function AppsMovilesPage() {
         title="¿Tienes una idea de app?"
         description="Validémosla juntos en 60 minutos. Sin coste, sin compromiso."
         primaryButton={{
-          text: "Agendar sesión gratuita",
+          text: "Demo gratuita 30min →",
           href: "/contacto"
         }}
         secondaryButton={{

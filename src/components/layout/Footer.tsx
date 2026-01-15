@@ -5,23 +5,37 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from 'lucide-react'
 import { getLogoUrl } from '@/lib/logo'
+import { getContactoContent } from '@/lib/content'
 
 const locations = [
-  { city: 'Madrid', address: 'Gran Vía 45, 3ª planta, 28013' },
-  { city: 'Barcelona', address: 'Passeig de Gràcia 21, 08007' },
-  { city: 'Sevilla', address: 'Avenida de la Constitución 18, 41001' }
+  { city: 'Madrid', label: 'Sede Central', address: 'Calle Columela, 9 28001 Madrid' },
+  { city: 'Barcelona', label: 'Barcelona', address: null },
+  { city: 'Sevilla', label: 'Sevilla', address: null }
 ]
 
 export function Footer() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null)
+  const [phone, setPhone] = useState<string>('+34 910 123 456')
 
   useEffect(() => {
     loadLogo()
+    loadContactInfo()
   }, [])
 
   const loadLogo = async () => {
     const url = await getLogoUrl()
     setLogoUrl(url)
+  }
+
+  const loadContactInfo = async () => {
+    try {
+      const contactoContent = await getContactoContent()
+      if (contactoContent?.contact_info?.phone) {
+        setPhone(contactoContent.contact_info.phone)
+      }
+    } catch (error) {
+      console.error('Error cargando información de contacto:', error)
+    }
   }
 
   return (
@@ -50,7 +64,7 @@ export function Footer() {
             </Link>
             
             <p className="text-gray-400 mb-6 leading-relaxed">
-              11 años transformando ideas en productos digitales que triunfan. 
+              6 años transformando ideas en productos digitales que triunfan. 
               Desarrollo de software con IA integrada desde el primer día.
             </p>
             
@@ -59,7 +73,10 @@ export function Footer() {
               {locations.map((location, i) => (
                 <div key={i} className="flex items-start gap-3 text-gray-400">
                   <MapPin className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">{location.city}:</strong> {location.address}</span>
+                  <span>
+                    <strong className="text-white">{location.label}</strong>
+                    {location.address && <span>: {location.address}</span>}
+                  </span>
                 </div>
               ))}
             </div>
@@ -67,8 +84,8 @@ export function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-3 text-gray-400">
                 <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <a href="tel:+34910123456" className="hover:text-orange-500 transition-colors">
-                  +34 910 123 456
+                <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-orange-500 transition-colors">
+                  {phone}
                 </a>
               </div>
               
@@ -111,7 +128,6 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Empresa</h3>
             <ul className="space-y-3 text-sm">
               <li><Link href="/nosotros" className="text-gray-400 hover:text-orange-500 transition-colors">Nosotros</Link></li>
-              <li><Link href="/synapse" className="text-gray-400 hover:text-orange-500 transition-colors">Synapse</Link></li>
               <li><Link href="/sectores" className="text-gray-400 hover:text-orange-500 transition-colors">Sectores</Link></li>
               <li><Link href="/contacto" className="text-gray-400 hover:text-orange-500 transition-colors">Contacto</Link></li>
             </ul>

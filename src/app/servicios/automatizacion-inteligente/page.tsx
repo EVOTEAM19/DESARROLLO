@@ -204,7 +204,7 @@ export default function AutomatizacionInteligentePage() {
         title="¿Quieres liberar tiempo de tu equipo?"
         description="Agenda una sesión de 60 minutos. Analizamos tus procesos y te mostramos qué podemos automatizar."
         primaryButton={{
-          text: "Agendar sesión gratuita →",
+          text: "Demo gratuita 30min →",
           href: "/contacto"
         }}
         secondaryButton={{

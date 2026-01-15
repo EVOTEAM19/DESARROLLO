@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createBrowserClient } from '@/lib/supabase'
-import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, EyeOff, Power } from 'lucide-react'
 
 interface Client {
   id: string
@@ -20,11 +20,76 @@ export default function AdminClientsPage() {
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [editingClient, setEditingClient] = useState<Client | null>(null)
+  const [sectionEnabled, setSectionEnabled] = useState(true)
+  const [loadingToggle, setLoadingToggle] = useState(false)
   const supabase = createBrowserClient()
 
   useEffect(() => {
     fetchClients()
+    fetchSectionSetting()
   }, [])
+
+  async function fetchSectionSetting() {
+    try {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('section', 'general')
+        .eq('key', 'clients_section_enabled')
+        .single()
+
+      if (!error && data) {
+        let enabled = true
+        try {
+          enabled = typeof data.value === 'string' 
+            ? JSON.parse(data.value) 
+            : data.value ?? true
+        } catch {
+          enabled = data.value ?? true
+        }
+        setSectionEnabled(enabled)
+      } else {
+        // Si no existe la configuración, por defecto está habilitada
+        setSectionEnabled(true)
+      }
+    } catch (err) {
+      console.error('Error fetching section setting:', err)
+    }
+  }
+
+  async function toggleSectionEnabled() {
+    try {
+      setLoadingToggle(true)
+      const newValue = !sectionEnabled
+      
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert(
+          {
+            section: 'general',
+            key: 'clients_section_enabled',
+            value: JSON.stringify(newValue),
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: 'section,key' }
+        )
+
+      if (error) {
+        throw error
+      }
+
+      setSectionEnabled(newValue)
+      alert(newValue 
+        ? 'Sección de clientes activada. Ahora se mostrará en la web.' 
+        : 'Sección de clientes desactivada. Ya no se mostrará en la web.'
+      )
+    } catch (err: any) {
+      console.error('Error toggling section:', err)
+      alert('Error al actualizar la configuración: ' + (err.message || 'Error desconocido'))
+    } finally {
+      setLoadingToggle(false)
+    }
+  }
 
   async function fetchClients() {
     try {
@@ -117,16 +182,32 @@ export default function AdminClientsPage() {
             <h1 className="text-3xl font-bold text-white mb-2">Gestión de Clientes</h1>
             <p className="text-gray-400">Gestiona los logos que aparecen en la web</p>
           </div>
-          <button
-            onClick={() => {
-              setEditingClient(null)
-              setShowModal(true)
-            }}
-            className="flex items-center gap-2 px-6 py-3 bg-accent-orange-500 hover:bg-accent-orange-600 text-white rounded-lg font-semibold transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Añadir Cliente
-          </button>
+          <div className="flex items-center gap-4">
+            {/* Toggle para activar/desactivar la sección */}
+            <button
+              onClick={toggleSectionEnabled}
+              disabled={loadingToggle}
+              className={`flex items-center gap-2 px-4 py-3 rounded-lg font-semibold transition-colors ${
+                sectionEnabled
+                  ? 'bg-green-500/20 text-green-500 hover:bg-green-500/30 border border-green-500/30'
+                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600 border border-gray-600'
+              }`}
+              title={sectionEnabled ? 'Clic para desactivar la sección en la web' : 'Clic para activar la sección en la web'}
+            >
+              <Power className={`w-5 h-5 ${sectionEnabled ? '' : 'opacity-50'}`} />
+              {sectionEnabled ? 'Sección Visible' : 'Sección Oculta'}
+            </button>
+            <button
+              onClick={() => {
+                setEditingClient(null)
+                setShowModal(true)
+              }}
+              className="flex items-center gap-2 px-6 py-3 bg-accent-orange-500 hover:bg-accent-orange-600 text-white rounded-lg font-semibold transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+              Añadir Cliente
+            </button>
+          </div>
         </div>
 
         {/* Table */}

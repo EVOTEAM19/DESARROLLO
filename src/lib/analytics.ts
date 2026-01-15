@@ -1,6 +1,6 @@
 /**
  * Utilidades de Analytics para FastIA
- * Integración con Google Analytics 4
+ * Integración con Google Analytics 4, Meta Pixel, LinkedIn Insight Tag
  */
 
 declare global {
@@ -11,6 +11,8 @@ declare global {
       config?: Record<string, any>
     ) => void
     dataLayer?: any[]
+    fbq?: (command: string, event: string, params?: Record<string, any>) => void
+    lintrk?: (command: string, params?: Record<string, any>) => void
   }
 }
 
@@ -157,5 +159,52 @@ export function trackServiceView(serviceName: string) {
   trackEvent('service_view', {
     event_category: 'Services',
     event_label: serviceName,
+  })
+}
+
+/**
+ * Trackea un evento en Meta Pixel (Facebook)
+ * @param eventName - Nombre del evento (PageView, Lead, Contact, etc.)
+ * @param eventData - Datos adicionales del evento
+ */
+export function trackMetaPixelEvent(eventName: string, eventData?: Record<string, any>) {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    ;(window as any).fbq('track', eventName, eventData || {})
+  }
+}
+
+/**
+ * Trackea un evento en LinkedIn Insight Tag
+ * @param eventName - Nombre del evento
+ * @param eventData - Datos adicionales del evento
+ */
+export function trackLinkedInEvent(eventName: string, eventData?: Record<string, any>) {
+  if (typeof window !== 'undefined' && (window as any).lintrk) {
+    ;(window as any).lintrk('track', { conversion_id: eventName, ...eventData })
+  }
+}
+
+/**
+ * Trackea un CTA click con todos los sistemas de tracking
+ * @param ctaName - Nombre del CTA
+ * @param location - Ubicación del CTA
+ * @param url - URL a la que lleva el CTA
+ */
+export function trackCTAClickAll(ctaName: string, location: string, url?: string) {
+  // Google Analytics
+  trackCTAClick(ctaName, location)
+  
+  // Meta Pixel
+  trackMetaPixelEvent('Contact', {
+    content_name: ctaName,
+    content_category: 'CTA',
+    content_location: location,
+  })
+  
+  // LinkedIn
+  trackLinkedInEvent('CTA_Click', {
+    cta_name: ctaName,
+    location: location,
+    url: url || (typeof window !== 'undefined' ? window.location.href : ''),
   })
 }

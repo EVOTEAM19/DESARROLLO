@@ -172,7 +172,7 @@ export function ProcessTimeline() {
             Nuestro <span className="text-gradient">proceso</span>
           </h2>
           <p className="text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto">
-            Metodología probada en +200 proyectos. Ágil, transparente y orientada a resultados.
+            Metodología probada en +100 proyectos. Ágil, transparente y orientada a resultados.
           </p>
         </motion.div>
 

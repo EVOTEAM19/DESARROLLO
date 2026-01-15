@@ -21,17 +21,17 @@ export const organizationSchema = {
   '@type': 'SoftwareCompany',
   name: 'FastIA',
   alternateName: 'Fast IA',
-  description: 'Empresa líder en desarrollo de software con inteligencia artificial en Madrid. 11 años de experiencia, +40 desarrolladores especializados en apps móviles, automatización y plataformas web inteligentes.',
+  description: 'Empresa líder en desarrollo de software con inteligencia artificial en Madrid. 6 años de experiencia, +40 desarrolladores especializados en apps móviles, automatización y plataformas web inteligentes.',
   url: 'https://www.fastia.es',
   logo: 'https://www.fastia.es/logo.png',
   image: 'https://www.fastia.es/og-image.jpg',
   foundingDate: '2014',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Gran Vía 45, 3ª planta',
+    streetAddress: 'Calle Columela, 9',
     addressLocality: 'Madrid',
     addressRegion: 'Madrid',
-    postalCode: '28013',
+    postalCode: '28001',
     addressCountry: 'ES',
   },
   geo: {
@@ -81,10 +81,10 @@ export const localBusinessSchemaMadrid = {
   priceRange: '€€€',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Gran Vía 45, 3ª planta',
+    streetAddress: 'Calle Columela, 9',
     addressLocality: 'Madrid',
     addressRegion: 'Madrid',
-    postalCode: '28013',
+    postalCode: '28001',
     addressCountry: 'ES',
   },
   geo: {
@@ -194,9 +194,9 @@ export const localBusinessSchema = {
   address: [
     {
       '@type': 'PostalAddress',
-      streetAddress: 'Gran Vía 45, 3ª planta',
-      addressLocality: 'Madrid',
-      postalCode: '28013',
+    streetAddress: 'Calle Columela, 9',
+    addressLocality: 'Madrid',
+    postalCode: '28001',
       addressCountry: 'ES',
     },
     {

@@ -106,7 +106,7 @@ export default function TheModalPage() {
             seo_title: 'SEO Técnico Avanzado',
             seo_description: 'Core Web Vitals, Schema.org, structured data y indexación perfecta.',
             apps_title: 'Especialistas en Apps Nativas e Híbridas',
-            apps_description: '11 años desarrollando apps móviles.',
+            apps_description: '6 años desarrollando apps móviles.',
           },
           cta: {
             title: '¿Listo para transformar tu idea?',
@@ -314,7 +314,7 @@ export default function TheModalPage() {
                 {content.expertise?.apps_title || 'Especialistas en Apps Nativas e Híbridas'}
               </h2>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                {content.expertise?.apps_description || '11 años desarrollando apps móviles.'}
+                {content.expertise?.apps_description || '6 años desarrollando apps móviles.'}
               </p>
               
               <div className="space-y-4">

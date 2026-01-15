@@ -196,7 +196,7 @@ export default function MantenimientoPage() {
       <ServiceCTA
         title="¿Quieres un producto estable y que siga creciendo?"
         description="Ponemos orden, monitorizamos y evolucionamos tu software con un proceso profesional."
-        primaryButton={{ text: 'Agendar sesión gratuita →', href: '/contacto' }}
+        primaryButton={{ text: 'Demo gratuita 30min →', href: '/contacto' }}
         secondaryButton={{ text: 'Ver otros servicios', href: '/servicios' }}
       />
     </>

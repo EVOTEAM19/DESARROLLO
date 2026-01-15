@@ -130,7 +130,7 @@ INSERT INTO public.blog_posts (title, slug, excerpt, content, featured_image, au
   'Chatbots con IA: Guía completa 2026',
   'chatbots-ia-guia-completa-2026',
   'Todo lo que necesitas saber sobre chatbots inteligentes. Desde el diseño hasta la implementación.',
-  '<h2>Tipos de Chatbots</h2><p>Basados en reglas, NLP, LLMs. Cuándo usar cada uno.</p><h2>Diseño de Conversaciones</h2><p>User journey, flujos, handoff a humanos. Cómo diseñar experiencias naturales.</p><h2>Implementación Técnica</h2><p>Stack tecnológico, integraciones, APIs. De la idea a producción.</p><h2>Métricas de Éxito</h2><p>Resolución automática, satisfacción, tiempo de respuesta. Cómo medir el éxito.</p><h2>Mejores Prácticas</h2><p>Tips de 11 años implementando chatbots. Errores comunes y cómo evitarlos.</p>',
+  '<h2>Tipos de Chatbots</h2><p>Basados en reglas, NLP, LLMs. Cuándo usar cada uno.</p><h2>Diseño de Conversaciones</h2><p>User journey, flujos, handoff a humanos. Cómo diseñar experiencias naturales.</p><h2>Implementación Técnica</h2><p>Stack tecnológico, integraciones, APIs. De la idea a producción.</p><h2>Métricas de Éxito</h2><p>Resolución automática, satisfacción, tiempo de respuesta. Cómo medir el éxito.</p><h2>Mejores Prácticas</h2><p>Tips de 6 años implementando chatbots. Errores comunes y cómo evitarlos.</p>',
   'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80',
   'Equipo FastIA',
   true,

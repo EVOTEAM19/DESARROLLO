@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     default: 'FastIA | Desarrollo de Software con IA en Madrid',
     template: '%s | FastIA',
   },
-  description: '11 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
+  description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
   keywords: ['desarrollo software IA', 'apps móviles IA', 'automatización empresarial', 'CTO externo', 'desarrollo web Madrid', 'inteligencia artificial'],
   authors: [{ name: 'FastIA' }],
   creator: 'FastIA',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'FastIA',
     title: 'FastIA | Desarrollo de Software con IA',
-    description: '11 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
+    description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
     images: [
       {
         url: '/og-image.jpg',
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FastIA | Desarrollo de Software con IA',
-    description: '11 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid.',
+    description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -121,6 +121,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link rel="preconnect" href="https://lbhviwctsjufyryoauem.supabase.co" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://snap.licdn.com" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         {/* Google Tag Manager (noscript) */}

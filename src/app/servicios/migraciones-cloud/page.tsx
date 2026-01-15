@@ -196,7 +196,7 @@ export default function MigracionesCloudPage() {
       <ServiceCTA
         title="¿Listo para migrar a cloud con seguridad?"
         description="Te damos un plan por fases con riesgos, costes y roadmap. Sin compromiso."
-        primaryButton={{ text: 'Agendar sesión gratuita →', href: '/contacto' }}
+        primaryButton={{ text: 'Demo gratuita 30min →', href: '/contacto' }}
         secondaryButton={{ text: 'Ver otros servicios', href: '/servicios' }}
       />
     </>

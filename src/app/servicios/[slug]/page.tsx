@@ -3,8 +3,10 @@ import Link from 'next/link'
 import { getServices, getPageBySlug } from '@/lib/api'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { ShareButtons } from '@/components/ui/ShareButtons'
+import { TrackedLink } from '@/components/ui/TrackedLink'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { Metadata } from 'next'
+import { generateServiceSchema } from '@/components/StructuredData'
 
 export const revalidate = 3600
 
@@ -61,18 +63,18 @@ export default async function ServicePage({ params }: PageProps) {
     .filter((s) => s.id !== service.id && s.category === service.category)
     .slice(0, 3)
 
-  // Structured Data (JSON-LD)
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
+  // Structured Data (JSON-LD) usando generateServiceSchema
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.fastia.es'
+  const serviceUrl = `${baseUrl}/servicios/${service.slug}`
+  
+  const structuredData = generateServiceSchema({
     name: service.name,
-    description: service.description,
-    serviceType: service.category,
-    provider: {
-      '@type': 'Organization',
-      name: 'FastIA',
-    },
-  }
+    description: service.description || '',
+    url: serviceUrl,
+    category: service.category || 'Servicio de Software',
+    image: service.image_url || `${baseUrl}/og-image.jpg`,
+    priceRange: '€€€',
+  })
 
   return (
     <>
@@ -194,16 +196,22 @@ export default async function ServicePage({ params }: PageProps) {
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
                 ¿Listo para transformar tu negocio?
               </h2>
-              <p className="text-xl text-foreground-muted">
-                Contacta con nuestro equipo para descubrir cómo podemos ayudarte
+              <p className="text-xl text-foreground-muted mb-4">
+                Agendamos una sesión de 30 minutos gratis. Analizamos tu caso y te damos un presupuesto sin compromiso.
               </p>
-              <Link
+              <p className="text-lg text-accent-orange-500 font-semibold mb-4">
+                ROI en 6 meses o devolvemos dinero
+              </p>
+              <TrackedLink
                 href="/contacto"
+                ctaName="Demo gratuita 30min - ROI garantizado"
+                location={`Service Page - ${service.name}`}
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-blue-600 via-accent-purple-600 to-accent-cyan-500 text-white rounded-lg font-semibold text-lg hover:opacity-90 transition-all duration-300 hover:shadow-glow-lg hover:scale-105 group"
+                id="service-cta-contact"
               >
-                <span>Contactar ahora</span>
+                <span>Demo gratuita 30min →</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </section>

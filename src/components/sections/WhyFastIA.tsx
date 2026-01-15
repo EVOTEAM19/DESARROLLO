@@ -298,7 +298,7 @@ export function WhyFastIA() {
               ¿Por qué más de <span className="text-gradient">200 empresas</span> confían en FastIA?
             </h2>
             <p className="text-lg md:text-xl text-foreground-muted">
-              11 años transformando ideas en productos digitales que triunfan.
+              6 años transformando ideas en productos digitales que triunfan.
               No somos una agencia más. Somos tu partner tecnológico.
             </p>
           </div>

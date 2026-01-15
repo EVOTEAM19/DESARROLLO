@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@/lib/supabase'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -23,7 +23,6 @@ interface Article {
 export default function ReflexionesPage() {
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
-  const supabase = createClientComponentClient()
 
   useEffect(() => {
     fetchArticles()
@@ -31,6 +30,7 @@ export default function ReflexionesPage() {
 
   async function fetchArticles() {
     try {
+      const supabase = createBrowserClient()
       const { data, error } = await supabase
         .from('blog_posts')
         .select('*')
@@ -64,7 +64,7 @@ export default function ReflexionesPage() {
             </h1>
             
             <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-              Insights, tutoriales y casos de estudio de 11 años desarrollando software con IA. 
+              Insights, tutoriales y casos de estudio de 6 años desarrollando software con IA. 
               Sin marketing, solo experiencia real.
             </p>
           </motion.div>

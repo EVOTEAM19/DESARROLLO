@@ -3,6 +3,9 @@
 import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { trackPageView } from '@/lib/analytics'
+import { MetaPixel } from './MetaPixel'
+import { LinkedInInsight } from './LinkedInInsight'
+import { MicrosoftClarity } from './MicrosoftClarity'
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -49,11 +52,14 @@ export function Analytics() {
     trackPageView(url)
   }, [pathname, searchParams])
 
-  if (!GA_MEASUREMENT_ID) {
-    return null
-  }
-
-  return null
+  return (
+    <>
+      {GA_MEASUREMENT_ID && null}
+      <MetaPixel />
+      <LinkedInInsight />
+      <MicrosoftClarity />
+    </>
+  )
 }
 
 // Re-exportar funciones de analytics para compatibilidad

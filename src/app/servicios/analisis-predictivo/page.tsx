@@ -57,10 +57,10 @@ export default function AnalisisPredictivoPage() {
             duration: "2 semanas",
             description: "Analizamos tus datos, identificamos fuentes y definimos qué predecir.",
             deliverables: [
-              "Auditoría de datos",
-              "Fuentes identificadas",
-              "Objetivos de predicción",
-              "Métricas de éxito"
+              { text: "Auditoría de datos" },
+              { text: "Fuentes identificadas" },
+              { text: "Objetivos de predicción" },
+              { text: "Métricas de éxito" }
             ]
           },
           {
@@ -68,10 +68,10 @@ export default function AnalisisPredictivoPage() {
             duration: "2-3 semanas",
             description: "Preparamos y limpiamos datos para entrenar modelos precisos.",
             deliverables: [
-              "Pipeline de datos",
-              "Features extraídas",
-              "Datos normalizados",
-              "Validación de calidad"
+              { text: "Pipeline de datos" },
+              { text: "Features extraídas" },
+              { text: "Datos normalizados" },
+              { text: "Validación de calidad" }
             ]
           },
           {
@@ -79,10 +79,10 @@ export default function AnalisisPredictivoPage() {
             duration: "4-6 semanas",
             description: "Entrenamos y optimizamos modelos de ML para tu caso específico.",
             deliverables: [
-              "Modelo entrenado",
-              "Validación cruzada",
-              "Métricas de precisión",
-              "A/B testing"
+              { text: "Modelo entrenado" },
+              { text: "Validación cruzada" },
+              { text: "Métricas de precisión" },
+              { text: "A/B testing" }
             ]
           },
           {
@@ -90,10 +90,10 @@ export default function AnalisisPredictivoPage() {
             duration: "2-3 semanas",
             description: "Integramos el modelo con tus sistemas y lo desplegamos en producción.",
             deliverables: [
-              "API de predicciones",
-              "Integración con sistemas",
-              "Dashboard de métricas",
-              "Sistema de alertas"
+              { text: "API de predicciones" },
+              { text: "Integración con sistemas" },
+              { text: "Dashboard de métricas" },
+              { text: "Sistema de alertas" }
             ]
           },
           {
@@ -101,10 +101,10 @@ export default function AnalisisPredictivoPage() {
             duration: "Continuo",
             description: "Monitoreamos el modelo y lo reentrenamos cuando baja la precisión.",
             deliverables: [
-              "Monitoreo 24/7",
-              "Reentrenamiento automático",
-              "Reportes mensuales",
-              "Mejora continua"
+              { text: "Monitoreo 24/7" },
+              { text: "Reentrenamiento automático" },
+              { text: "Reportes mensuales" },
+              { text: "Mejora continua" }
             ]
           }
         ]}
@@ -204,7 +204,7 @@ export default function AnalisisPredictivoPage() {
         title="¿Quieres predecir el futuro de tu negocio?"
         description="Agenda una sesión de 60 minutos. Analizamos tus datos y te mostramos qué podemos predecir."
         primaryButton={{
-          text: "Agendar sesión gratuita →",
+          text: "Demo gratuita 30min →",
           href: "/contacto"
         }}
         secondaryButton={{
