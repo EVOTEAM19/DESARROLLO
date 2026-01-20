@@ -7,8 +7,6 @@ import { ShareButtons } from '@/components/ui/ShareButtons'
 import { ArrowRight, Check, Mail } from 'lucide-react'
 import type { Metadata } from 'next'
 
-export const revalidate = 3600
-
 interface PageProps {
   params: Promise<{ slug: string }>
 }

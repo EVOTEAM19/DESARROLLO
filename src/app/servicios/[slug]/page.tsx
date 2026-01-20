@@ -8,8 +8,6 @@ import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { Metadata } from 'next'
 import { generateServiceSchema } from '@/lib/schemas'
 
-export const revalidate = 3600
-
 interface PageProps {
   params: Promise<{ slug: string }>
 }
