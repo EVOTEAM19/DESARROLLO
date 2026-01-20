@@ -106,9 +106,11 @@ const nextConfig = {
   // Powerd by header
   poweredByHeader: false,
   
-  // Desactivar caché de páginas en producción para ver cambios inmediatos
-  onDemandRevalidation: {
-    // Permitir revalidación manual
+  // Forzar renderizado dinámico en todas las páginas
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
+    // Desactivar generación estática automática
+    isrMemoryCacheSize: 0,
   },
 }
 

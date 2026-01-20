@@ -7,18 +7,21 @@ import type { Metadata } from 'next'
 import { generateArticleSchema } from '@/lib/schemas'
 import { TrackedLink } from '@/components/ui/TrackedLink'
 
-export const revalidate = 3600
+// Forzar renderizado dinámico
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  const posts = await getBlogPosts(100)
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+// Desactivado generateStaticParams para renderizado dinámico en cada request
+// export async function generateStaticParams() {
+//   const posts = await getBlogPosts(100)
+//   return posts.map((post) => ({
+//     slug: post.slug,
+//   }))
+// }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params

@@ -13,12 +13,17 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  const posts = await getBlogPosts(100) // Obtener más posts para generar todas las rutas
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+// Desactivado generateStaticParams para renderizado dinámico en cada request
+// export async function generateStaticParams() {
+//   const posts = await getBlogPosts(100) // Obtener más posts para generar todas las rutas
+//   return posts.map((post) => ({
+//     slug: post.slug,
+//   }))
+// }
+
+// Forzar renderizado dinámico
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params

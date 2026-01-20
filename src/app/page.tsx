@@ -12,8 +12,10 @@ import { getSiteSettings } from '@/lib/api'
 import { HeroSkeleton } from '@/components/ui/Skeleton'
 
 // Forzar renderizado dinámico en cada request (sin caché)
+// Esto desactiva completamente la generación estática
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+export const dynamicParams = true
 
 export default async function Home() {
   // Cargar datos del hero desde Supabase (si no existe, no falla)
