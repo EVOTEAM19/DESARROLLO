@@ -167,7 +167,7 @@ export function ContactForm() {
       const supabase = createBrowserClient()
 
       // Insertar en la tabla contact_messages
-      const { error } = await supabase.from('contact_messages').insert([
+      const { error } = await (supabase.from('contact_messages') as any).insert([
         sanitizedData,
       ])
 
@@ -549,7 +549,7 @@ export function ContactForm() {
                     }`}
                   >
                     <option value="">Selecciona una opción</option>
-                    {projectTypes.map((type) => (
+                    {projectTypes.map((type: string) => (
                       <option key={type} value={type}>
                         {type}
                       </option>
@@ -588,7 +588,7 @@ export function ContactForm() {
                     }`}
                   >
                     <option value="">Selecciona una opción</option>
-                    {budgetRanges.map((range) => (
+                    {budgetRanges.map((range: string) => (
                       <option key={range} value={range}>
                         {range}
                       </option>
@@ -662,7 +662,7 @@ export function ContactForm() {
                     }`}
                   >
                     <option value="">Selecciona una opción</option>
-                    {startTimeframes.map((timeframe) => (
+                    {startTimeframes.map((timeframe: string) => (
                       <option key={timeframe} value={timeframe}>
                         {timeframe}
                       </option>

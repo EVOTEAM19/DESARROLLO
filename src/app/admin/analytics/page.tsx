@@ -171,7 +171,12 @@ export default function AnalyticsDashboard() {
         <div className="flex items-center gap-4">
           <select
             value={dateRange}
-            onChange={(e) => setDateRange(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value as '7d' | '30d' | '90d'
+              if (value === '7d' || value === '30d' || value === '90d') {
+                setDateRange(value)
+              }
+            }}
             className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
           >
             <option value="7d">Últimos 7 días</option>
@@ -239,7 +244,7 @@ export default function AnalyticsDashboard() {
             {data?.bounceRate.toFixed(1)}%
           </div>
           <div className="text-sm text-gray-400">
-            {data && data.bounceRate < 50 ? 'Excelente' : data.bounceRate < 70 ? 'Bueno' : 'Mejorable'}
+            {data ? (data.bounceRate < 50 ? 'Excelente' : data.bounceRate < 70 ? 'Bueno' : 'Mejorable') : 'N/A'}
           </div>
         </motion.div>
 

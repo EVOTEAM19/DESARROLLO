@@ -57,10 +57,10 @@ export default function AutomatizacionInteligentePage() {
             duration: "1-2 semanas",
             description: "Identificamos procesos automatizables y calculamos ROI real.",
             deliverables: [
-              "Mapa de procesos",
-              "Análisis de ROI",
-              "Priorización",
-              "Plan de automatización"
+              { text: "Mapa de procesos" },
+              { text: "Análisis de ROI" },
+              { text: "Priorización" },
+              { text: "Plan de automatización" }
             ]
           },
           {
@@ -68,10 +68,10 @@ export default function AutomatizacionInteligentePage() {
             duration: "2 semanas",
             description: "Diseñamos flujos inteligentes que manejan excepciones y toman decisiones.",
             deliverables: [
-              "Flujos documentados",
-              "Casos de excepción",
-              "Lógica de decisión",
-              "Handoff a humanos"
+              { text: "Flujos documentados" },
+              { text: "Casos de excepción" },
+              { text: "Lógica de decisión" },
+              { text: "Handoff a humanos" }
             ]
           },
           {
@@ -79,10 +79,10 @@ export default function AutomatizacionInteligentePage() {
             duration: "4-6 semanas",
             description: "Construimos bots inteligentes con visión por computadora y NLP.",
             deliverables: [
-              "Bot funcional",
-              "Integración con sistemas",
-              "Detección de errores",
-              "Dashboard de métricas"
+              { text: "Bot funcional" },
+              { text: "Integración con sistemas" },
+              { text: "Detección de errores" },
+              { text: "Dashboard de métricas" }
             ]
           },
           {
@@ -90,10 +90,10 @@ export default function AutomatizacionInteligentePage() {
             duration: "2 semanas",
             description: "Probamos con datos reales y optimizamos para máxima eficiencia.",
             deliverables: [
-              "Test completo",
-              "Optimización de velocidad",
-              "Reducción de errores",
-              "Documentación"
+              { text: "Test completo" },
+              { text: "Optimización de velocidad" },
+              { text: "Reducción de errores" },
+              { text: "Documentación" }
             ]
           },
           {
@@ -101,10 +101,10 @@ export default function AutomatizacionInteligentePage() {
             duration: "1 semana",
             description: "Desplegamos y monitoreamos 24/7 para detectar problemas.",
             deliverables: [
-              "Deploy en producción",
-              "Sistema de alertas",
-              "Reportes automáticos",
-              "Soporte continuo"
+              { text: "Deploy en producción" },
+              { text: "Sistema de alertas" },
+              { text: "Reportes automáticos" },
+              { text: "Soporte continuo" }
             ]
           }
         ]}

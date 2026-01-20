@@ -86,7 +86,7 @@ function renderMarkdown(content: string) {
     .join('')
 
   // Wrap list items
-  html = html.replace(/(<li.*<\/li>)/gs, (match) => {
+  html = html.replace(/(<li[\s\S]*?<\/li>)/g, (match) => {
     if (match.includes('<ul') || match.includes('<ol')) return match
     return `<ul class="list-disc ml-6 mb-4 space-y-2">${match}</ul>`
   })

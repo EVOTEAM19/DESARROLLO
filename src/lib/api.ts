@@ -129,7 +129,7 @@ export async function getSiteSettings(key: string): Promise<any | null> {
       return null
     }
 
-    return data?.value || null
+    return (data as any)?.value || null
   } catch (error) {
     console.error('Error en getSiteSettings:', error)
     return null
@@ -152,7 +152,7 @@ export async function getAllSiteSettings(): Promise<Record<string, any>> {
     }
 
     const settings: Record<string, any> = {}
-    data?.forEach((item) => {
+    data?.forEach((item: any) => {
       settings[item.key] = item.value
     })
 

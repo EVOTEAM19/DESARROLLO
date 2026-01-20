@@ -17,18 +17,18 @@ export async function getLogoUrl(): Promise<string | null> {
       return null
     }
 
-    if (!data?.value) return null
+    if (!(data as any)?.value) return null
 
     // Parsear JSON si es string
-    if (typeof data.value === 'string') {
+    if (typeof (data as any).value === 'string') {
       try {
-        return JSON.parse(data.value)
+        return JSON.parse((data as any).value)
       } catch {
-        return data.value
+        return (data as any).value
       }
     }
 
-    return data.value
+    return (data as any).value
   } catch (error) {
     console.error('Error en getLogoUrl:', error)
     return null

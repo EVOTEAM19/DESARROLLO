@@ -115,14 +115,14 @@ export default function SynapseContentPage() {
     try {
       setIsLoading(true)
       const { data } = await supabase
-        .from('site_settings')
+        .from('site_content')
         .select('*')
         .eq('section', 'synapse')
         .eq('key', 'content')
         .single()
 
-      if (data?.value) {
-        const content = typeof data.value === 'string' ? JSON.parse(data.value) : data.value
+      if ((data as any)?.value) {
+        const content = typeof (data as any).value === 'string' ? JSON.parse((data as any).value) : (data as any).value
         Object.keys(content).forEach((key) => {
           setValue(key as any, content[key])
         })
@@ -138,13 +138,13 @@ export default function SynapseContentPage() {
     try {
       setIsSaving(true)
       const { error } = await supabase
-        .from('site_settings')
+        .from('site_content')
         .upsert({
           section: 'synapse',
           key: 'content',
           value: data,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'section,key' })
+        } as any, { onConflict: 'section,key' })
 
       if (error) throw error
       alert('Contenido guardado exitosamente')

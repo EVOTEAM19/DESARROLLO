@@ -135,6 +135,7 @@ export interface Database {
           slug: string
           description: string | null
           icon: string | null
+          image_url: string | null
           category: string | null
           order: number
           published: boolean
@@ -147,6 +148,7 @@ export interface Database {
           slug: string
           description?: string | null
           icon?: string | null
+          image_url?: string | null
           category?: string | null
           order?: number
           published?: boolean
@@ -159,6 +161,7 @@ export interface Database {
           slug?: string
           description?: string | null
           icon?: string | null
+          image_url?: string | null
           category?: string | null
           order?: number
           published?: boolean
@@ -179,6 +182,9 @@ export interface Database {
           tags: string[]
           published: boolean
           published_at: string | null
+          meta_title: string | null
+          meta_description: string | null
+          is_featured: boolean
           created_at: string
           updated_at: string
         }
@@ -194,6 +200,9 @@ export interface Database {
           tags?: string[]
           published?: boolean
           published_at?: string | null
+          meta_title?: string | null
+          meta_description?: string | null
+          is_featured?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -209,6 +218,9 @@ export interface Database {
           tags?: string[]
           published?: boolean
           published_at?: string | null
+          meta_title?: string | null
+          meta_description?: string | null
+          is_featured?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -267,8 +279,13 @@ export interface Database {
           id: string
           name: string
           email: string
+          phone: string | null
           company: string | null
+          project_type: string | null
+          budget_range: string | null
           message: string
+          start_timeframe: string | null
+          status: 'new' | 'read' | 'responded' | 'archived'
           created_at: string
           read: boolean
           responded: boolean
@@ -277,8 +294,13 @@ export interface Database {
           id?: string
           name: string
           email: string
+          phone?: string | null
           company?: string | null
+          project_type?: string | null
+          budget_range?: string | null
           message: string
+          start_timeframe?: string | null
+          status?: 'new' | 'read' | 'responded' | 'archived'
           created_at?: string
           read?: boolean
           responded?: boolean
@@ -287,11 +309,39 @@ export interface Database {
           id?: string
           name?: string
           email?: string
+          phone?: string | null
           company?: string | null
+          project_type?: string | null
+          budget_range?: string | null
           message?: string
+          start_timeframe?: string | null
+          status?: 'new' | 'read' | 'responded' | 'archived'
           created_at?: string
           read?: boolean
           responded?: boolean
+        }
+      }
+      site_content: {
+        Row: {
+          id: string
+          section: string
+          key: string
+          value: Json
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          section: string
+          key: string
+          value?: Json
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          section?: string
+          key?: string
+          value?: Json
+          updated_at?: string
         }
       }
     }

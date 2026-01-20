@@ -68,7 +68,7 @@ export default function SettingsPage() {
       if (error) throw error
 
       const settingsMap: Record<string, any> = {}
-      data?.forEach((setting) => {
+      data?.forEach((setting: any) => {
         settingsMap[setting.key] = setting.value
       })
 
@@ -202,7 +202,6 @@ export default function SettingsPage() {
         console.error('Error en upload:', uploadResult.error)
         console.error('Detalles:', {
           message: uploadResult.error.message,
-          statusCode: uploadResult.error.statusCode,
           error: uploadResult.error,
         })
         
@@ -237,14 +236,14 @@ export default function SettingsPage() {
       // Guardar URL en site_settings
       // La tabla tiene UNIQUE(section, key), así que necesitamos especificar ambos
       const { error: saveError } = await supabase
-        .from('site_settings')
+        .from('site_content')
         .upsert(
           {
             section: 'general',
             key: 'logo_url',
             value: publicUrl, // Guardar como string directamente, no JSON.stringify
             updated_at: new Date().toISOString(),
-          },
+          } as any,
           { onConflict: 'section,key' }
         )
 
@@ -324,7 +323,7 @@ export default function SettingsPage() {
               key: update.key,
               value: update.value,
               updated_at: new Date().toISOString(),
-            },
+            } as any,
             { onConflict: 'key' }
           )
 

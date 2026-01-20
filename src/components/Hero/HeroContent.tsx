@@ -89,7 +89,7 @@ export function HeroContent() {
       <div className="relative max-w-6xl mx-auto px-4 lg:px-6 text-center">
         {/* Título con animación letra por letra */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
-          {titleWords.map((word, i) => (
+          {titleWords.map((word: string, i: number) => (
             <motion.span
               key={i}
               initial={{ opacity: 0, y: 50 }}

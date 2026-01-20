@@ -151,7 +151,7 @@ export default function TheModalContentPage() {
     try {
       setIsLoading(true)
       const { data, error } = await supabase
-        .from('site_settings')
+        .from('site_content')
         .select('*')
         .eq('section', 'the-modal')
         .single()
@@ -160,8 +160,8 @@ export default function TheModalContentPage() {
         throw error
       }
 
-      if (data?.value) {
-        const content = typeof data.value === 'string' ? JSON.parse(data.value) : data.value
+      if ((data as any)?.value) {
+        const content = typeof (data as any).value === 'string' ? JSON.parse((data as any).value) : (data as any).value
         Object.keys(content).forEach((key) => {
           if (key === 'services' && Array.isArray(content[key])) {
             setValue('services', content[key])
@@ -181,14 +181,14 @@ export default function TheModalContentPage() {
     try {
       setIsSaving(true)
       const { error } = await supabase
-        .from('site_settings')
+        .from('site_content')
         .upsert(
           {
             section: 'the-modal',
             key: 'content',
             value: data,
             updated_at: new Date().toISOString(),
-          },
+          } as any,
           { onConflict: 'section,key' }
         )
 

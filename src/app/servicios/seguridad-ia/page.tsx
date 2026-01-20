@@ -57,10 +57,10 @@ export default function SeguridadIAPage() {
             duration: "2 semanas",
             description: "Evaluamos tu infraestructura y identificamos vulnerabilidades y riesgos.",
             deliverables: [
-              "Reporte de vulnerabilidades",
-              "Análisis de riesgos",
-              "Gaps de seguridad",
-              "Roadmap de mejora"
+              { text: "Reporte de vulnerabilidades" },
+              { text: "Análisis de riesgos" },
+              { text: "Gaps de seguridad" },
+              { text: "Roadmap de mejora" }
             ]
           },
           {
@@ -68,10 +68,10 @@ export default function SeguridadIAPage() {
             duration: "2-3 semanas",
             description: "Diseñamos una arquitectura de seguridad multicapa y resiliente.",
             deliverables: [
-              "Arquitectura definida",
-              "Políticas de seguridad",
-              "Plan de implementación",
-              "Cumplimiento normativo"
+              { text: "Arquitectura definida" },
+              { text: "Políticas de seguridad" },
+              { text: "Plan de implementación" },
+              { text: "Cumplimiento normativo" }
             ]
           },
           {
@@ -79,10 +79,10 @@ export default function SeguridadIAPage() {
             duration: "6-8 semanas",
             description: "Desplegamos sistemas de detección y respuesta con IA integrada.",
             deliverables: [
-              "Sistema de detección",
-              "Respuesta automática",
-              "Monitoreo 24/7",
-              "Dashboard de seguridad"
+              { text: "Sistema de detección" },
+              { text: "Respuesta automática" },
+              { text: "Monitoreo 24/7" },
+              { text: "Dashboard de seguridad" }
             ]
           },
           {
@@ -90,10 +90,10 @@ export default function SeguridadIAPage() {
             duration: "2 semanas",
             description: "Probamos la seguridad con ataques simulados y ajustamos defensas.",
             deliverables: [
-              "Penetration test",
-              "Vulnerabilidades corregidas",
-              "Plan de respuesta",
-              "Documentación"
+              { text: "Penetration test" },
+              { text: "Vulnerabilidades corregidas" },
+              { text: "Plan de respuesta" },
+              { text: "Documentación" }
             ]
           },
           {
@@ -101,10 +101,10 @@ export default function SeguridadIAPage() {
             duration: "Continuo",
             description: "Monitoreamos 24/7 y respondemos automáticamente a amenazas.",
             deliverables: [
-              "Monitoreo activo",
-              "Alertas inteligentes",
-              "Respuesta automática",
-              "Reportes mensuales"
+              { text: "Monitoreo activo" },
+              { text: "Alertas inteligentes" },
+              { text: "Respuesta automática" },
+              { text: "Reportes mensuales" }
             ]
           }
         ]}

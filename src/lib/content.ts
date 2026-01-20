@@ -7,7 +7,7 @@ export async function getSectionContent(section: string, key: string = 'content'
   try {
     const supabase = createPublicClient()
     const { data, error } = await supabase
-      .from('site_settings')
+      .from('site_content')
       .select('value')
       .eq('section', section)
       .eq('key', key)
@@ -18,18 +18,18 @@ export async function getSectionContent(section: string, key: string = 'content'
       return null
     }
 
-    if (!data?.value) return null
+    if (!(data as any)?.value) return null
 
     // Parsear JSON si es string
-    if (typeof data.value === 'string') {
+    if (typeof (data as any).value === 'string') {
       try {
-        return JSON.parse(data.value)
+        return JSON.parse((data as any).value)
       } catch {
-        return data.value
+        return (data as any).value
       }
     }
 
-    return data.value
+    return (data as any).value
   } catch (error) {
     console.error(`Error en getSectionContent(${section}):`, error)
     return null

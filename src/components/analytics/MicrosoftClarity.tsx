@@ -10,7 +10,7 @@ export function MicrosoftClarity() {
 
     // Cargar Microsoft Clarity
     if (typeof window !== 'undefined' && !(window as any).clarity) {
-      ;(function(c: any, l: any, a: any, r: any, i: any, t: any, y: any) {
+      ;(function(c: any, l: any, a: any, r: any, i: any, t?: any, y?: any) {
         c[a] = c[a] || function() { (c[a].q = c[a].q || []).push(arguments) }
         t = l.createElement(r)
         t.async = 1
