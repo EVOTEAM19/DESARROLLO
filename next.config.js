@@ -105,6 +105,11 @@ const nextConfig = {
   
   // Powerd by header
   poweredByHeader: false,
+  
+  // Desactivar caché de páginas en producción para ver cambios inmediatos
+  onDemandRevalidation: {
+    // Permitir revalidación manual
+  },
 }
 
 module.exports = nextConfig

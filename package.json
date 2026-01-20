@@ -12,7 +12,8 @@
     "backup-db": "node scripts/backup-database.js",
     "create-admin": "node scripts/create-admin-user.js",
     "update-password": "node scripts/update-user-password.js",
-    "submit-sitemap": "node scripts/submit-sitemap-enhanced.js"
+    "submit-sitemap": "node scripts/submit-sitemap-enhanced.js",
+    "force-deploy": "node scripts/force-redeploy.js"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.1",

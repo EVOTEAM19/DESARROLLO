@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getServices, getBlogPosts } from '@/lib/api'
 
-export const revalidate = 3600 // Revalidar cada hora
+export const revalidate = 0 // Revalidar en cada request (sin caché)
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -11,12 +11,13 @@ import { ClientLogos } from '@/components/ClientLogos'
 import { getSiteSettings } from '@/lib/api'
 import { HeroSkeleton } from '@/components/ui/Skeleton'
 
-// Revalidar cada hora (3600 segundos)
-export const revalidate = 3600
+// Forzar renderizado dinámico en cada request (sin caché)
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function Home() {
-  // Cargar datos del hero desde Supabase
-  const heroData = await getSiteSettings('hero_section')
+  // Cargar datos del hero desde Supabase (si no existe, no falla)
+  const heroData = await getSiteSettings('hero_section').catch(() => null)
 
   return (
     <div className="flex flex-col">
