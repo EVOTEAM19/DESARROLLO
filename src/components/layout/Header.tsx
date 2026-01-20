@@ -172,6 +172,10 @@ export function Header() {
               </AnimatePresence>
             </div>
             
+            <Link href="/freelance" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
+              Freelance
+            </Link>
+            
             <Link href="/sectores" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
               Sectores
             </Link>
@@ -231,7 +235,23 @@ export function Header() {
                     {service.label}
                   </Link>
                 ))}
+                {/* Ver todos los servicios */}
+                <Link
+                  href="/the-modal"
+                  className="block px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-orange-500 rounded-lg transition-all text-sm"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Ver todos los servicios →
+                </Link>
               </div>
+              
+              <Link
+                href="/freelance"
+                className="block px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-orange-500 rounded-lg transition-all"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Freelance
+              </Link>
               
               <Link
                 href="/sectores"
