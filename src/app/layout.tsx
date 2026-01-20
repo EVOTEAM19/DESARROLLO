@@ -1,4 +1,8 @@
 import type { Metadata } from 'next'
+
+// Forzar renderizado dinámico en todo el sitio
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { SiteChrome } from '@/components/layout/SiteChrome'
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
     default: 'FastIA - Desarrollo Freelance Apps & Software | CTO as a Service | Madrid',
     template: '%s | FastIA - Desarrollo Rápido y Económico',
   },
-  description: 'Desarrolladores freelance expertos en apps móviles, web y software a medida. MVP en 8 semanas. CTO as a Service para startups. +40 developers, 6 años experiencia. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
+  description: 'Desarrolladores freelance expertos en apps móviles, web y software a medida. MVP en 8 semanas. CTO as a Service para startups. +40 developers, 11 años experiencia. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
   keywords: [
     'desarrollador freelance madrid',
     'desarrollo app movil freelance',

@@ -36,7 +36,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next()
+  // Añadir headers de no-caché a todas las respuestas
+  const response = NextResponse.next()
+  response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0')
+  response.headers.set('Pragma', 'no-cache')
+  response.headers.set('Expires', '0')
+  return response
 }
 
 export const config = {
