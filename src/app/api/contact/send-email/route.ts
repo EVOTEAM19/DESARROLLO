@@ -168,8 +168,12 @@ export async function POST(request: NextRequest) {
 
     // Enviar correo usando Resend
     try {
+      // Usar dominio verificado de Resend o el dominio de prueba
+      // Si fastia.es no está verificado, usar onboarding@resend.dev temporalmente
+      const fromEmail = process.env.RESEND_FROM_EMAIL || 'FastIA <onboarding@resend.dev>'
+      
       const { data, error } = await resend.emails.send({
-        from: 'FastIA <noreply@fastia.es>',
+        from: fromEmail,
         to: CONTACT_EMAIL,
         replyTo: message.email,
         subject: `Nuevo mensaje de contacto de ${message.name}${message.company ? ` - ${message.company}` : ''}`,

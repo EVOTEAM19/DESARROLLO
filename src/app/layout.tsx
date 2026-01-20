@@ -10,6 +10,7 @@ import {
   localBusinessSchemaMadrid,
   localBusinessSchemaBarcelona,
   localBusinessSchemaSevilla,
+  professionalServiceSchema,
 } from '@/components/StructuredData'
 
 const inter = Inter({ 
@@ -41,12 +42,31 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.fastia.es'),
   title: {
-    default: 'FastIA | Desarrollo de Software con IA en Madrid',
-    template: '%s | FastIA',
+    default: 'FastIA - Desarrollo Freelance Apps & Software | CTO as a Service | Madrid',
+    template: '%s | FastIA - Desarrollo Rápido y Económico',
   },
-  description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
-  keywords: ['desarrollo software IA', 'apps móviles IA', 'automatización empresarial', 'CTO externo', 'desarrollo web Madrid', 'inteligencia artificial'],
-  authors: [{ name: 'FastIA' }],
+  description: 'Desarrolladores freelance expertos en apps móviles, web y software a medida. MVP en 8 semanas. CTO as a Service para startups. +40 developers, 6 años experiencia. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
+  keywords: [
+    'desarrollador freelance madrid',
+    'desarrollo app movil freelance',
+    'cto freelance',
+    'cto as a service',
+    'desarrollo software rapido',
+    'mvp 8 semanas',
+    'programador freelance españa',
+    'app personalizada precio',
+    'desarrollo web economico',
+    'freelance react native',
+    'flutter freelance madrid',
+    'full stack developer freelance',
+    'crear app rapido',
+    'desarrollo software agil',
+    'mejor programador freelance',
+    'desarrollo software IA',
+    'apps móviles IA',
+    'automatización empresarial',
+  ],
+  authors: [{ name: 'FastIA Team' }],
   creator: 'FastIA',
   publisher: 'FastIA',
   formatDetection: {
@@ -54,26 +74,30 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  alternates: {
+    canonical: '/',
+    languages: { 'es-ES': '/' },
+  },
   openGraph: {
     type: 'website',
     locale: 'es_ES',
     url: '/',
     siteName: 'FastIA',
-    title: 'FastIA | Desarrollo de Software con IA',
-    description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid. #1 en IA para desarrollo de software.',
+    title: 'FastIA - Desarrollo Freelance Apps & Software | CTO as a Service',
+    description: 'Desarrolladores freelance expertos. MVP en 8 semanas. +40 developers. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'FastIA - Transformamos ideas en soluciones inteligentes',
+        alt: 'FastIA - Desarrollo Freelance Profesional',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FastIA | Desarrollo de Software con IA',
-    description: '6 años transformando empresas con desarrollo de apps, plataformas web y automatizaciones impulsadas por IA. +40 desarrolladores en Madrid.',
+    title: 'FastIA - Desarrollo Freelance Apps & Software',
+    description: 'MVP en 8 semanas. +40 developers freelance. Precio competitivo. CTO as a Service.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -158,6 +182,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(localBusinessSchemaSevilla),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(professionalServiceSchema),
           }}
         />
         

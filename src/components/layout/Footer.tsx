@@ -41,7 +41,7 @@ export function Footer() {
   return (
     <footer className="bg-gray-900 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-12">
           {/* Company info */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-6">
@@ -111,6 +111,18 @@ export function Footer() {
             </div>
           </div>
           
+          {/* Servicios Freelance */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Servicios Freelance</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="/freelance" className="text-gray-400 hover:text-orange-500 transition-colors">Developers Freelance</Link></li>
+              <li><Link href="/cto-as-a-service" className="text-gray-400 hover:text-orange-500 transition-colors">CTO as a Service</Link></li>
+              <li><Link href="/servicios/desarrollo-apps-moviles" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo App Móvil</Link></li>
+              <li><Link href="/servicios/plataformas-web-ia" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo Web</Link></li>
+              <li><Link href="/freelance#precios" className="text-gray-400 hover:text-orange-500 transition-colors">MVP Rápido</Link></li>
+            </ul>
+          </div>
+
           {/* The Modal */}
           <div>
             <h3 className="text-white font-semibold mb-4">The Modal</h3>

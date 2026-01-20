@@ -216,6 +216,50 @@ export const localBusinessSchema = {
   ],
 }
 
+// ProfessionalService - SEO freelance / CTO
+export const professionalServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'FastIA - Desarrollo Freelance',
+  description:
+    'Desarrolladores freelance expertos en apps móviles, web y software. MVP en 8 semanas. CTO as a Service para startups.',
+  url: 'https://www.fastia.es',
+  telephone: '+34910123456',
+  email: 'hola@fastia.es',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Calle Columela, 9',
+    addressLocality: 'Madrid',
+    postalCode: '28001',
+    addressCountry: 'ES',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '40.4168',
+    longitude: '-3.7038',
+  },
+  priceRange: '€€',
+  areaServed: ['Madrid', 'Barcelona', 'Sevilla', 'España'],
+  serviceType: [
+    'Desarrollo de aplicaciones móviles',
+    'Desarrollo web',
+    'Desarrollo de software a medida',
+    'CTO as a Service',
+    'Consultoría tecnológica',
+    'Desarrollo freelance',
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '47',
+  },
+  sameAs: [
+    'https://linkedin.com/company/fastia',
+    'https://twitter.com/fastia',
+    'https://github.com/fastia',
+  ],
+}
+
 // Re-exportar funciones de schemas.ts para compatibilidad hacia atrás
 // Nota: Estas funciones deben importarse desde '@/lib/schemas' en Server Components
 export { generateServiceSchema, generateArticleSchema } from '@/lib/schemas'

@@ -55,48 +55,43 @@ function getPropertyIdFromMeasurementId(measurementId: string): string | null {
  * La verificación se hace en la API route del servidor
  */
 export async function getGA4Metrics(dateRange: '7d' | '30d' | '90d' = '7d') {
-
   try {
-    // Calcular fechas
-    const endDate = new Date()
-    const startDate = new Date()
-    
-    switch (dateRange) {
-      case '7d':
-        startDate.setDate(startDate.getDate() - 7)
-        break
-      case '30d':
-        startDate.setDate(startDate.getDate() - 30)
-        break
-      case '90d':
-        startDate.setDate(startDate.getDate() - 90)
-        break
-    }
-
-    const dateRangeStr = {
-      startDate: startDate.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
-    }
-
-    // Llamar a la API route interna
+    // Enviar el dateRange en el formato que espera la API (7d, 30d, 90d)
+    // La API route lo convertirá a '7daysAgo', 'today', etc.
     const response = await fetch('/api/analytics/ga4', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        dateRange: dateRangeStr,
+        dateRange: dateRange, // Enviar directamente '7d', '30d', o '90d'
       }),
     })
 
     if (!response.ok) {
-      throw new Error('Error obteniendo métricas de GA4')
+      const errorData = await response.json().catch(() => ({}))
+      console.error('[GA4 API Client] Error response:', errorData)
+      throw new Error(errorData.error || errorData.message || 'Error obteniendo métricas de GA4')
     }
 
-    return await response.json()
-  } catch (error) {
-    console.error('Error obteniendo métricas GA4:', error)
-    return null
+    const data = await response.json()
+    console.log('[GA4 API Client] Respuesta recibida:', {
+      pageViews: data.pageViews,
+      uniqueVisitors: data.uniqueVisitors,
+      hasError: !!data.error,
+      hasMessage: !!data.message,
+    })
+    
+    return data
+  } catch (error: any) {
+    console.error('[GA4 API Client] Error obteniendo métricas GA4:', error.message || error)
+    return {
+      pageViews: 0,
+      uniqueVisitors: 0,
+      bounceRate: 0,
+      avgSessionDuration: 0,
+      error: error.message || 'Error desconocido',
+    }
   }
 }
 
