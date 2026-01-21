@@ -5,7 +5,7 @@ import { ArrowRight, Check, Building2 } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'CTO as a Service para Startups | CTO Freelance',
   description:
-    'CTO externo para tu startup. Estrategia tech, gestión equipos, arquitectura escalable. Desde 2.500€/mes. Sin compromisos largos. 6 años experiencia, +50 startups asesoradas.',
+    'CTO externo para tu startup. Estrategia tech, gestión equipos, arquitectura escalable. Desde 2.500€/mes. Sin compromisos largos. 11 años experiencia, +50 startups asesoradas.',
   keywords:
     'cto freelance, cto as a service, cto externo startup, cto temporal, asesor tecnologico startup',
   openGraph: {

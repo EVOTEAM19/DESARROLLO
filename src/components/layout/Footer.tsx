@@ -117,8 +117,8 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li><Link href="/freelance" className="text-gray-400 hover:text-orange-500 transition-colors">Developers Freelance</Link></li>
               <li><Link href="/cto-as-a-service" className="text-gray-400 hover:text-orange-500 transition-colors">CTO as a Service</Link></li>
-              <li><Link href="/servicios/desarrollo-apps-moviles" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo App Móvil</Link></li>
-              <li><Link href="/servicios/plataformas-web-ia" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo Web</Link></li>
+              <li><Link href="/freelance#developers" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo App Móvil</Link></li>
+              <li><Link href="/freelance#developers" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo Web</Link></li>
               <li><Link href="/freelance#precios" className="text-gray-400 hover:text-orange-500 transition-colors">MVP Rápido</Link></li>
             </ul>
           </div>
