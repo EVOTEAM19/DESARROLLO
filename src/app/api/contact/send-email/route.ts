@@ -9,6 +9,25 @@ import { Resend } from 'resend'
 // Email de destino para todos los correos
 const CONTACT_EMAIL = 'hola@fastia.es'
 
+function getResendStatus() {
+  const rawKey = process.env.RESEND_API_KEY?.trim() || ''
+  const hasKey = rawKey.length >= 20
+  const from = (process.env.RESEND_FROM_EMAIL || 'FastIA <noreply@fastia.es>').trim()
+  const match = from.match(/@([a-zA-Z0-9.-]+)/)
+  const fromDomain = match ? match[1] : ''
+  let hint = ''
+  if (!hasKey) {
+    hint = 'Añade RESEND_API_KEY en .env.local o en las variables de entorno del hosting. https://resend.com/api-keys'
+  } else if (from.includes('onboarding@resend.dev')) {
+    hint = 'RESEND_FROM_EMAIL usa onboarding@resend.dev: Resend SOLO envía al email de tu cuenta Resend, NO a hola@fastia.es. Verifica fastia.es en https://resend.com/domains y usa RESEND_FROM_EMAIL=FastIA <noreply@fastia.es>'
+  } else if (fromDomain && !fromDomain.includes('resend.dev')) {
+    hint = 'Si ' + fromDomain + ' está verificado en Resend, los correos deberían llegar. Si no: Resend → Domains → SPF/DKIM.'
+  } else {
+    hint = 'Usa RESEND_FROM_EMAIL=FastIA <noreply@fastia.es> y verifica fastia.es en https://resend.com/domains'
+  }
+  return { configured: hasKey, from, fromDomain: fromDomain || '(no detectado)', to: CONTACT_EMAIL, hint }
+}
+
 /**
  * Obtiene una instancia de Resend (lazy initialization)
  * Solo se crea cuando se necesita y si hay API key configurada
@@ -126,6 +145,11 @@ function escapeHtml(text: string): string {
     "'": '&#039;',
   }
   return text.replace(/[&<>"']/g, (m) => map[m])
+}
+
+/** GET /api/contact/send-email → mismo diagnóstico que /api/contact/resend-status (por si resend-status da 404 en producción) */
+export async function GET() {
+  return NextResponse.json(getResendStatus())
 }
 
 export async function POST(request: NextRequest) {
