@@ -5,15 +5,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createGAClient, getGAPropertyId, isGA4Configured } from '@/lib/google-analytics'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     if (!isGA4Configured()) {
       return NextResponse.json(
         {
           error: 'GA4 no configurado',
           message: 'Configura GA4_PROPERTY_ID y GA4_SERVICE_ACCOUNT_KEY en las variables de entorno.',
+          activeUsers: 0,
+          pageViews: 0,
+          conversions: 0,
+          recentEvents: [],
         },
-        { status: 400 }
+        { status: 200 } // Status 200 para que el frontend pueda mostrar el mensaje
       )
     }
 
@@ -22,8 +26,14 @@ export async function GET(request: NextRequest) {
     
     if (!client || !propertyId) {
       return NextResponse.json(
-        { error: 'Error creando cliente GA4' },
-        { status: 500 }
+        {
+          error: 'Error creando cliente GA4',
+          activeUsers: 0,
+          pageViews: 0,
+          conversions: 0,
+          recentEvents: [],
+        },
+        { status: 200 }
       )
     }
 
@@ -94,6 +104,14 @@ export async function GET(request: NextRequest) {
     })
   } catch (error: any) {
     console.error('[Realtime API] Error:', error)
+    
+    // Si es error de permisos o configuración, devolver status 200 para que el frontend lo muestre
+    const isConfigError = error?.message?.includes('permission') || 
+                          error?.message?.includes('Permission') || 
+                          error?.code === 7 ||
+                          error?.message?.includes('not found') ||
+                          error?.code === 5
+    
     return NextResponse.json(
       {
         error: error.message || 'Error obteniendo métricas en tiempo real',
@@ -102,7 +120,7 @@ export async function GET(request: NextRequest) {
         conversions: 0,
         recentEvents: [],
       },
-      { status: 500 }
+      { status: isConfigError ? 200 : 500 }
     )
   }
 }

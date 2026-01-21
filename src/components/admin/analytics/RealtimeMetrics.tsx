@@ -21,16 +21,47 @@ export function RealtimeMetrics() {
     try {
       setIsLoading(true)
       setError(null)
-      const res = await fetch('/api/analytics/realtime')
-      const json = await res.json()
       
+      const url = typeof window !== 'undefined' 
+        ? `${window.location.origin}/api/analytics/realtime`
+        : '/api/analytics/realtime'
+      
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      
+      const json = await res.json().catch(() => ({
+        error: `Error ${res.status}: No se pudo parsear la respuesta`,
+        activeUsers: 0,
+        pageViews: 0,
+        conversions: 0,
+        recentEvents: [],
+      }))
+      
+      // Si hay error en la respuesta (incluso con status 200)
+      if (json.error) {
+        setError(json.error || json.message || 'Error obteniendo métricas en tiempo real')
+        setData({
+          activeUsers: 0,
+          pageViews: 0,
+          conversions: 0,
+          recentEvents: [],
+        })
+        return
+      }
+      
+      // Si el status no es OK, mostrar error
       if (!res.ok) {
-        throw new Error(json.error || 'Error cargando métricas en tiempo real')
+        throw new Error(json.error || json.message || `Error ${res.status}: ${res.statusText}`)
       }
       
       setData(json)
+      setError(null)
     } catch (err: any) {
-      setError(err.message)
+      const errorMsg = err.message || 'Error de conexión. Verifica que el servidor esté corriendo.'
+      setError(errorMsg)
+      console.error('[RealtimeMetrics] Error:', err)
       setData({
         activeUsers: 0,
         pageViews: 0,
