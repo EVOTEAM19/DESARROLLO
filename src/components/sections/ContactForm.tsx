@@ -175,17 +175,30 @@ export function ContactForm() {
         throw error
       }
 
-      // Enviar notificación por correo (opcional, no bloquea el éxito del formulario)
+      // Enviar notificación por correo a hola@fastia.es vía Resend (no bloquea el éxito del formulario)
       try {
-        await fetch('/api/contact/send-email', {
+        const emailPayload = {
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone ?? undefined,
+          company: sanitizedData.company ?? undefined,
+          project_type: sanitizedData.project_type ?? undefined,
+          budget_range: sanitizedData.budget_range ?? undefined,
+          message: sanitizedData.message,
+          start_timeframe: sanitizedData.start_timeframe ?? undefined,
+        }
+        const res = await fetch('/api/contact/send-email', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(sanitizedData),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(emailPayload),
         })
+        const json = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          console.warn('send-email API error:', res.status, json?.error || json)
+        } else if (json.warning) {
+          console.warn('Email no enviado (mensaje sí guardado). Resend:', json.warning)
+        }
       } catch (emailError) {
-        // No lanzamos error si falla el envío de email, el mensaje ya está guardado
         console.warn('No se pudo enviar notificación por correo:', emailError)
       }
 

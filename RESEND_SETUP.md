@@ -30,7 +30,7 @@ Para enviar correos desde `@fastia.es`, debes verificar el dominio:
 5. Añade estos registros en tu proveedor de DNS (ej: Cloudflare, Namecheap, etc.)
 6. Espera a que Resend verifique el dominio (puede tomar unos minutos)
 
-**Nota:** Si no puedes verificar el dominio ahora, puedes usar el dominio de prueba de Resend temporalmente: `onboarding@resend.dev` (pero esto no es recomendable para producción)
+**⚠️ Importante:** `onboarding@resend.dev` **solo puede enviar al email de tu cuenta Resend**, no a `hola@fastia.es`. Para que los correos lleguen a `hola@fastia.es` **debes verificar fastia.es** y usar `noreply@fastia.es` (o otro @fastia.es) como remitente.
 
 ### 3. Obtener API Key
 
@@ -55,16 +55,16 @@ RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 3. Añade `RESEND_API_KEY` con el valor de tu API Key
 4. Asegúrate de que esté disponible en todos los entornos (Production, Preview, Development)
 
-### 5. Configurar "From" Address
+### 5. Configurar "From" Address (RESEND_FROM_EMAIL)
 
-El código está configurado para enviar desde `noreply@fastia.es`. Asegúrate de:
+En `.env.local` (y en producción) define:
 
-1. Que el dominio `fastia.es` esté verificado en Resend (paso 2)
-2. O cambiar temporalmente a `onboarding@resend.dev` para pruebas
+```env
+RESEND_FROM_EMAIL=FastIA <noreply@fastia.es>
+```
 
-Para cambiar el remitente, edita:
-- `src/app/api/contact/send-email/route.ts`
-- Busca: `from: 'FastIA <noreply@fastia.es>'`
+**Requisito:** El dominio `fastia.es` debe estar verificado en Resend (paso 2).  
+**No uses** `onboarding@resend.dev`: Resend devolverá 403 y los correos no llegarán a `hola@fastia.es`.
 
 ### 6. Probar el Envío
 
@@ -103,9 +103,11 @@ El formato es HTML responsivo y profesional.
 
 **Solución:** Añade `RESEND_API_KEY` a tu `.env.local` o variables de entorno.
 
-### Error: "Domain not verified"
+### Error 403 / "Domain not verified" / correos que no llegan a hola@fastia.es
 
-**Solución:** Verifica tu dominio en Resend (paso 2) o usa temporalmente `onboarding@resend.dev`.
+**Causa:** Con `onboarding@resend.dev`, Resend solo envía al email de tu cuenta Resend, no a otros destinatarios.
+
+**Solución:** 1) Verifica el dominio `fastia.es` en Resend (Domains > Add domain > añade los registros SPF/DKIM en tu DNS). 2) Usa `RESEND_FROM_EMAIL=FastIA <noreply@fastia.es>`.
 
 ### Error: "Invalid API key"
 
