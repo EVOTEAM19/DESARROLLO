@@ -14,8 +14,8 @@ const CONTACT_EMAIL = 'hola@fastia.es'
  * Solo se crea cuando se necesita y si hay API key configurada
  */
 function getResendClient(): Resend | null {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
+  const apiKey = process.env.RESEND_API_KEY?.trim()
+  if (!apiKey || apiKey.length < 20) {
     return null
   }
   return new Resend(apiKey)
@@ -162,7 +162,9 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
+        emailSent: false,
         message: 'Mensaje registrado correctamente (email no enviado - RESEND_API_KEY no configurada)',
+        warning: 'Añade RESEND_API_KEY en .env.local o en las variables de entorno de tu hosting.',
       })
     }
 
@@ -170,15 +172,19 @@ export async function POST(request: NextRequest) {
     // IMPORTANTE: Para que llegue a hola@fastia.es debes tener el dominio fastia.es
     // verificado en Resend y usar RESEND_FROM_EMAIL con @fastia.es (ej: FastIA <noreply@fastia.es>).
     // onboarding@resend.dev solo envía al email de tu cuenta Resend, no a hola@fastia.es (403).
-    try {
-      const fromEmail = (process.env.RESEND_FROM_EMAIL || 'FastIA <noreply@fastia.es>').trim()
-      if (fromEmail.includes('onboarding@resend.dev')) {
-        console.warn('⚠️ RESEND_FROM_EMAIL=...@resend.dev: Resend solo envía al email de tu cuenta, NO a hola@fastia.es. Verifica fastia.es en Resend y usa noreply@fastia.es')
-      }
+    const fromEmail = (process.env.RESEND_FROM_EMAIL || 'FastIA <noreply@fastia.es>').trim()
+    if (fromEmail.includes('onboarding@resend.dev')) {
+      console.warn('⚠️ RESEND_FROM_EMAIL=...@resend.dev: Resend solo envía al email de tu cuenta, NO a hola@fastia.es. Verifica fastia.es en Resend y usa noreply@fastia.es')
+    }
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📤 Resend: intentando envío → to:', CONTACT_EMAIL, '| from:', fromEmail)
+    }
 
+    try {
+      // to puede ser string o string[]; usamos string según la doc
       const { data, error } = await resend.emails.send({
         from: fromEmail,
-        to: [CONTACT_EMAIL],
+        to: CONTACT_EMAIL,
         replyTo: message.email,
         subject: `Nuevo mensaje de contacto de ${message.name}${message.company ? ` - ${message.company}` : ''}`,
         html: generateEmailHTML(message),
@@ -189,10 +195,13 @@ export async function POST(request: NextRequest) {
         throw typeof error === 'object' ? new Error((error as any)?.message || JSON.stringify(error)) : error
       }
 
-      console.log('✅ Correo enviado a', CONTACT_EMAIL, '| ID:', data?.id)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ Resend: correo enviado a', CONTACT_EMAIL, '| id:', data?.id)
+      }
 
       return NextResponse.json({
         success: true,
+        emailSent: true,
         message: 'Correo enviado correctamente a hola@fastia.es',
         emailId: data?.id,
       })
@@ -200,11 +209,12 @@ export async function POST(request: NextRequest) {
       const errMsg = emailError?.message || String(emailError)
       console.error('Error enviando correo con Resend:', errMsg)
       // Ayuda específica para 403 / dominio no verificado
-      if (/403|domain|resend\.dev|recipient|verif/i.test(errMsg)) {
-        console.error('💡 Solución: 1) Ve a https://resend.com/domains 2) Añade y verifica fastia.es (SPF/DKIM) 3) Usa RESEND_FROM_EMAIL=FastIA <noreply@fastia.es>')
+      if (/403|domain|resend\.dev|recipient|verif|unauthorized/i.test(errMsg)) {
+        console.error('💡 Resend: 1) https://resend.com/domains → añade y verifica fastia.es (SPF/DKIM) 2) RESEND_FROM_EMAIL=FastIA <noreply@fastia.es> 3) onboarding@resend.dev NO envía a hola@fastia.es')
       }
       return NextResponse.json({
         success: true,
+        emailSent: false,
         message: 'Mensaje registrado correctamente (error al enviar email)',
         warning: errMsg,
       })

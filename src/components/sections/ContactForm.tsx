@@ -90,6 +90,7 @@ const defaultStartTimeframes = [
 export function ContactForm() {
   const [formState, setFormState] = useState<FormState>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [emailNotificationFailed, setEmailNotificationFailed] = useState(false)
   const [content, setContent] = useState<any>(null)
   const [isLoadingContent, setIsLoadingContent] = useState(true)
 
@@ -148,6 +149,7 @@ export function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     setFormState('loading')
     setErrorMessage('')
+    setEmailNotificationFailed(false)
 
     try {
       // Sanitizar los datos
@@ -187,7 +189,8 @@ export function ContactForm() {
           message: sanitizedData.message,
           start_timeframe: sanitizedData.start_timeframe ?? undefined,
         }
-        const res = await fetch('/api/contact/send-email', {
+        const url = typeof window !== 'undefined' ? `${window.location.origin}/api/contact/send-email` : '/api/contact/send-email'
+        const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(emailPayload),
@@ -195,11 +198,14 @@ export function ContactForm() {
         const json = await res.json().catch(() => ({}))
         if (!res.ok) {
           console.warn('send-email API error:', res.status, json?.error || json)
-        } else if (json.warning) {
-          console.warn('Email no enviado (mensaje sí guardado). Resend:', json.warning)
+          setEmailNotificationFailed(true)
+        } else if (json.warning || json.emailSent === false) {
+          console.warn('Email no enviado (mensaje sí guardado). Resend:', json.warning || 'emailSent=false')
+          setEmailNotificationFailed(true)
         }
       } catch (emailError) {
         console.warn('No se pudo enviar notificación por correo:', emailError)
+        setEmailNotificationFailed(true)
       }
 
       // Éxito
@@ -371,12 +377,17 @@ export function ContactForm() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 p-4 bg-success/10 border border-success/20 rounded-lg flex items-center gap-3"
+                    className="mb-6 p-4 bg-success/10 border border-success/20 rounded-lg flex flex-col gap-1"
                   >
-                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
-                    <p className="text-success font-medium">
-                      {successMessage}
-                    </p>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+                      <p className="text-success font-medium">{successMessage}</p>
+                    </div>
+                    {emailNotificationFailed && (
+                      <p className="text-amber-600 dark:text-amber-400 text-sm mt-1 pl-8">
+                        La notificación por email no pudo enviarse; de todos modos te contactaremos.
+                      </p>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

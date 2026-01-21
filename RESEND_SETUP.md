@@ -68,12 +68,18 @@ RESEND_FROM_EMAIL=FastIA <noreply@fastia.es>
 
 ### 6. Probar el Envío
 
-1. Inicia tu servidor de desarrollo: `npm run dev`
-2. Envía un mensaje de prueba desde el formulario de contacto
-3. Revisa:
-   - Los logs en la consola del servidor
+1. **Comprobar configuración:** Abre `https://tudominio.com/api/contact/resend-status` (o `http://localhost:3000/api/contact/resend-status` en local). Debe devolver `configured: true` y un `hint` con los siguientes pasos si algo falla.
+
+2. Inicia tu servidor de desarrollo: `npm run dev`
+
+3. Envía un mensaje de prueba desde el formulario de contacto.
+
+4. Revisa:
+   - Los logs en la consola del servidor (busca `📤 Resend:` y `✅ Resend:` o errores)
    - El dashboard de Resend > Emails (deberías ver el correo enviado)
    - El correo en `hola@fastia.es`
+
+5. Si el formulario muestra «La notificación por email no pudo enviarse», revisa `resend-status` y el hint, y comprueba dominio + `RESEND_FROM_EMAIL`.
 
 ## 📧 Configuración del Correo
 
