@@ -1,18 +1,28 @@
 import { createPublicClient } from './supabase'
 
 /**
- * Obtiene el contenido de una sección desde site_settings
+ * Obtiene el contenido de una sección desde site_settings.
+ * Los scripts init (init_content_management, init_contacto_content) usan site_settings.
  */
 export async function getSectionContent(section: string, key: string = 'content') {
   try {
     const supabase = createPublicClient()
     const { data, error } = await supabase
-      .from('site_content')
+      .from('site_settings')
       .select('value')
       .eq('section', section)
       .eq('key', key)
       .single()
 
+    // PGRST116 = ninguna fila con .single() (contenido no configurado aún)
+    if (error?.code === 'PGRST116') return null
+    // 42P01 = la tabla no existe → indicar que se ejecuten las migraciones
+    if (error?.code === '42P01' || error?.message?.includes('does not exist')) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`[content] Tabla site_settings no encontrada. Ejecuta las migraciones/init (init_content_management.sql o schema) en tu proyecto Supabase.`)
+      }
+      return null
+    }
     if (error) {
       console.error(`Error obteniendo contenido de ${section}:`, error)
       return null

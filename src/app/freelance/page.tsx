@@ -20,7 +20,8 @@ const usps = [
   'MVP funcional en 8 semanas (no 6 meses)',
   'Precio fijo acordado (sin sorpresas)',
   'Facturación legal empresa española',
-  'Código limpio + documentación completa',
+  'Desarrollos 100% escalables (crece con tu negocio)',
+  'Código 100% propio, limpio + documentación completa',
   'Soporte post-lanzamiento incluido',
 ]
 
@@ -60,6 +61,18 @@ const comparison = [
     fastia: '12 meses',
     freelancer: 'Limitado',
     agencia: '6 meses',
+  },
+  {
+    criterio: 'Escalabilidad',
+    fastia: '100% escalable / Ilimitada',
+    freelancer: 'Variable',
+    agencia: 'Alta',
+  },
+  {
+    criterio: 'Código',
+    fastia: '100% propio (a medida)',
+    freelancer: 'Variable',
+    agencia: 'Propietario a veces',
   },
 ]
 
@@ -146,7 +159,7 @@ const processSteps = [
   {
     step: 4,
     title: 'Entrega final',
-    items: ['Código + documentación', 'Capacitación equipo', '12 meses soporte incluido'],
+    items: ['Código 100% propio + documentación', 'Arquitectura escalable lista para crecer', 'Capacitación equipo', '12 meses soporte incluido'],
   },
 ]
 
@@ -195,7 +208,7 @@ const faqs = [
   },
   {
     q: '¿El código es mío?',
-    a: '100% tuyo. Entregamos repo Git completo + documentación.',
+    a: '100% tuyo y 100% propio: lo escribimos a medida para tu proyecto, sin plantillas ni low-code. Entregamos repo Git completo + documentación. Arquitectura escalable desde el día uno.',
   },
   {
     q: '¿Qué tecnologías usáis?',
@@ -214,7 +227,7 @@ export default function FreelancePage() {
             Desarrolladores Freelance que Entregan
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-3xl">
-            Apps, Web y Software a Medida | MVP en 8 Semanas | +40 Developers Expertos
+            Apps, Web y Software a Medida | Código 100% propio y escalabilidad ilimitada | MVP en 8 Semanas
           </p>
 
           <ul className="space-y-4 mb-12 max-w-2xl">
@@ -288,7 +301,7 @@ export default function FreelancePage() {
             Nuestros developers freelance
           </h2>
           <p className="text-gray-400 mb-12 max-w-2xl">
-            +5 años experiencia, portfolio verificado, español nativo + inglés fluido, metodología Agile/Scrum.
+            +5 años experiencia, portfolio verificado, español nativo + inglés fluido, metodología Agile/Scrum. Código propio a medida y arquitecturas 100% escalables.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">

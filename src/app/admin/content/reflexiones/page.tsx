@@ -58,7 +58,7 @@ export default function ReflexionesContentPage() {
     try {
       setIsLoading(true)
       const { data } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .select('*')
         .eq('section', 'reflexiones')
         .eq('key', 'content')
@@ -81,7 +81,7 @@ export default function ReflexionesContentPage() {
     try {
       setIsSaving(true)
       const { error } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .upsert({
           section: 'reflexiones',
           key: 'content',

@@ -123,9 +123,12 @@ export async function createServerClient(): Promise<SupabaseClient<Database>> {
   return createServerComponentClient<Database>({ cookies: () => cookieStore })
 }
 
+let publicClientInstance: SupabaseClient<Database> | null = null
+
 /**
  * Cliente de Supabase básico (sin autenticación de cookies)
- * Útil para operaciones públicas o cuando no necesitas sesión
+ * Útil para operaciones públicas o cuando no necesitas sesión.
+ * Singleton para evitar múltiples instancias (y avisos "Multiple GoTrueClient").
  */
 export function createPublicClient(): SupabaseClient<Database> {
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -133,7 +136,9 @@ export function createPublicClient(): SupabaseClient<Database> {
       'Missing Supabase environment variables. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file.'
     )
   }
-  return createClient<Database>(supabaseUrl, supabaseAnonKey)
+  if (publicClientInstance) return publicClientInstance
+  publicClientInstance = createClient<Database>(supabaseUrl, supabaseAnonKey)
+  return publicClientInstance
 }
 
 // Exportar cliente público por defecto para compatibilidad

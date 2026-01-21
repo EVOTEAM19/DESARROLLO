@@ -9,9 +9,11 @@ export async function getLogoUrl(): Promise<string | null> {
     const { data, error } = await supabase
       .from('site_settings')
       .select('value')
+      .eq('section', 'general')
       .eq('key', 'logo_url')
       .single()
 
+    if (error?.code === 'PGRST116') return null
     if (error) {
       console.error('Error obteniendo logo:', error)
       return null

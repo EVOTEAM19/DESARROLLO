@@ -151,7 +151,7 @@ export default function TheModalContentPage() {
     try {
       setIsLoading(true)
       const { data, error } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .select('*')
         .eq('section', 'the-modal')
         .single()
@@ -181,7 +181,7 @@ export default function TheModalContentPage() {
     try {
       setIsSaving(true)
       const { error } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .upsert(
           {
             section: 'the-modal',

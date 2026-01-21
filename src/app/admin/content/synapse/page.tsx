@@ -115,7 +115,7 @@ export default function SynapseContentPage() {
     try {
       setIsLoading(true)
       const { data } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .select('*')
         .eq('section', 'synapse')
         .eq('key', 'content')
@@ -138,7 +138,7 @@ export default function SynapseContentPage() {
     try {
       setIsSaving(true)
       const { error } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .upsert({
           section: 'synapse',
           key: 'content',

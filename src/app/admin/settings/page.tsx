@@ -236,7 +236,7 @@ export default function SettingsPage() {
       // Guardar URL en site_settings
       // La tabla tiene UNIQUE(section, key), así que necesitamos especificar ambos
       const { error: saveError } = await supabase
-        .from('site_content')
+        .from('site_settings')
         .upsert(
           {
             section: 'general',
@@ -277,10 +277,11 @@ export default function SettingsPage() {
         }
       }
 
-      // Eliminar de site_settings
+      // Eliminar de site_settings (section 'general' para coincidir con el upsert del logo)
       const { error } = await supabase
         .from('site_settings')
         .delete()
+        .eq('section', 'general')
         .eq('key', 'logo_url')
 
       if (error) throw error
