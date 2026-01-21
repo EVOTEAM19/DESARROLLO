@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -88,6 +89,7 @@ const defaultStartTimeframes = [
 ]
 
 export function ContactForm() {
+  const router = useRouter()
   const [formState, setFormState] = useState<FormState>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [emailNotificationFailed, setEmailNotificationFailed] = useState(false)
@@ -208,35 +210,25 @@ export function ContactForm() {
         setEmailNotificationFailed(true)
       }
 
-      // Éxito
-      setFormState('success')
-      reset()
-
       // Tracking de analytics en todos los sistemas
       trackFormSubmit('contact_form', {
         project_type: sanitizedData.project_type,
         budget_range: sanitizedData.budget_range,
       })
       trackConversion('contact_form_submit', 1)
-      
-      // Meta Pixel - Lead event
       trackMetaPixelEvent('Lead', {
         content_name: 'Contact Form',
         content_category: 'Form Submission',
         value: 1,
         currency: 'EUR',
       })
-      
-      // LinkedIn - Lead conversion
       trackLinkedInEvent('Lead', {
         conversion_type: 'contact_form',
         value: 1,
       })
 
-      // Resetear a idle después de 5 segundos
-      setTimeout(() => {
-        setFormState('idle')
-      }, 5000)
+      // Redirigir a la página de agradecimiento
+      router.push('/contacto/gracias')
     } catch (error: any) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error al enviar mensaje:', error)
