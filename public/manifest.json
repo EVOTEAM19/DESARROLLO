@@ -14,14 +14,14 @@
       "type": "image/svg+xml"
     },
     {
-      "src": "/favicon-32x32.png",
+      "src": "/favicon.svg",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/svg+xml"
     },
     {
-      "src": "/favicon-32x32.png",
+      "src": "/favicon.svg",
       "sizes": "180x180",
-      "type": "image/png"
+      "type": "image/svg+xml"
     }
   ]
 }
