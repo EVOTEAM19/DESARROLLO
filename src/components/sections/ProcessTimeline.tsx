@@ -16,50 +16,50 @@ const phases = [
   {
     icon: Search,
     phase: '01',
-    title: 'Discovery',
+    title: 'Discovery + Auditoría IA',
     duration: '1-2 semanas',
-    description: 'Entendemos tu negocio, usuarios y objetivos. Research, benchmarking y definición de scope.',
-    deliverables: ['Product Brief', 'User Research', 'Tech Stack', 'Roadmap'],
+    description: 'Entendemos tu negocio, usuarios y objetivos. Identificamos oportunidades de automatización con IA y analizamos dónde la tecnología puede generar el mayor impacto en tu ROI.',
+    deliverables: ['Product Brief', 'User Research', 'Tech Stack + IA Stack', 'Roadmap con Quick Wins IA'],
   },
   {
     icon: Palette,
     phase: '02',
-    title: 'Design',
+    title: 'Design + Arquitectura IA',
     duration: '2-3 semanas',
-    description: 'Diseño UX/UI centrado en conversión. Wireframes, prototipos interactivos y design system.',
-    deliverables: ['Wireframes', 'Prototipos', 'Design System', 'UI Kit'],
+    description: 'Diseño UX/UI centrado en conversión. Además, diseñamos la arquitectura de IA: qué modelos usar, cómo entrenarlos, y cómo integrarlos en tu producto para máxima eficiencia.',
+    deliverables: ['Wireframes', 'Prototipos', 'Design System', 'IA Architecture', 'Data Flow Diagram'],
   },
   {
     icon: Code,
     phase: '03',
-    title: 'Development',
+    title: 'Development + Integración IA',
     duration: '4-8 semanas',
-    description: 'Desarrollo ágil con sprints de 2 semanas. Entregas continuas para ver el progreso.',
-    deliverables: ['MVP funcional', 'Integraciones', 'Backend', 'Frontend'],
+    description: 'Desarrollo ágil con sprints de 2 semanas. Construimos tu app/web/software e integramos IA desde el código base. Entregas continuas para ver el progreso.',
+    deliverables: ['MVP funcional', 'Integraciones', 'Backend + Frontend', 'Modelos IA Entrenados'],
   },
   {
     icon: TestTube,
     phase: '04',
-    title: 'Testing',
+    title: 'Testing + Optimización IA',
     duration: '1-2 semanas',
-    description: 'QA exhaustivo: funcional, performance, seguridad, UX. Fix de bugs y optimizaciones.',
-    deliverables: ['Test Plan', 'Bug Reports', 'Performance Audit', 'Security Scan'],
+    description: 'QA exhaustivo: funcional, performance, seguridad, UX. Además, optimizamos los modelos de IA para precisión, velocidad y coste. Fine-tuning con datos reales.',
+    deliverables: ['Test Plan', 'Bug Reports', 'Performance Audit', 'IA Model Optimization', 'Security Scan'],
   },
   {
     icon: Rocket,
     phase: '05',
-    title: 'Launch',
+    title: 'Launch + Monitorización IA',
     duration: '1 semana',
-    description: 'Despliegue en producción, monitorización, y soporte intensivo post-launch.',
-    deliverables: ['Deploy', 'Monitorización', 'Documentation', 'Training'],
+    description: 'Despliegue en producción, monitorización 24/7, y soporte intensivo post-launch. Dashboard en tiempo real de métricas de negocio Y rendimiento de IA.',
+    deliverables: ['Deploy', 'Monitoring Dashboard (IA + Negocio)', 'Documentation', 'Training'],
   },
   {
     icon: TrendingUp,
     phase: '06',
-    title: 'Evolution',
+    title: 'Evolution + Mejora Continua IA',
     duration: 'Ongoing',
-    description: 'Iteraciones basadas en datos reales. Nuevas features, optimizaciones y escalado.',
-    deliverables: ['Analytics', 'A/B Testing', 'Optimizations', 'New Features'],
+    description: 'Iteraciones basadas en datos reales. La IA aprende y mejora automáticamente. Nuevas features, optimizaciones y escalado basado en comportamiento de usuarios.',
+    deliverables: ['Analytics', 'A/B Testing', 'IA Improvements', 'New Features', 'Scaling Strategy'],
   },
 ]
 
@@ -172,7 +172,7 @@ export function ProcessTimeline() {
             Nuestro <span className="text-gradient">proceso</span>
           </h2>
           <p className="text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto">
-            Metodología probada en +100 proyectos. Ágil, transparente y orientada a resultados.
+            Metodología probada en +100 proyectos con IA integrada. Ágil, transparente y orientada a resultados medibles.
           </p>
         </motion.div>
 

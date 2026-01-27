@@ -64,8 +64,9 @@ export function Footer() {
             </Link>
             
             <p className="text-gray-400 mb-6 leading-relaxed">
-              6 años transformando ideas en productos digitales que triunfan. 
-              Desarrollo de software con IA integrada desde el primer día.
+              Desarrollamos apps móviles, plataformas web y software con Inteligencia Artificial integrada. 
+              Especialistas en automatización, reducción de costes y escalado de negocios. 
+              8+ años transformando empresas con tecnología de vanguardia.
             </p>
             
             {/* Locations */}

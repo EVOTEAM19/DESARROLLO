@@ -74,10 +74,10 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
     } else if (!heroDataProp && !isLoadingProp) {
       // Valores por defecto FastIA
       setHeroData({
-        title: 'Nacidos para la era de la IA',
-        subtitle: 'Transformamos ideas en soluciones inteligentes mediante inteligencia artificial.\nSoluciones innovadoras que impulsan el futuro digital.',
-        cta_text: 'Descubre nuestro enfoque',
-        cta_link: '/productos',
+        title: 'Desarrollo de Software con IA que Revoluciona tu Negocio',
+        subtitle: 'Desarrollamos apps móviles, plataformas web y software a medida con Inteligencia Artificial integrada desde el primer día. No solo programamos: transformamos tu negocio. Automatizamos procesos, reducimos costes hasta un 70% y multiplicamos productividad. Resultados medibles en 8 semanas.',
+        cta_text: 'Descubre cómo la IA puede transformar tu negocio',
+        cta_link: '/contacto',
         video_url: defaultVideoUrl,
       })
     }
@@ -160,8 +160,8 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
   }
 
   const videoUrl = heroData?.video_url || defaultVideoUrl
-  const title = heroData?.title || 'Nacidos para la era de la IA'
-  const subtitle = heroData?.subtitle || 'Transformamos ideas en soluciones inteligentes mediante inteligencia artificial.\nSoluciones innovadoras que impulsan el futuro digital.'
+  const title = heroData?.title || 'Desarrollo de Software con IA que Revoluciona tu Negocio'
+  const subtitle = heroData?.subtitle || 'Desarrollamos apps móviles, plataformas web y software a medida con Inteligencia Artificial integrada desde el primer día. No solo programamos: transformamos tu negocio. Automatizamos procesos, reducimos costes hasta un 70% y multiplicamos productividad. Resultados medibles en 8 semanas.'
   const subtitleLines = subtitle.split('\n')
 
   return (
@@ -257,9 +257,9 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
             className="mb-8"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-              <span className="text-lg">🚀</span>
+              <span className="text-lg">🤖</span>
               <span className="text-sm font-semibold text-white">
-                #1 en IA | +40 Desarrolladores | Madrid
+                Especialistas en IA | +100 Proyectos | Madrid
               </span>
             </div>
           </motion.div>
@@ -316,7 +316,7 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                href="/productos"
+                href={heroData?.cta_link || "/contacto"}
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-orange-500 via-accent-orange-600 to-accent-orange-700 text-white rounded-xl font-bold text-lg hover:opacity-90 transition-all duration-300 shadow-2xl hover:shadow-accent-orange-500/50 group relative overflow-hidden"
               >
                 <motion.div
@@ -331,7 +331,7 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
                     ease: 'easeInOut',
                   }}
                 />
-                <span className="relative z-10">Descubre nuestro enfoque</span>
+                <span className="relative z-10">{heroData?.cta_text || 'Descubre cómo la IA puede transformar tu negocio'}</span>
                 <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
@@ -342,10 +342,10 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                href="/productos"
+                href="/contacto"
                 className="inline-flex items-center gap-3 px-8 py-4 border-2 border-accent-orange-500 text-accent-orange-500 rounded-xl font-bold text-lg hover:bg-accent-orange-500 hover:text-white transition-all duration-300 backdrop-blur-sm bg-white/5"
               >
-                Ver proyectos
+                Habla con un especialista en IA
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>
@@ -360,10 +360,10 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
             className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto"
           >
             {[
-              { value: 100, suffix: '+', label: 'proyectos entregados' },
-              { value: 6, suffix: '', label: 'años de experiencia' },
-              { value: 40, suffix: '+', label: 'desarrolladores' },
-              { value: 98, suffix: '%', label: 'clientes satisfechos' },
+              { value: 70, suffix: '%', label: 'reducción de costes operativos' },
+              { value: 3, suffix: 'x', label: 'multiplicación de productividad' },
+              { value: 8, suffix: ' semanas', label: 'de la idea a IA en producción' },
+              { value: 100, suffix: '+', label: 'proyectos con IA integrada' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -375,24 +375,24 @@ export function Hero({ data: heroDataProp, isLoading: isLoadingProp }: HeroProps
                 <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 drop-shadow-lg">
                   {statsInView ? (
                     <>
+                      {stat.suffix === '%' && stat.value === 70 && (
+                        <>
+                          <AnimatedCounter end={70} />%
+                        </>
+                      )}
+                      {stat.suffix === 'x' && stat.value === 3 && (
+                        <>
+                          <AnimatedCounter end={3} />x
+                        </>
+                      )}
+                      {stat.suffix === ' semanas' && stat.value === 8 && (
+                        <>
+                          <AnimatedCounter end={8} /> semanas
+                        </>
+                      )}
                       {stat.suffix === '+' && stat.value === 100 && (
                         <>
                           <AnimatedCounter end={100} />+
-                        </>
-                      )}
-                      {stat.suffix === '' && stat.value === 6 && (
-                        <>
-                          <AnimatedCounter end={6} />
-                        </>
-                      )}
-                      {stat.suffix === '+' && stat.value === 40 && (
-                        <>
-                          <AnimatedCounter end={40} />+
-                        </>
-                      )}
-                      {stat.suffix === '%' && stat.value === 98 && (
-                        <>
-                          <AnimatedCounter end={98} />%
                         </>
                       )}
                     </>

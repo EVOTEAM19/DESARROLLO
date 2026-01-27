@@ -58,12 +58,11 @@ export function BlogGrid() {
           className="text-center mb-16 lg:mb-20 max-w-4xl mx-auto"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 text-foreground">
-            Reflexiones sobre{' '}
-            <span className="text-gradient">Desarrollo y IA</span>
+            Aprende cómo la IA está{' '}
+            <span className="text-gradient">revolucionando los negocios</span>
           </h2>
           <p className="text-lg md:text-xl text-foreground-muted">
-            Artículos técnicos, mejores prácticas y tendencias sobre desarrollo de plataformas digitales, 
-            TypeScript, React, Node.js, Kotlin, iOS, Android, Flux e inteligencia artificial
+            Insights, casos de uso y estrategias de IA aplicada. Contenido práctico para empresarios que quieren liderar con tecnología.
           </p>
         </motion.div>
 

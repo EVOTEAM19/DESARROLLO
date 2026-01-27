@@ -56,6 +56,11 @@ const contactSchema = z.object({
     .string()
     .optional()
     .or(z.literal('')),
+  automation_process: z
+    .string()
+    .max(1000, 'El texto no puede exceder 1000 caracteres')
+    .optional()
+    .or(z.literal('')),
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
@@ -63,12 +68,12 @@ type ContactFormData = z.infer<typeof contactSchema>
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 const defaultProjectTypes = [
-  'Desarrollo de app móvil',
-  'Plataforma web',
-  'Automatización con IA',
-  'Consultoría tecnológica',
-  'Migración cloud',
-  'Mantenimiento',
+  'Automatización con IA (chatbots, workflows)',
+  'Desarrollo de software con IA integrada',
+  'CTO especializado en IA',
+  'Análisis predictivo y Machine Learning',
+  'Migración cloud + optimización IA',
+  'Consultoría estratégica de IA',
   'Otro',
 ]
 
@@ -116,8 +121,8 @@ export function ContactForm() {
   const projectTypes = content?.form?.project_types || defaultProjectTypes
   const budgetRanges = content?.form?.budget_ranges || defaultBudgetRanges
   const startTimeframes = content?.form?.start_timeframes || defaultStartTimeframes
-  const formTitle = content?.form?.title || '¿Hablamos de tu proyecto?'
-  const formDescription = content?.form?.description || 'Estamos aquí para ayudarte. Cuéntanos tu idea y te respondemos en menos de 24 horas.'
+  const formTitle = content?.form?.title || '¿Listo para revolucionar tu negocio con IA?'
+  const formDescription = content?.form?.description || 'Agenda una consultoría gratuita. Analizamos tu negocio y te mostramos exactamente cómo la IA puede multiplicar tus resultados.'
   const successMessage = content?.form?.success_message || '¡Mensaje enviado! Te responderemos pronto.'
   const errorMessageText = content?.form?.error_message || 'Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.'
   
@@ -164,6 +169,7 @@ export function ContactForm() {
         budget_range: data.budget_range || null,
         message: sanitizeInput(data.message),
         start_timeframe: data.start_timeframe || null,
+        automation_process: data.automation_process ? sanitizeInput(data.automation_process) : null,
         status: 'new' as const,
       }
 
@@ -190,6 +196,7 @@ export function ContactForm() {
           budget_range: sanitizedData.budget_range ?? undefined,
           message: sanitizedData.message,
           start_timeframe: sanitizedData.start_timeframe ?? undefined,
+          automation_process: sanitizedData.automation_process ?? undefined,
         }
         const url = typeof window !== 'undefined' ? `${window.location.origin}/api/contact/send-email` : '/api/contact/send-email'
         const res = await fetch(url, {
@@ -693,6 +700,40 @@ export function ContactForm() {
                     >
                       <AlertCircle className="w-4 h-4" />
                       {errors.start_timeframe.message}
+                    </motion.p>
+                  )}
+                </div>
+
+                {/* Campo: ¿Qué proceso quieres automatizar con IA? */}
+                <div>
+                  <label
+                    htmlFor="automation_process"
+                    className="block text-sm font-semibold mb-2 text-foreground"
+                  >
+                    ¿Qué proceso quieres automatizar con IA? <span className="text-foreground-muted text-xs">(opcional)</span>
+                  </label>
+                  <textarea
+                    {...register('automation_process')}
+                    id="automation_process"
+                    name="automation_process"
+                    rows={3}
+                    aria-invalid={errors.automation_process ? 'true' : 'false'}
+                    className={`w-full px-4 py-3 rounded-lg border transition-all duration-200 bg-background text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 resize-y min-h-[80px] ${
+                      errors.automation_process
+                        ? 'border-error focus:ring-error/20 focus:border-error'
+                        : 'border-foreground/20 focus:ring-accent-orange-500/20 focus:border-accent-orange-500'
+                    }`}
+                    placeholder="Ej: Atención al cliente, análisis de datos, generación de contenido..."
+                  />
+                  {errors.automation_process && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-2 text-sm text-error flex items-center gap-1.5"
+                      role="alert"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.automation_process.message}
                     </motion.p>
                   )}
                 </div>

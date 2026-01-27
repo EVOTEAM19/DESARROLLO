@@ -1,57 +1,57 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Smartphone, Monitor, Cog, Compass, Cloud, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Smartphone, Monitor, Cog, Compass, Cloud, ShieldCheck, Brain, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 
-// Datos hardcodeados de servicios FastIA
+// Datos hardcodeados de servicios FastIA - Enfocados en IA
 const services = [
   {
     id: '1',
-    title: 'Apps que conectan con tu audiencia',
-    description: 'Desarrollamos aplicaciones nativas (iOS/Android), híbridas y para dispositivos wearables. Desde smartwatches hasta Smart TV.',
-    icon: Smartphone,
-    link: '/servicios/apps-moviles',
+    title: 'Automatización Inteligente que Trabaja 24/7',
+    description: 'Dejamos que la IA haga el trabajo pesado. Automatizamos atención al cliente, análisis de datos, generación de contenido, y procesos internos. Tú solo ves los resultados: más ingresos, menos costes.',
+    icon: Cog,
+    link: '/servicios/automatizacion-inteligente',
     gradient: 'from-accent-orange-500 to-accent-orange-600',
   },
   {
     id: '2',
-    title: 'Plataformas web inteligentes',
-    description: 'Construimos SaaS, e-commerce y dashboards que escalan. Nuestras plataformas integran IA desde el primer día.',
-    icon: Monitor,
-    link: '/servicios/plataformas-web',
+    title: 'Apps Móviles Nativas e Híbridas con IA',
+    description: 'Desarrollamos apps para iOS y Android con Inteligencia Artificial integrada. Apps que aprenden de tus usuarios, personalizan experiencias y automatizan tareas. De la idea a App Store/Play Store en 8-12 semanas.',
+    icon: Smartphone,
+    link: '/servicios/desarrollo-apps-moviles',
     gradient: 'from-accent-orange-500 to-accent-orange-700',
   },
   {
     id: '3',
-    title: 'Automatizaciones que te hacen más rápido',
-    description: '¿Cansado de procesos repetitivos? Nuestras automatizaciones con IA propia son más eficientes, seguras y económicas.',
-    icon: Cog,
-    link: '/servicios/automatizaciones-ia',
+    title: 'Plataformas Web y SaaS que Escalan con IA',
+    description: 'Construimos plataformas web, e-commerce y SaaS con Inteligencia Artificial desde el código base. Tu plataforma aprende, predice y optimiza automáticamente. Arquitectura escalable, código limpio, IA potente.',
+    icon: Monitor,
+    link: '/servicios/plataformas-web-ia',
     gradient: 'from-accent-orange-600 to-accent-orange-700',
   },
   {
     id: '4',
-    title: 'Te guiamos en tu transformación digital',
-    description: 'Analizamos tu negocio, identificamos oportunidades y diseñamos la hoja de ruta tecnológica perfecta.',
+    title: 'CTO Experto en IA para tu Empresa',
+    description: 'Liderazgo tecnológico especializado en Inteligencia Artificial. Diseñamos tu estrategia de IA, seleccionamos las mejores tecnologías y ejecutamos. Sin contratar full-time.',
     icon: Compass,
-    link: '/servicios/consultoria',
+    link: '/servicios/cto-as-a-service',
     gradient: 'from-accent-orange-500 to-accent-orange-600',
   },
   {
     id: '5',
-    title: 'Lleva tu infraestructura al futuro',
-    description: 'Migramos tus sistemas legacy a la nube sin interrupciones. AWS, Azure, Google Cloud.',
-    icon: Cloud,
-    link: '/servicios/migraciones-cloud',
+    title: 'Chatbots que Venden y Atienden Mejor que Humanos',
+    description: 'IA conversacional que atiende clientes 24/7, cierra ventas, agenda citas y resuelve problemas. Entrenada específicamente para tu negocio. Resultados desde el día 1.',
+    icon: MessageSquare,
+    link: '/servicios/ia-conversacional',
     gradient: 'from-accent-orange-600 to-accent-orange-700',
   },
   {
     id: '6',
-    title: 'Tu tecnología siempre actualizada',
-    description: 'No solo creamos, también cuidamos. Mantenimiento proactivo, actualizaciones y evolución continua.',
-    icon: ShieldCheck,
-    link: '/servicios/mantenimiento',
+    title: 'IA que Predice el Futuro de tu Negocio',
+    description: 'Análisis predictivo con Machine Learning. Anticipamos tendencias, detectamos oportunidades y evitamos riesgos antes de que ocurran. Decisiones basadas en datos, no en intuición.',
+    icon: Brain,
+    link: '/servicios/analisis-predictivo',
     gradient: 'from-accent-orange-500 to-accent-orange-700',
   },
 ]
@@ -70,10 +70,10 @@ export function ProductsSection() {
           className="text-center mb-16 lg:mb-20"
         >
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 text-foreground">
-            Servicios que <span className="text-gradient">marcan la diferencia</span>
+            IA que <span className="text-gradient">transforma cada área de tu negocio</span>
           </h2>
           <p className="text-lg md:text-xl text-foreground-muted max-w-3xl mx-auto">
-            De la idea al deploy. Todo bajo un mismo techo.
+            No vendemos apps. Vendemos resultados. Integramos IA para automatizar, optimizar y escalar tu empresa.
           </p>
         </motion.div>
 

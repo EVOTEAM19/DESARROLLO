@@ -7,6 +7,9 @@ import { ProcessTimeline } from '@/components/sections/ProcessTimeline'
 import { TechStack } from '@/components/sections/TechStack'
 import { BlogGrid } from '@/components/sections/BlogGrid'
 import { ContactForm } from '@/components/sections/ContactForm'
+import { WhyAICompetitive } from '@/components/sections/WhyAICompetitive'
+import { BusinessSectors } from '@/components/sections/BusinessSectors'
+import { AICaseStudies } from '@/components/sections/AICaseStudies'
 import { ClientLogos } from '@/components/ClientLogos'
 import { getSiteSettings } from '@/lib/api'
 import { HeroSkeleton } from '@/components/ui/Skeleton'
@@ -27,54 +30,59 @@ export default async function Home() {
         <Hero />
       </Suspense>
 
-      {/* Sección Desarrollo Freelance - SEO */}
-      <section className="py-24 bg-gray-800/50">
+      {/* Sección Estadísticas de Impacto IA */}
+      <section className="py-24 bg-gradient-to-br from-purple-900 via-blue-900 to-black">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-white text-center mb-16">
-            Desarrollo Freelance Profesional | Apps &amp; Software a Medida
+            Integramos IA en tu negocio para multiplicar resultados con menos recursos
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-4 gap-8 mb-16">
+            <div className="text-center">
+              <div className="text-5xl font-bold text-orange-500 mb-2">70%</div>
+              <div className="text-xl text-white mb-2">Reducción de costes operativos</div>
+              <div className="text-gray-400">Automatiza tareas repetitivas con IA</div>
+            </div>
+
+            <div className="text-center">
+              <div className="text-5xl font-bold text-orange-500 mb-2">3x</div>
+              <div className="text-xl text-white mb-2">Multiplicación de productividad</div>
+              <div className="text-gray-400">Tus equipos logran más en menos tiempo</div>
+            </div>
+
             <div className="text-center">
               <div className="text-5xl font-bold text-orange-500 mb-2">8 semanas</div>
-              <div className="text-xl text-white mb-2">MVP en producción</div>
-              <div className="text-gray-400">De idea a App Store/Play Store</div>
+              <div className="text-xl text-white mb-2">De la idea a IA en producción</div>
+              <div className="text-gray-400">Resultados medibles desde el día 1</div>
             </div>
 
             <div className="text-center">
-              <div className="text-5xl font-bold text-orange-500 mb-2">45-75€</div>
-              <div className="text-xl text-white mb-2">hora developers senior</div>
-              <div className="text-gray-400">Precio competitivo, calidad premium</div>
-            </div>
-
-            <div className="text-center">
-              <div className="text-5xl font-bold text-orange-500 mb-2">+40</div>
-              <div className="text-xl text-white mb-2">developers freelance</div>
-              <div className="text-gray-400">React, Flutter, iOS, Android, IA</div>
+              <div className="text-5xl font-bold text-orange-500 mb-2">+100</div>
+              <div className="text-xl text-white mb-2">Proyectos con IA integrada</div>
+              <div className="text-gray-400">Empresas transformadas por nuestro equipo</div>
             </div>
           </div>
 
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-xl text-gray-300 mb-8">
-              Desarrolladores <strong className="text-white">freelance expertos</strong> en apps móviles,
-              plataformas web y software personalizado. <strong className="text-white">MVP rápido</strong>,
-              código limpio, <strong className="text-white">precio justo</strong>. También ofrecemos
-              <strong className="text-white"> CTO as a Service</strong> para startups que necesitan
-              liderazgo tech sin contratar full-time.
+              Desarrollamos apps móviles, plataformas web y software a medida con <strong className="text-white">Inteligencia Artificial integrada desde el primer día</strong>. 
+              No solo programamos: <strong className="text-white">transformamos tu negocio</strong>. 
+              Automatizamos procesos, reducimos costes hasta un 70% y multiplicamos productividad. 
+              <strong className="text-white"> Resultados medibles en 8 semanas</strong>.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/freelance"
+                href="/contacto"
                 className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors"
               >
-                Ver developers disponibles →
+                Descubre cómo la IA puede transformar tu negocio →
               </Link>
               <Link
-                href="/cto-as-a-service"
+                href="/contacto"
                 className="px-8 py-4 border-2 border-white hover:bg-white hover:text-gray-900 text-white font-medium rounded-lg transition-colors"
               >
-                Contratar CTO freelance →
+                Habla con un especialista en IA →
               </Link>
             </div>
           </div>
@@ -91,10 +99,19 @@ export default async function Home() {
         <ProductsSection />
       </Suspense>
       <Suspense fallback={<div className="py-20" />}>
+        <WhyAICompetitive />
+      </Suspense>
+      <Suspense fallback={<div className="py-20" />}>
         <ProcessTimeline />
       </Suspense>
       <Suspense fallback={<div className="py-20" />}>
         <TechStack />
+      </Suspense>
+      <Suspense fallback={<div className="py-20" />}>
+        <BusinessSectors />
+      </Suspense>
+      <Suspense fallback={<div className="py-20" />}>
+        <AICaseStudies />
       </Suspense>
       <Suspense fallback={<div className="py-20" />}>
         <BlogGrid />
