@@ -6,32 +6,32 @@ import { Rocket, DollarSign, Users, Zap, TrendingUp, Brain } from 'lucide-react'
 const advantages = [
   {
     icon: Rocket,
-    title: '🚀 Tus competidores ya lo están haciendo',
+    title: 'Tus competidores ya lo están haciendo',
     description: 'El 67% de empresas líderes ya usan IA para automatizar y escalar. Si esperas, será tarde.',
   },
   {
     icon: DollarSign,
-    title: '💰 ROI medible en semanas, no años',
+    title: 'ROI medible en semanas, no años',
     description: 'Reducción de costes del 40-70% en los primeros 3 meses. Automatización que se paga sola.',
   },
   {
     icon: Users,
-    title: '🎯 Menos recursos, más resultados',
+    title: 'Menos recursos, más resultados',
     description: 'Tu equipo hace el trabajo de 10 personas. Sin contratar, sin formar, sin esperar.',
   },
   {
     icon: Zap,
-    title: '⚡ Velocidad imposible para humanos',
+    title: 'Velocidad imposible para humanos',
     description: 'Procesamos en minutos lo que a tu equipo le tomaría semanas. Sin errores.',
   },
   {
     icon: TrendingUp,
-    title: '📈 Escalabilidad sin límites',
+    title: 'Escalabilidad sin límites',
     description: 'Creces 10x sin multiplicar tus costes. La IA escala contigo sin contratar más personal.',
   },
   {
     icon: Brain,
-    title: '🧠 Decisiones más inteligentes',
+    title: 'Decisiones más inteligentes',
     description: 'Datos en tiempo real, insights predictivos, detección de patrones invisibles para humanos.',
   },
 ]

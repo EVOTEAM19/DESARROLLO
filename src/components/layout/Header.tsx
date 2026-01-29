@@ -180,10 +180,6 @@ export function Header() {
               Sectores
             </Link>
             
-            <Link href="/nosotros" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
-              Nosotros
-            </Link>
-            
             <Link href="/reflexiones" className="text-gray-300 hover:text-orange-500 transition-colors font-medium">
               Reflexiones
             </Link>
@@ -259,14 +255,6 @@ export function Header() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sectores
-              </Link>
-              
-              <Link
-                href="/nosotros"
-                className="block px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-orange-500 rounded-lg transition-all"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Nosotros
               </Link>
               
               <Link

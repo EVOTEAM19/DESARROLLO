@@ -156,7 +156,7 @@ const config: Config = {
         'spin-slow': 'spin 3s linear infinite',
         'gradient-shift': 'gradientShift 8s ease infinite',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
+        'float': 'float 10s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
         'scroll': 'scroll 20s linear infinite',
       },
@@ -202,8 +202,10 @@ const config: Config = {
           '50%': { opacity: '0.8', boxShadow: '0 0 40px rgba(255, 107, 53, 0.6)' },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '0%, 100%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
+          '10%': { opacity: '1' },
+          '50%': { transform: 'translateY(-100px) translateX(20px)', opacity: '0.8' },
+          '90%': { opacity: '0.3' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-1000px 0' },

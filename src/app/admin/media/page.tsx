@@ -352,6 +352,13 @@ export default function MediaPage() {
               <FileText className="w-5 h-5" />
               Presentación
             </Link>
+            <Link
+              href="/admin/media/presentacion-prats"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-semibold transition-colors"
+            >
+              <FileText className="w-5 h-5" />
+              Presentación Prats
+            </Link>
             {selectedFiles.size > 0 && (
               <button
                 onClick={handleBulkDelete}

@@ -28,8 +28,8 @@ export function HeroContent() {
         // Fallback a datos por defecto
         setHeroData({
           badge: 'FastIA',
-          title: 'Transformamos ideas en soluciones inteligentes',
-          subtitle: '6 años desarrollando software con IA. +40 desarrolladores especializados en apps móviles, automatización y plataformas web.',
+          title: 'Nacidos para la era de la IA',
+          subtitle: 'Automatizando empresas con IA desde hace más de 6 años.',
           cta_primary_text: 'Hablemos de tu proyecto',
           cta_primary_link: '/contacto',
           cta_secondary_text: 'Ver servicios',
@@ -38,10 +38,10 @@ export function HeroContent() {
       }
     } catch (error) {
       console.error('Error cargando contenido hero:', error)
-      setHeroData({
-        badge: 'FastIA',
-        title: 'Transformamos ideas en soluciones inteligentes',
-        subtitle: '6 años desarrollando software con IA.',
+        setHeroData({
+          badge: 'FastIA',
+          title: 'Nacidos para la era de la IA',
+          subtitle: 'Automatizando empresas con IA desde hace más de 6 años.',
         cta_primary_text: 'Hablemos de tu proyecto',
         cta_primary_link: '/contacto',
         cta_secondary_text: 'Ver servicios',
@@ -88,7 +88,7 @@ export function HeroContent() {
     >
       <div className="relative max-w-6xl mx-auto px-4 lg:px-6 text-center">
         {/* Título con animación letra por letra */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[7rem] font-display font-bold mb-6 leading-tight tracking-tight">
           {titleWords.map((word: string, i: number) => (
             <motion.span
               key={i}
@@ -110,7 +110,7 @@ export function HeroContent() {
           transition={{ duration: 1, delay: 1 }}
           className="text-xl sm:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed"
         >
-          <p>{heroData.subtitle || '6 años desarrollando software con IA.'}</p>
+          <p>Automatizando empresas con IA desde hace más de 6 años.</p>
         </motion.div>
 
         {/* CTAs */}
@@ -156,59 +156,6 @@ export function HeroContent() {
               <span className="relative z-10">{heroData.cta_secondary_text || 'Ver servicios'}</span>
               <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Stats animados */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 2.2 }}
-            className="text-center"
-          >
-            <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              +100
-            </div>
-            <div className="text-sm text-gray-400">Proyectos</div>
-          </motion.div>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 2.4 }}
-            className="text-center"
-          >
-            <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              6
-            </div>
-            <div className="text-sm text-gray-400">Años</div>
-          </motion.div>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 2.6 }}
-            className="text-center"
-          >
-            <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              +40
-            </div>
-            <div className="text-sm text-gray-400">Desarrolladores</div>
-          </motion.div>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 2.8 }}
-            className="text-center"
-          >
-            <div className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-accent-orange-500 mb-1">
-              98%
-            </div>
-            <div className="text-sm text-gray-400">Satisfacción</div>
           </motion.div>
         </motion.div>
       </div>
