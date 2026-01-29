@@ -6,7 +6,7 @@ import { useScrollProgress } from '@/hooks/useScrollProgress'
 import * as THREE from 'three'
 
 // Palabras que escupe el globo
-const LAVA_WORDS = ['AI', 'THINK', 'AUTO', 'MIND', 'CLP', 'ALL', 'LIVE']
+const LAVA_WORDS = ['AI', 'THINK', 'AUTO', 'MIND', 'CLP', 'ALL', 'LIVE', 'SEND', 'COPY', 'PASTE', 'DATE', 'EMAIL', 'CALL', 'CHATBOT', 'SECURE', 'ANALITICS']
 
 function useParticlePositions(count: number) {
   const [positions, setPositions] = useState<Array<{ left: number; top: number; delay: number; duration: number }>>([])
