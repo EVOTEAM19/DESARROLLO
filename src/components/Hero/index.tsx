@@ -469,11 +469,11 @@ function LavaGlobe({ opacity, scale }: { opacity: number; scale: number }) {
       const baseScale = 0.7 + Math.random() * 0.4
       wordMesh.scale.setScalar(baseScale)
       
-      // Muy rápido hacia la cámara / bordes de pantalla
-      const velocity = wordMesh.position.clone().normalize().multiplyScalar(0.06 + Math.random() * 0.04)
-      velocity.x += (Math.random() - 0.5) * 0.02
-      velocity.y += (Math.random() - 0.5) * 0.02
-      velocity.z += (Math.random() - 0.5) * 0.02
+      // Velocidad hacia la cámara / bordes (despacio)
+      const velocity = wordMesh.position.clone().normalize().multiplyScalar(0.024 + Math.random() * 0.016)
+      velocity.x += (Math.random() - 0.5) * 0.008
+      velocity.y += (Math.random() - 0.5) * 0.008
+      velocity.z += (Math.random() - 0.5) * 0.008
       
       const rotationSpeed = new THREE.Vector3(
         (Math.random() - 0.5) * 0.02,
