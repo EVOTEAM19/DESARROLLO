@@ -6,6 +6,7 @@ import { SolutionsGrid } from '@/components/sections/v2/SolutionsGrid'
 import { GrowthSection } from '@/components/sections/v2/GrowthSection'
 import { DeviceMockups } from '@/components/sections/v2/DeviceMockups'
 import { ProjectsShowcase } from '@/components/sections/v2/ProjectsShowcase'
+import { FreelanceSection } from '@/components/sections/v2/FreelanceSection'
 import { ProcessSteps } from '@/components/sections/v2/ProcessSteps'
 import { StatsBand } from '@/components/sections/v2/StatsBand'
 import { NoFeesSection } from '@/components/sections/v2/NoFeesSection'
@@ -27,6 +28,7 @@ export default function Home() {
       <GrowthSection />
       <DeviceMockups />
       <ProjectsShowcase />
+      <FreelanceSection />
       <ProcessSteps />
       <StatsBand />
       <NoFeesSection />

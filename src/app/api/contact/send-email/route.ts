@@ -5,9 +5,31 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { sendTelegramMessage } from '@/lib/concierge/notify'
 
 // Email de destino para todos los correos
 const CONTACT_EMAIL = 'hola@fastia.es'
+
+/** Aviso instantáneo a Telegram del lead recibido por el formulario de contacto. */
+function buildContactTelegramText(m: {
+  name: string
+  email: string
+  phone?: string
+  company?: string
+  project_type?: string
+  start_timeframe?: string
+  message: string
+}): string {
+  let t = 'NUEVO LEAD (formulario de contacto)\n'
+  t += `Nombre: ${m.name}\n`
+  t += `Email: ${m.email}\n`
+  if (m.phone) t += `Telefono: ${m.phone}\n`
+  if (m.company) t += `Empresa: ${m.company}\n`
+  if (m.project_type) t += `Tipo: ${m.project_type}\n`
+  if (m.start_timeframe) t += `Inicio: ${m.start_timeframe}\n`
+  t += `\nMensaje: ${m.message}`
+  return t
+}
 
 function getResendStatus() {
   const rawKey = process.env.RESEND_API_KEY?.trim() || ''
@@ -162,6 +184,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Aviso instantáneo a Telegram (además del email). No bloquea si falla.
+    await sendTelegramMessage(buildContactTelegramText(message))
 
     // Verificar si Resend está configurado
     const resend = getResendClient()

@@ -10,8 +10,8 @@ const NAV = [
   { href: '/servicios', label: 'Servicios' },
   { href: '/#proceso', label: 'Proceso' },
   { href: '/#proyectos', label: 'Proyectos' },
+  { href: '/#freelance', label: 'Freelance' },
   { href: '/nosotros', label: 'Nosotros' },
-  { href: '/reflexiones', label: 'Blog' },
 ]
 
 export function Header() {

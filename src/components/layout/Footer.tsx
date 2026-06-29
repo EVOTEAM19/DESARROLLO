@@ -17,7 +17,7 @@ const COLUMNS = [
     links: [
       { href: '/nosotros', label: 'Nosotros' },
       { href: '/#proyectos', label: 'Proyectos' },
-      { href: '/reflexiones', label: 'Blog' },
+      { href: '/#freelance', label: 'Freelance' },
       { href: '/contacto', label: 'Contacto' },
     ],
   },

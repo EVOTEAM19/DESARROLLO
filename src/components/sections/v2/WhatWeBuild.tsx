@@ -63,7 +63,7 @@ export function WhatWeBuild() {
         <div className="mt-16 grid gap-5 lg:grid-cols-3">
           <Reveal className="lg:col-span-2">
             <ImageCard
-              src="/generated/mocks/mock-web-v2.jpg"
+              src="/generated/mocks/saas-platform.jpg"
               title="Plataformas web & SaaS"
               desc="Paneles de control, portales de cliente y productos SaaS completos. Escalables, rápidos y con la experiencia de usuario que esperan tus clientes."
               wide
@@ -71,7 +71,7 @@ export function WhatWeBuild() {
           </Reveal>
           <Reveal delay={0.08}>
             <ImageCard
-              src="/generated/mocks/mock-app-v2.jpg"
+              src="/generated/mocks/mobile-apps.jpg"
               title="Apps móviles"
               desc="iOS y Android desde una sola base de código. Nativas, fluidas y listas para publicar en las stores."
             />
@@ -79,7 +79,7 @@ export function WhatWeBuild() {
 
           <Reveal delay={0.04}>
             <ImageCard
-              src="/generated/mocks/mock-store-v2.jpg"
+              src="/generated/mocks/web-landing.jpg"
               title="Webs que convierten"
               desc="Sitios corporativos y landing pages rápidas, bonitas y optimizadas para vender."
             />

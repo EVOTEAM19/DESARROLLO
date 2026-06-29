@@ -4,7 +4,10 @@ const ROW_A = ['Next.js', 'React', 'React Native', 'TypeScript', 'Node.js', 'Pyt
 const ROW_B = ['AWS', 'Vercel', 'OpenAI', 'Stripe', 'Tailwind', 'Docker', 'GraphQL', 'Figma', 'n8n']
 
 function Track({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
-  const doubled = [...items, ...items]
+  // Repetimos lo suficiente para que SIEMPRE llene el ancho (también en pantallas
+  // grandes) y el bucle -50% sea continuo: así queda centrado y nunca pegado a la izquierda.
+  const set = [...items, ...items, ...items]
+  const doubled = [...set, ...set]
   return (
     <div className="flex w-max gap-4 animate-marquee" style={reverse ? { animationDirection: 'reverse' } : undefined}>
       {doubled.map((t, i) => (

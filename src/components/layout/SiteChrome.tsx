@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { ConciergeWidget } from '@/components/concierge/ConciergeWidget'
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -19,6 +20,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       {/* La home tiene un hero full-bleed; el resto de páginas dejan hueco bajo el header fijo (topbar + nav) */}
       <main className={`min-h-screen ${isHome ? '' : 'pt-[6.5rem]'}`}>{children}</main>
       <Footer />
+      {/* Chatbot comercial Fia — captura leads (Telegram + email). No aparece en /admin. */}
+      <ConciergeWidget />
     </>
   )
 }
