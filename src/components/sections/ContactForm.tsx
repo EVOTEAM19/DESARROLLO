@@ -71,7 +71,7 @@ const defaultProjectTypes = [
   'Plataforma web / SaaS',
   'Software interno (ERP, CRM, herramienta)',
   'Automatización & IA',
-  'MVP para startup',
+  'Producto para startup',
   'Aún no lo tengo claro',
   'Otro',
 ]

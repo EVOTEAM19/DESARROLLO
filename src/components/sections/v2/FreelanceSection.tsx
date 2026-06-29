@@ -18,7 +18,7 @@ const MODES = [
   {
     icon: Target,
     title: 'Trabajo puntual',
-    desc: 'Un encargo concreto con principio y fin: una integración, una funcionalidad, una migración o un MVP. Lo desarrollamos, lo entregamos y listo.',
+    desc: 'Un encargo concreto con principio y fin: una integración, una funcionalidad, una migración o un producto completo. Lo desarrollamos, lo entregamos y listo.',
   },
 ]
 

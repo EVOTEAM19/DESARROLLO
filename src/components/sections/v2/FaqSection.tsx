@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: '¿Cuánto tarda mi proyecto?',
-    a: 'Trabajamos en sprints semanales. Un MVP o una web a medida suele estar en producción entre 2 y 8 semanas, según la complejidad. Verás avances funcionando cada semana desde el primer día.',
+    a: 'Trabajamos en sprints semanales. Un producto a medida o una web suele estar en producción entre 2 y 8 semanas, según la complejidad. Verás avances funcionando cada semana desde el primer día.',
   },
   {
     q: '¿De quién es el código?',

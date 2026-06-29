@@ -11,7 +11,7 @@ export const faqsAppMoviles: FAQItem[] = [
   },
   {
     question: '¿App nativa o híbrida? ¿Cuál es mejor?',
-    answer: 'App nativa (Swift/Kotlin) es mejor para apps complejas que necesitan máximo rendimiento, acceso completo al hardware, y presupuesto amplio. App híbrida (Flutter/React Native) es mejor para startups que necesitan lanzar rápido en iOS y Android con un presupuesto ajustado. En FastIA recomendamos híbrida para MVPs y nativa para apps que requieren alta performance (juegos, apps con AR/VR, edición de video).',
+    answer: 'App nativa (Swift/Kotlin) es mejor para apps complejas que necesitan máximo rendimiento, acceso completo al hardware, y presupuesto amplio. App híbrida (Flutter/React Native) es mejor para startups que necesitan lanzar rápido en iOS y Android con un presupuesto ajustado. En FastIA recomendamos híbrida para productos que necesitan salir rápido y nativa para apps que requieren alta performance (juegos, apps con AR/VR, edición de video).',
   },
   {
     question: '¿La app incluye inteligencia artificial o hay que pagarla aparte?',

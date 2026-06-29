@@ -7,9 +7,9 @@ import { SectionHeading, Reveal, Eyebrow } from './_shared'
 const VALUES = [
   { icon: MessageSquare, title: 'Cercanía real', desc: 'Hablas directamente con quien diseña y programa tu producto. Sin capas, sin intermediarios, sin tickets.' },
   { icon: Wallet, title: 'Precio justo', desc: 'Presupuesto cerrado desde 2.000 €. Crees que el buen software tiene que costar una fortuna: no es verdad.' },
-  { icon: Gauge, title: 'Velocidad', desc: 'Trabajamos en sprints y entregamos pronto. Un MVP en semanas vale más que un proyecto perfecto que nunca sale.' },
+  { icon: Gauge, title: 'Velocidad', desc: 'Trabajamos en sprints y entregamos pronto: un producto terminado y perfecto en semanas, no en meses.' },
   { icon: Code2, title: 'Es tuyo', desc: 'Te entregamos el código fuente completo. Sin ataduras ni dependencias forzadas con nosotros.' },
-  { icon: ShieldCheck, title: 'Calidad seria', desc: 'Código limpio, probado y escalable. Lo que hoy es un MVP mañana tiene que poder crecer contigo.' },
+  { icon: ShieldCheck, title: 'Calidad seria', desc: 'Código limpio, probado y escalable. Tu producto nace terminado y preparado para crecer contigo.' },
   { icon: Sparkles, title: 'Sin humo', desc: 'Usamos IA y la última tecnología cuando aporta valor de verdad, no para rellenar una propuesta.' },
 ]
 

@@ -40,7 +40,7 @@ export function Header() {
           <span className="text-white/50">·</span>
           <span><strong className="font-semibold">Sin cuotas mensuales</strong></span>
           <span className="hidden text-white/50 sm:inline">·</span>
-          <span className="hidden sm:inline">Tu MVP en <strong className="font-semibold">semanas, no meses</strong></span>
+          <span className="hidden sm:inline">Producto terminado <strong className="font-semibold">en semanas, no meses</strong></span>
           <Link href="/contacto" className="hidden items-center gap-1 underline-offset-2 hover:underline md:inline-flex">
             Pide presupuesto <ArrowRight className="h-3.5 w-3.5" />
           </Link>

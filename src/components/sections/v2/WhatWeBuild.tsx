@@ -57,7 +57,7 @@ export function WhatWeBuild() {
         <SectionHeading
           eyebrow="Qué construimos"
           title={<>Si lo puedes imaginar, <span className="text-gradient">lo podemos construir</span></>}
-          subtitle="Apps, webs, plataformas y automatizaciones a medida. Desde el MVP de una startup hasta la herramienta interna que tu empresa necesita."
+          subtitle="Apps, webs, plataformas y automatizaciones a medida. Desde el producto de una startup hasta la herramienta interna que tu empresa necesita."
         />
 
         <div className="mt-16 grid gap-5 lg:grid-cols-3">
@@ -102,7 +102,7 @@ export function WhatWeBuild() {
             <IconCard icon={Plug} title="Integraciones & APIs" desc="Conecta tu stack: pagos, facturación, CRMs, ERPs y cualquier servicio con API." />
           </Reveal>
           <Reveal delay={0.16}>
-            <IconCard icon={Brain} title="MVP para startups" desc="De cero a producto validable en semanas, listo para enseñar a inversores y primeros usuarios." />
+            <IconCard icon={Brain} title="Producto para startups" desc="De cero a un producto terminado y pulido en semanas, listo para lanzar y enseñar a clientes e inversores." />
           </Reveal>
         </div>
 

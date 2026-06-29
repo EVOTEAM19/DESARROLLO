@@ -222,7 +222,7 @@ export const professionalServiceSchema = {
   '@type': 'ProfessionalService',
   name: 'FastIA - Desarrollo Freelance',
   description:
-    'Desarrolladores freelance expertos en apps móviles, web y software. MVP en 8 semanas. CTO as a Service para startups.',
+    'Desarrolladores freelance expertos en apps móviles, web y software. Productos terminados en semanas. CTO as a Service para startups.',
   url: 'https://www.fastia.es',
   telephone: '+34910123456',
   email: 'hola@fastia.es',

@@ -12,7 +12,7 @@ const PILLARS = [
   {
     icon: Gauge,
     title: 'Tiempo récord',
-    desc: 'Un MVP funcional en semanas, no en meses. Trabajamos en sprints y ves avances reales cada semana.',
+    desc: 'Tu producto terminado en semanas, no en meses. Trabajamos en sprints y ves avances reales cada semana.',
   },
   {
     icon: Code2,
