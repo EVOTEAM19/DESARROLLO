@@ -1,5 +1,4 @@
 {
-  "regions": ["mad1"],
   "headers": [
     {
       "source": "/(.*)",
