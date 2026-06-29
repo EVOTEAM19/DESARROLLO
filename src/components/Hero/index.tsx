@@ -336,10 +336,10 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Remate de marketing al formarse la Tierra */}
-        <motion.div style={{ opacity: mktOpacity, y: mktY }} className="pointer-events-none absolute inset-x-0 top-0 z-20 px-4 pt-[7rem] text-center sm:pt-28">
-          <div className="relative mx-auto max-w-3xl">
-            <div className="pointer-events-none absolute inset-x-[-14%] -top-[40%] bottom-[-60%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.92),rgba(255,255,255,0.6)_45%,transparent_72%)]" />
+        {/* Remate de marketing EN EL CENTRO del planeta */}
+        <div className="pointer-events-none absolute inset-x-0 top-[56%] z-20 -translate-y-1/2 px-4 text-center">
+          <motion.div style={{ opacity: mktOpacity, y: mktY }} className="relative mx-auto max-w-3xl">
+            <div className="pointer-events-none absolute inset-x-[-16%] -top-[90%] -bottom-[90%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.96),rgba(255,255,255,0.72)_42%,transparent_70%)]" />
             <div className="relative">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Sin fronteras</p>
               <h2 className="mx-auto mt-3 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tightest text-gray-900 sm:text-6xl text-balance">
@@ -347,8 +347,8 @@ export function Hero() {
                 <span className="text-gradient">Tu software, tampoco.</span>
               </h2>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Pista de scroll */}
         <motion.div style={{ opacity: hintOpacity }} className="absolute inset-x-0 bottom-6 z-20 flex flex-col items-center gap-2 text-gray-400">
