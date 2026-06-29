@@ -46,29 +46,23 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.fastia.es'),
   title: {
-    default: 'FastIA - Desarrollo Freelance Apps & Software | CTO as a Service | Madrid',
-    template: '%s | FastIA - Desarrollo Rápido y Económico',
+    default: 'FastIA — Software a medida desde 2.000 € | Agencia de desarrollo',
+    template: '%s | FastIA',
   },
-  description: 'Desarrolladores freelance expertos en apps móviles, web y software a medida. MVP en 8 semanas. CTO as a Service para startups. +40 developers, 11 años experiencia. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
+  description: 'Agencia de desarrollo de software a medida. Convertimos tu idea en una app, web o plataforma — desde 2.000 € y en tiempo récord. Precio cerrado, código tuyo, MVP en semanas.',
   keywords: [
-    'desarrollador freelance madrid',
-    'desarrollo app movil freelance',
-    'cto freelance',
-    'cto as a service',
-    'desarrollo software rapido',
-    'mvp 8 semanas',
-    'programador freelance españa',
-    'app personalizada precio',
-    'desarrollo web economico',
-    'freelance react native',
-    'flutter freelance madrid',
-    'full stack developer freelance',
-    'crear app rapido',
-    'desarrollo software agil',
-    'mejor programador freelance',
-    'desarrollo software IA',
-    'apps móviles IA',
-    'automatización empresarial',
+    'agencia de desarrollo de software',
+    'software a medida',
+    'desarrollo de apps a medida',
+    'desarrollo web a medida',
+    'crear una app',
+    'mvp para startups',
+    'plataforma web saas',
+    'software a medida barato',
+    'desarrollo software precio cerrado',
+    'automatización con ia',
+    'desarrollo software rápido',
+    'agencia desarrollo españa',
   ],
   authors: [{ name: 'FastIA Team' }],
   creator: 'FastIA',
@@ -87,22 +81,22 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     url: '/',
     siteName: 'FastIA',
-    title: 'FastIA - Desarrollo Freelance Apps & Software | CTO as a Service',
-    description: 'Desarrolladores freelance expertos. MVP en 8 semanas. +40 developers. Precio competitivo, calidad premium. Madrid, Barcelona, Sevilla.',
+    title: 'FastIA — Software a medida desde 2.000 €',
+    description: 'Tú imaginas, nosotros lo construimos. Apps, webs y plataformas a medida con precio cerrado y entrega en tiempo récord.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/generated/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'FastIA - Desarrollo Freelance Profesional',
+        alt: 'FastIA — Agencia de desarrollo de software a medida',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FastIA - Desarrollo Freelance Apps & Software',
-    description: 'MVP en 8 semanas. +40 developers freelance. Precio competitivo. CTO as a Service.',
-    images: ['/og-image.jpg'],
+    title: 'FastIA — Software a medida desde 2.000 €',
+    description: 'Tú imaginas, nosotros lo construimos. Apps, webs y plataformas a medida, en tiempo récord.',
+    images: ['/generated/og-image.png'],
   },
   robots: {
     index: true,
@@ -136,7 +130,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" className="light">
       <head>
         {/* Google Tag Manager */}
         <script

@@ -229,7 +229,7 @@ const VestSilhouette = ({ className = "", opacity = 0.15 }: { className?: string
 const LogoFastIA = ({ logoUrl, large }: { logoUrl: string | null; large?: boolean }) => (
   <div className={large ? 'absolute top-4 left-1/2 -translate-x-1/2 z-20' : 'absolute top-4 right-6 z-20'}>
     {logoUrl ? (
-      <div className={`relative ${large ? 'w-56 h-20 md:w-72 md:h-24' : 'w-28 h-9'}`}>
+      <div className={`relative ${large ? 'w-56 h-20 md:w-72 md:h-24' : 'w-28 h-9'}`} style={{ filter: 'brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(1deg) brightness(98%) contrast(101%)' }}>
         <Image src={logoUrl} alt="FastIA" fill className="object-contain object-center" unoptimized sizes={large ? '288px' : '112px'} />
       </div>
     ) : null}
@@ -238,37 +238,37 @@ const LogoFastIA = ({ logoUrl, large }: { logoUrl: string | null; large?: boolea
 
 // Componente para tarjeta de característica
 const FeatureCard = ({ icon: Icon, title, description }: { icon: React.ElementType; title: string; description: string }) => (
-  <div className="bg-gray-800/50 backdrop-blur-sm border border-amber-600/20 rounded-xl p-3 hover:bg-gray-800/70 transition-all group hover:border-amber-500/40">
-    <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center mb-3 shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
+  <div className="bg-white border border-orange-200 rounded-xl p-4 hover:bg-orange-50/50 transition-all group hover:border-orange-400 shadow-sm">
+    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-3 shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
       <Icon className="w-5 h-5 text-white" />
     </div>
-    <h4 className="text-base font-semibold text-white mb-1">{title}</h4>
-    <p className="text-xs text-gray-400 leading-relaxed">{description}</p>
+    <h4 className="text-lg font-semibold text-gray-900 mb-2">{title}</h4>
+    <p className="text-base text-gray-700 leading-relaxed">{description}</p>
   </div>
 )
 
 // Componente para estadística
 const StatCard = ({ value, label, icon: Icon }: { value: string; label: string; icon: React.ElementType }) => (
-  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 rounded-xl p-3 text-center hover:scale-105 transition-transform">
-    <Icon className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-    <div className="text-2xl font-bold text-white mb-1">{value}</div>
-    <div className="text-xs text-gray-400">{label}</div>
+  <div className="bg-orange-50/80 border border-orange-200 rounded-xl p-4 text-center hover:scale-105 transition-transform shadow-sm">
+    <Icon className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+    <div className="text-4xl font-bold text-gray-900 mb-1">{value}</div>
+    <div className="text-base text-gray-700">{label}</div>
   </div>
 )
 
-// Wrapper A4 horizontal para cada slide (297×210 mm) — gris oscuro neutro tipo terminal
+// Wrapper A4 horizontal para cada slide (297×210 mm) — fondo blanco, detalles naranja
 const SlideWrapper = ({ children, isPrintMode }: { children: React.ReactNode; isPrintMode: boolean }) => (
   <div
     className={`${isPrintMode ? 'print-slide' : 'slide-container-a4'} overflow-hidden relative flex flex-col`}
     style={{
-      backgroundColor: '#1e1e1e',
+      backgroundColor: '#ffffff',
       aspectRatio: isPrintMode ? undefined : '297 / 210',
       width: '100%',
       height: isPrintMode ? undefined : 'auto',
-      padding: isPrintMode ? 14 : 24,
+      padding: isPrintMode ? 10 : 28,
     }}
   >
-    {children}
+    {isPrintMode ? <div className="print-slide-inner h-full w-full flex flex-col">{children}</div> : children}
   </div>
 )
 
@@ -306,10 +306,10 @@ export default function PresentacionPratsPage() {
   const handlePrint = () => {
     document.body.classList.add('print-mode')
     setIsPrintMode(true)
-    // Esperar a que se rendericen todos los slides antes de abrir el diálogo
+    // Esperar a que se rendericen todos los slides (incl. imágenes) antes de abrir el diálogo
     setTimeout(() => {
       window.print()
-    }, 500)
+    }, 800)
   }
 
   const slides = [
@@ -338,19 +338,20 @@ export default function PresentacionPratsPage() {
 
   return (
     <>
-      {/* Estilos CSS para impresión A4 horizontal */}
+      {/* Estilos CSS para impresión A4 horizontal — fondo blanco, colores exactos, ajuste al ancho */}
       <style jsx global>{`
         @media print {
           @page {
             size: A4 landscape;
-            margin: 12mm;
+            margin: 10mm;
           }
           
           html, body {
             margin: 0 !important;
             padding: 0 !important;
             overflow: hidden !important;
-            background-color: #1e1e1e !important;
+            background: #ffffff !important;
+            background-color: #ffffff !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
             color-adjust: exact !important;
@@ -377,34 +378,46 @@ export default function PresentacionPratsPage() {
             padding: 0 !important;
             margin: 0 !important;
             max-width: none !important;
+            max-height: none !important;
             width: 100% !important;
             min-height: auto !important;
             height: auto !important;
             overflow: visible !important;
             box-sizing: border-box !important;
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important;
+            background: #ffffff !important;
+            background-color: #ffffff !important;
           }
           
           .print-container::-webkit-scrollbar {
             display: none !important;
           }
           
+          /* Cada slide: ancho útil A4 horizontal, altura fija para una página por slide */
           .print-slide {
-            width: 273mm !important;
-            max-width: 273mm !important;
-            height: 186mm !important;
-            min-height: 186mm !important;
+            width: 277mm !important;
+            max-width: 100% !important;
+            height: 190mm !important;
+            min-height: 190mm !important;
             page-break-after: always !important;
             page-break-inside: avoid !important;
             break-after: page !important;
             break-inside: avoid !important;
-            background-color: #1e1e1e !important;
+            background: #ffffff !important;
+            background-color: #ffffff !important;
             overflow: hidden !important;
             position: relative !important;
             box-sizing: border-box !important;
-            padding: 14px !important;
+            padding: 10px !important;
             margin: 0 auto !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          
+          /* Portada: asegurar que siempre tenga altura y contenido visible */
+          .print-slide:first-child {
+            min-height: 190mm !important;
+            display: block !important;
+            visibility: visible !important;
           }
           
           .print-slide > * {
@@ -423,12 +436,13 @@ export default function PresentacionPratsPage() {
             color-adjust: exact !important;
           }
           
-          .bg-gray-900,
+          /* Forzar fondo blanco en slides y contenedores (no gris) */
           .slide-container-a4,
           .print-slide,
-          [style*="background-color: #1e1e1e"],
-          [style*="backgroundColor"] {
-            background-color: #1e1e1e !important;
+          [class*="slide-container"],
+          [class*="print-slide"] {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
           }
         }
         
@@ -436,70 +450,80 @@ export default function PresentacionPratsPage() {
           width: 100%;
           max-width: 1188px;
           aspect-ratio: 297 / 210;
-          background-color: #1e1e1e;
+          background-color: #ffffff;
           margin: 0 auto;
+        }
+        
+        /* Ocultar barra de desplazamiento a la derecha de la presentación (solo en pantalla) */
+        @media not print {
+          .presentacion-prats-scroll-wrap {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          .presentacion-prats-scroll-wrap::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
         }
       `}</style>
 
-      <div className={`min-h-screen ${isPrintMode ? 'p-0' : 'p-6'}`} style={{ backgroundColor: '#1e1e1e' }}>
-        <div className={`${isPrintMode ? 'print-container' : 'max-w-7xl mx-auto'}`}>
+      <div className={`min-h-screen ${isPrintMode ? 'p-0' : 'p-6'} presentacion-prats-root`} style={{ backgroundColor: '#fafafa' }}>
+        <div className={`${isPrintMode ? 'print-container' : 'max-w-7xl mx-auto presentacion-prats-scroll-wrap overflow-y-auto overflow-x-hidden max-h-[calc(100vh-2rem)]'}`}>
           {/* Controles - ocultos en impresión */}
-          <div className="slide-navigation mb-6 flex items-center justify-between rounded-lg p-4 border print:hidden" style={{ backgroundColor: '#252526', borderColor: '#3c3c3c' }}>
+          <div className="slide-navigation mb-6 flex items-center justify-between rounded-lg p-4 border print:hidden bg-white border-orange-200 shadow-sm">
           <div className="flex items-center gap-4">
-            <button onClick={prevSlide} disabled={currentSlide === 0} className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" style={{ backgroundColor: '#3c3c3c' }} onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#505050' }} onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#3c3c3c' }}>
-              <ChevronLeft className="w-5 h-5 text-white" />
+            <button onClick={prevSlide} disabled={currentSlide === 0} className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors bg-orange-50 hover:bg-orange-100 text-gray-900 border border-orange-200">
+              <ChevronLeft className="w-5 h-5 text-orange-600" />
             </button>
-            <span className="text-white font-medium">{currentSlide + 1} / {totalSlides}</span>
-            <button onClick={nextSlide} disabled={currentSlide === totalSlides - 1} className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" style={{ backgroundColor: '#3c3c3c' }} onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#505050' }} onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#3c3c3c' }}>
-              <ChevronRight className="w-5 h-5 text-white" />
+            <span className="text-gray-900 font-medium text-lg">{currentSlide + 1} / {totalSlides}</span>
+            <button onClick={nextSlide} disabled={currentSlide === totalSlides - 1} className="p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors bg-orange-50 hover:bg-orange-100 text-gray-900 border border-orange-200">
+              <ChevronRight className="w-5 h-5 text-orange-600" />
             </button>
           </div>
-          <button onClick={handlePrint} className="print-button flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors shadow-lg shadow-amber-600/20 print:hidden">
+          <button onClick={handlePrint} className="print-button flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-lg shadow-orange-500/30 print:hidden">
             <Download className="w-5 h-5" />
             Imprimir / PDF
           </button>
         </div>
 
         {/* Navegación por puntos - oculta en impresión */}
-        <div className="navigation-dots mb-6 flex flex-wrap gap-2 justify-center print:hidden" style={{ backgroundColor: 'transparent' }}>
+        <div className="navigation-dots mb-6 flex flex-wrap gap-2 justify-center print:hidden">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-3 rounded-full transition-all ${currentSlide === index ? 'bg-amber-500 w-8 shadow-lg shadow-amber-500/50' : 'w-3'}`}
-              style={currentSlide === index ? undefined : { backgroundColor: '#3c3c3c' }}
-              onMouseOver={currentSlide === index ? undefined : (e) => { e.currentTarget.style.backgroundColor = '#505050' }}
-              onMouseOut={currentSlide === index ? undefined : (e) => { e.currentTarget.style.backgroundColor = '#3c3c3c' }}
+              className={`h-3 rounded-full transition-all ${currentSlide === index ? 'bg-orange-500 w-8 shadow-lg shadow-orange-500/50' : 'w-3 bg-orange-200 hover:bg-orange-300'}`}
               title={`Slide ${index + 1}`}
             />
           ))}
         </div>
 
         {/* Presentación */}
-        <div ref={presentationRef} className={`${isPrintMode ? 'print-container' : 'rounded-xl shadow-2xl border'} overflow-hidden`} style={{ backgroundColor: '#1e1e1e', borderColor: '#3c3c3c' }}>
+        <div ref={presentationRef} className={`${isPrintMode ? 'print-container' : 'rounded-xl shadow-2xl border border-orange-100'} overflow-hidden bg-white`}>
           
           {/* ==================== SLIDE 0 - PORTADA ==================== */}
           {(currentSlide === 0 || isPrintMode) && (
           <SlideWrapper isPrintMode={isPrintMode}>
               <div className="h-full flex flex-col items-center justify-center text-center relative z-10">
                 {/* Barra superior dorada */}
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600"></div>
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600"></div>
                 
                 {/* Siluetas sastrería — LIMPIAS y ELEGANTES */}
-                <TuxedoSilhouette className="absolute -left-8 top-12 w-72 h-80 text-amber-500" opacity={0.15} />
-                <BusinessmanSilhouette className="absolute -right-5 bottom-0 w-56 h-[420px] text-amber-500 scale-x-[-1]" opacity={0.12} />
-                <TieSilhouette className="absolute left-[22%] bottom-16 w-14 h-44 text-amber-500 rotate-[-10deg]" opacity={0.18} />
-                <ScissorsSilhouette className="absolute right-[18%] top-20 w-20 h-40 text-amber-600 rotate-[25deg]" opacity={0.12} />
-                <BowTieSilhouette className="absolute left-[30%] top-28 w-28 h-14 text-amber-500" opacity={0.1} />
+                <TuxedoSilhouette className="absolute -left-8 top-12 w-72 h-80 text-orange-500" opacity={0.15} />
+                <BusinessmanSilhouette className="absolute -right-5 bottom-0 w-56 h-[420px] text-orange-500 scale-x-[-1]" opacity={0.12} />
+                <TieSilhouette className="absolute left-[22%] bottom-16 w-14 h-44 text-orange-500 rotate-[-10deg]" opacity={0.18} />
+                <ScissorsSilhouette className="absolute right-[18%] top-20 w-20 h-40 text-orange-600 rotate-[25deg]" opacity={0.12} />
+                <BowTieSilhouette className="absolute left-[30%] top-28 w-28 h-14 text-orange-500" opacity={0.1} />
                 
                 {/* Elementos decorativos sutiles */}
-                <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-amber-500/5 blur-2xl"></div>
-                <div className="absolute bottom-20 left-20 w-40 h-40 rounded-full bg-amber-500/5 blur-3xl"></div>
+                <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-orange-500/5 blur-2xl"></div>
+                <div className="absolute bottom-20 left-20 w-40 h-40 rounded-full bg-orange-500/5 blur-3xl"></div>
 
-                {/* Logo FastIA — solo el logo, sin caja */}
-                <div className="mb-8 flex items-center justify-center">
+                {/* Logo FastIA — solo el logo, sin caja (naranja). Fallback texto si no carga (p. ej. en PDF) */}
+                <div className="mb-8 flex items-center justify-center min-h-[4rem]">
                   {logoUrl ? (
-                    <div className="relative w-48 h-16">
+                    <div className="relative w-48 h-16" style={{ filter: 'brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(1deg) brightness(98%) contrast(101%)' }}>
                       <Image
                         src={logoUrl}
                         alt="FastIA"
@@ -509,42 +533,44 @@ export default function PresentacionPratsPage() {
                         sizes="192px"
                       />
                     </div>
-                  ) : null}
+                  ) : (
+                    <span className="text-4xl font-bold text-orange-500 tracking-tight">FastIA</span>
+                  )}
                 </div>
                 
-                <h1 className="text-5xl xl:text-6xl font-bold text-white mb-4 leading-tight tracking-tight">
+                <h1 className="text-6xl xl:text-7xl font-bold text-gray-900 mb-5 leading-tight tracking-tight">
                   DESARROLLO A MEDIDA
                 </h1>
                 
-                <h2 className="text-4xl xl:text-5xl font-bold text-amber-500 mb-8">
+                <h2 className="text-5xl xl:text-6xl font-bold text-orange-500 mb-10">
                   SASTRERÍA PRATS
                 </h2>
                 
-                <div className="w-40 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mb-8"></div>
+                <div className="w-48 h-1.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent mb-10"></div>
                 
-                <p className="text-xl text-gray-300 mb-3 font-light">Plataforma Integral de Gestión</p>
+                <p className="text-2xl text-gray-700 mb-4 font-light">Plataforma Integral de Gestión</p>
                 
-                <p className="text-base text-gray-400 mb-10 italic font-light">
+                <p className="text-lg text-gray-600 mb-12 italic font-light">
                   Una única plataforma · Todo automatizado · Control total
                 </p>
                 
                 {/* Badges */}
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-800/80 rounded-full border border-gray-600/50">
-                    <Store className="w-4 h-4 text-amber-500" />
-                    <span className="text-sm text-gray-300">3 Tiendas</span>
+                <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-3 px-6 py-3 bg-orange-50 rounded-full border border-orange-200">
+                    <Store className="w-5 h-5 text-orange-500" />
+                    <span className="text-base text-gray-700">3 Tiendas</span>
                   </div>
-                  <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-800/80 rounded-full border border-gray-600/50">
-                    <Zap className="w-4 h-4 text-amber-500" />
-                    <span className="text-sm text-gray-300">100% Automatizado</span>
+                  <div className="flex items-center gap-3 px-6 py-3 bg-orange-50 rounded-full border border-orange-200">
+                    <Zap className="w-5 h-5 text-orange-500" />
+                    <span className="text-base text-gray-700">100% Automatizado</span>
                   </div>
-                  <div className="flex items-center gap-2 px-5 py-2.5 bg-gray-800/80 rounded-full border border-gray-600/50">
-                    <Shield className="w-4 h-4 text-amber-500" />
-                    <span className="text-sm text-gray-300">Control Total</span>
+                  <div className="flex items-center gap-3 px-6 py-3 bg-orange-50 rounded-full border border-orange-200">
+                    <Shield className="w-5 h-5 text-orange-500" />
+                    <span className="text-base text-gray-700">Control Total</span>
                   </div>
                 </div>
                 
-                <p className="absolute bottom-6 text-sm text-gray-500">Enero 2026</p>
+                <p className="absolute bottom-8 text-base text-gray-700">Enero 2026</p>
               </div>
           </SlideWrapper>
           )}
@@ -555,15 +581,15 @@ export default function PresentacionPratsPage() {
               <div className="h-full relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-amber-500" opacity={0.1} />
-                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-amber-500 rotate-[-12deg]" opacity={0.12} />
+                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-orange-500" opacity={0.1} />
+                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-orange-500 rotate-[-12deg]" opacity={0.12} />
                 
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
-                  <h2 className="text-4xl font-bold text-white">Índice</h2>
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="w-2 h-16 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
+                  <h2 className="text-5xl font-bold text-gray-900">Índice</h2>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-4">
                   {[
                     { icon: Building2, title: 'Sobre FastIA' },
                     { icon: Target, title: 'Entendemos Vuestro Reto' },
@@ -580,17 +606,17 @@ export default function PresentacionPratsPage() {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-3.5 flex items-center gap-4 hover:bg-gray-800/80 transition-all group hover:border-amber-500/30 cursor-pointer"
+                      className="bg-white border border-orange-200 rounded-xl p-5 flex items-center gap-5 hover:bg-orange-50 transition-all group hover:border-orange-500/50 cursor-pointer shadow-sm"
                       onClick={() => goToSlide(index + 2)}
                     >
-                      <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
-                        <item.icon className="w-4 h-4 text-white" />
+                      <div className="flex-shrink-0 w-11 h-11 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
+                        <item.icon className="w-5 h-5 text-white" />
                       </div>
-                      <div className="flex items-center gap-3 flex-1">
-                        <span className="text-lg font-bold text-amber-500">{String(index + 1).padStart(2, '0')}</span>
-                        <span className="text-sm text-gray-200 font-medium">{item.title}</span>
+                      <div className="flex items-center gap-4 flex-1">
+                        <span className="text-xl font-bold text-orange-500">{String(index + 1).padStart(2, '0')}</span>
+                        <span className="text-base text-gray-800 font-medium">{item.title}</span>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-amber-500/50 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-orange-500/50 group-hover:text-orange-500 group-hover:translate-x-1 transition-all" />
                     </div>
                   ))}
                 </div>
@@ -604,30 +630,30 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} large />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-amber-500 rotate-[-20deg]" opacity={0.1} />
-                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-amber-600" opacity={0.08} />
+                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-orange-500 rotate-[-20deg]" opacity={0.1} />
+                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-4 mb-4 mt-14">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Building2 className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Sobre FastIA</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Sobre FastIA</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-2 gap-5">
                   <div className="space-y-4">
-                    <div className="bg-gray-800/50 backdrop-blur-sm border border-amber-500/20 rounded-xl p-5">
-                      <p className="text-gray-200 leading-relaxed mb-3 text-sm">
-                        <span className="text-amber-500 font-semibold">Implementar IA en tu negocio</span> te permite <span className="text-white font-medium">automatizar muchos procesos</span> y conseguir lo que te imaginas: desde atención al cliente y análisis de datos hasta flujos administrativos y toma de decisiones en tiempo real.
+                    <div className="bg-white border border-orange-200 rounded-xl p-5">
+                      <p className="text-gray-900 leading-relaxed mb-3 text-base">
+                        <span className="text-orange-500 font-semibold">Implementar IA en tu negocio</span> te permite <span className="text-gray-900 font-medium">automatizar muchos procesos</span> y conseguir lo que te imaginas: desde atención al cliente y análisis de datos hasta flujos administrativos y toma de decisiones en tiempo real.
                       </p>
-                      <p className="text-gray-300 leading-relaxed text-sm mb-3">
-                        Las empresas que adoptan IA reportan un <span className="text-amber-400 font-medium">aumento medio del 38% en productividad</span>, reducción de costes y mayor velocidad de respuesta. El coste de implementación ha bajado de forma drástica; la IA es más accesible que nunca y permite liberar tiempo para tareas estratégicas.
+                      <p className="text-gray-900 leading-relaxed text-base mb-3">
+                        Las empresas que adoptan IA reportan un <span className="text-orange-500 font-medium">aumento medio del 38% en productividad</span>, reducción de costes y mayor velocidad de respuesta. El coste de implementación ha bajado de forma drástica; la IA es más accesible que nunca y permite liberar tiempo para tareas estratégicas.
                       </p>
-                      <p className="text-gray-300 leading-relaxed text-sm">
-                        En <span className="text-amber-500 font-semibold">FastIA</span> combinamos automatización inteligente, plataformas a medida y soluciones de IA para transformar negocios tradicionales en empresas digitales eficientes y <span className="text-amber-400">maximizar la productividad</span> con tecnología de vanguardia.
+                      <p className="text-gray-900 leading-relaxed text-base">
+                        En <span className="text-orange-500 font-semibold">FastIA</span> combinamos automatización inteligente, plataformas a medida y soluciones de IA para transformar negocios tradicionales en empresas digitales eficientes y <span className="text-orange-500">maximizar la productividad</span> con tecnología de vanguardia.
                       </p>
                     </div>
                     
@@ -645,8 +671,8 @@ export default function PresentacionPratsPage() {
                       <FeatureCard icon={Shield} title="Soporte 24/7" description="Acompañamiento continuo post-lanzamiento" />
                     </div>
                     
-                    <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                      <p className="text-xs text-gray-400 mb-3">Stack Tecnológico</p>
+                    <div className="bg-white border border-orange-200 rounded-xl p-3">
+                      <p className="text-base text-gray-700 mb-3">Stack Tecnológico</p>
                       <div className="flex flex-wrap gap-2">
                         {[
                           { name: 'react', color: '#61DAFB', label: 'React' },
@@ -655,11 +681,11 @@ export default function PresentacionPratsPage() {
                           { name: 'supabase', color: '#3ECF8E', label: 'Supabase' },
                           { name: 'openai', color: '#10A37F', label: 'OpenAI' },
                         ].map((tech) => (
-                          <div key={tech.name} className="flex items-center gap-2 px-2 py-1 bg-gray-700/50 rounded-lg">
+                          <div key={tech.name} className="flex items-center gap-2 px-2 py-1 bg-orange-100 rounded-lg">
                             <div className="w-4 h-4 flex-shrink-0">
                               <TechLogo name={tech.name} color={tech.color} />
                             </div>
-                            <span className="text-xs text-gray-300">{tech.label}</span>
+                            <span className="text-base text-gray-700">{tech.label}</span>
                           </div>
                         ))}
                       </div>
@@ -676,30 +702,30 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-amber-500" opacity={0.1} />
-                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-amber-500" opacity={0.1} />
+                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-orange-500" opacity={0.1} />
+                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-orange-500" opacity={0.1} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Target className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Entendemos Vuestro Reto</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Entendemos Vuestro Reto</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-3 gap-3">
                   {/* Columna 1 */}
                   <div className="space-y-3">
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <AlertTriangle className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Sistemas Fragmentados</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Sistemas Fragmentados</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Boutique y sastrería operan por separado</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Duplicación de esfuerzos y datos</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Pérdida de información entre sistemas</li>
@@ -707,14 +733,14 @@ export default function PresentacionPratsPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <Receipt className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Facturación Problemática</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Facturación Problemática</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Facturación separada boutique/sastrería</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Pérdida de dinero en cada operación</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Proceso manual propenso a errores</li>
@@ -725,14 +751,14 @@ export default function PresentacionPratsPage() {
 
                   {/* Columna 2 */}
                   <div className="space-y-3">
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <PackageSearch className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Sin Control de Stock</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Sin Control de Stock</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Telas obsoletas sin detectar</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Productos estancados meses</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Sin visibilidad de rotación real</li>
@@ -740,14 +766,14 @@ export default function PresentacionPratsPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <AlertCircle className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Impagos Sin Detectar</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Impagos Sin Detectar</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Sin alertas de pagos pendientes</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Clientes con deudas ocultas</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Vencimientos no controlados</li>
@@ -758,14 +784,14 @@ export default function PresentacionPratsPage() {
 
                   {/* Columna 3 */}
                   <div className="space-y-3">
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <Calendar className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Vencimientos Ocultos</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Vencimientos Ocultos</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Calendario proveedores sin visibilidad</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Pagos olvidados o retrasados</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Sin control centralizado</li>
@@ -773,14 +799,14 @@ export default function PresentacionPratsPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-red-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-red-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="p-1.5 bg-red-500/20 rounded-lg">
                           <ClipboardList className="w-4 h-4 text-red-400" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Gestión 100% Manual</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Gestión 100% Manual</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-400">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Citas gestionadas a mano</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Medidas en papel/Excel</li>
                         <li className="flex items-start gap-2"><span className="text-red-400 mt-0.5">•</span>Pedidos sin trazabilidad</li>
@@ -790,9 +816,9 @@ export default function PresentacionPratsPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 bg-gradient-to-r from-red-500/10 to-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-                  <p className="text-center text-gray-300 text-sm">
-                    <span className="text-amber-500 font-semibold">Resultado actual:</span> Pérdida de dinero, tiempo y oportunidades de negocio por falta de una plataforma unificada y automatizada
+                <div className="mt-4 bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-orange-500/30 rounded-xl p-3">
+                  <p className="text-center text-gray-700 text-sm">
+                    <span className="text-orange-500 font-semibold">Resultado actual:</span> Pérdida de dinero, tiempo y oportunidades de negocio por falta de una plataforma unificada y automatizada
                   </p>
                 </div>
               </div>
@@ -805,18 +831,18 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-amber-500 rotate-[8deg]" opacity={0.12} />
-                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-amber-600" opacity={0.08} />
+                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-orange-500 rotate-[8deg]" opacity={0.12} />
+                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-1.5 h-12 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-12 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Sparkles className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-white">Nuestra Visión</h2>
-                      <p className="text-amber-400 text-xs italic">Una única plataforma que lo unifica todo</p>
+                      <h2 className="text-2xl font-bold text-gray-900">Nuestra Visión</h2>
+                      <p className="text-orange-400 text-sm italic">Una única plataforma que lo unifica todo</p>
                     </div>
                   </div>
                 </div>
@@ -824,14 +850,14 @@ export default function PresentacionPratsPage() {
                 <div className="flex-1 grid grid-cols-3 gap-3">
                   {/* Columna 1: Unificación */}
                   <div className="space-y-3">
-                    <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-orange-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <Layers className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <Layers className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Sistema Unificado</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Sistema Unificado</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-300">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Boutique + Sastrería + Web</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />3 tiendas sincronizadas</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Datos centralizados</li>
@@ -839,14 +865,14 @@ export default function PresentacionPratsPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-orange-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <Users className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <Users className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Cliente 360°</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Cliente 360°</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-300">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Historial completo</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Medidas guardadas</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Preferencias y notas</li>
@@ -857,14 +883,14 @@ export default function PresentacionPratsPage() {
 
                   {/* Columna 2: Automatización */}
                   <div className="space-y-3">
-                    <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-orange-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <Zap className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <Zap className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">100% Automatizado</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">100% Automatizado</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-300">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Pedidos proveedores auto</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Notificaciones automáticas</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Facturación integrada</li>
@@ -872,14 +898,14 @@ export default function PresentacionPratsPage() {
                       </ul>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-orange-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <DollarSign className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <DollarSign className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Control Financiero</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Control Financiero</h4>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-gray-300">
+                      <ul className="space-y-1.5 text-base text-gray-700">
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Rentabilidad por prenda</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Márgenes por proveedor</li>
                         <li className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-green-500" />Impagos detectados</li>
@@ -890,12 +916,12 @@ export default function PresentacionPratsPage() {
 
                   {/* Columna 3: Acceso */}
                   <div className="space-y-3">
-                    <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-3">
+                    <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <Monitor className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <Monitor className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">Multiplataforma</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">Multiplataforma</h4>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         {[
@@ -904,50 +930,49 @@ export default function PresentacionPratsPage() {
                           { icon: Tablet, label: 'Tablet' },
                           { icon: Smartphone, label: 'Móvil' },
                         ].map((item, idx) => (
-                          <div key={idx} className="p-2 bg-gray-800/50 rounded-lg text-center">
-                            <item.icon className="w-4 h-4 text-amber-500 mx-auto mb-1" />
-                            <p className="text-xs text-gray-300">{item.label}</p>
+                          <div key={idx} className="p-2 bg-white rounded-lg text-center">
+                            <item.icon className="w-4 h-4 text-orange-500 mx-auto mb-1" />
+                            <p className="text-base text-gray-700">{item.label}</p>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-amber-500/20 rounded-xl p-3">
+                    <div className="bg-white border border-orange-500/20 rounded-xl p-3">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="p-1.5 bg-amber-500/20 rounded-lg">
-                          <Store className="w-4 h-4 text-amber-500" />
+                        <div className="p-1.5 bg-orange-500/20 rounded-lg">
+                          <Store className="w-4 h-4 text-orange-500" />
                         </div>
-                        <h4 className="text-white font-semibold text-sm">3 Tiendas</h4>
+                        <h4 className="text-gray-900 font-semibold text-sm">3 Tiendas</h4>
                       </div>
                       <div className="space-y-1.5">
-                        <div className="px-3 py-1.5 bg-amber-500/10 rounded-lg text-center">
-                          <p className="text-xs text-amber-400 font-medium">Wellington</p>
+                        <div className="px-3 py-1.5 bg-orange-500/10 rounded-lg text-center">
+                          <p className="text-base text-orange-400 font-medium">Wellington</p>
                         </div>
-                        <div className="px-3 py-1.5 bg-amber-500/10 rounded-lg text-center">
-                          <p className="text-xs text-amber-400 font-medium">Hermanos Pinzón</p>
+                        <div className="px-3 py-1.5 bg-orange-500/10 rounded-lg text-center">
+                          <p className="text-base text-orange-400 font-medium">Hermanos Pinzón</p>
                         </div>
-                        <div className="px-3 py-1.5 bg-amber-500/10 rounded-lg text-center">
-                          <p className="text-xs text-amber-400 font-medium">Tienda Web</p>
+                        <div className="px-3 py-1.5 bg-orange-500/10 rounded-lg text-center">
+                          <p className="text-base text-orange-400 font-medium">Tienda Web</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Footer con beneficios de automatización — una línea */}
-                <div className="mt-3 grid grid-cols-7 gap-2">
+                {/* Footer con beneficios de automatización — una línea (sin gestión envío transporte) */}
+                <div className="mt-3 grid grid-cols-6 gap-3">
                   {[
                     { icon: Zap, text: 'Automatización total de procesos' },
                     { icon: Gauge, text: 'Máxima eficiencia operativa' },
                     { icon: Brain, text: 'Decisiones basadas en datos' },
                     { icon: Clock, text: 'Ahorro de tiempo y recursos' },
                     { icon: TrendingUp, text: 'Crecimiento escalable' },
-                    { icon: Truck, text: 'Gestión envío con transportes' },
                     { icon: Tags, text: 'Sistema de etiquetado' },
                   ].map((item, idx) => (
-                    <div key={idx} className="flex flex-col items-center justify-center bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-lg px-1.5 py-2 text-center min-h-0">
-                      <item.icon className="w-4 h-4 text-green-500 mb-1 flex-shrink-0" />
-                      <p className="text-[10px] text-gray-300 leading-tight text-center">{item.text}</p>
+                    <div key={idx} className="flex flex-col items-center justify-center bg-gradient-to-br from-green-500/15 to-green-600/10 border border-green-500/25 rounded-xl px-4 py-4 text-center min-h-0">
+                      <item.icon className="w-6 h-6 text-green-500 mb-2 flex-shrink-0" />
+                      <p className="text-sm text-gray-800 leading-tight text-center font-medium">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -961,69 +986,72 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-amber-500" opacity={0.1} />
-                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-amber-500 rotate-[-12deg]" opacity={0.12} />
+                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-orange-500" opacity={0.1} />
+                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-orange-500 rotate-[-12deg]" opacity={0.12} />
                 {/* Cabecera arriba a la izquierda, mismo formato que el resto de slides */}
                 <div className="flex items-center gap-4 mb-5 flex-shrink-0">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Workflow className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-3xl font-bold text-white">Flujo Completo del Cliente</h2>
-                      <p className="text-xs text-amber-400">Desde que entra hasta que se lleva el traje</p>
+                      <h2 className="text-3xl font-bold text-gray-900">Flujo Completo del Cliente</h2>
+                      <p className="text-base text-orange-400">Desde que entra hasta que se lleva el traje</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Bloque centrado en mitad de la página: cards con iconos dentro */}
+                {/* Bloque centrado: 6 cards de fases arriba, 5 cards verdes abajo (más separados) */}
                 <div className="flex-1 flex flex-col justify-center items-stretch pt-2 pb-6 -translate-y-[6%] mt-4">
+                  {/* 6 cards de fases — contenido inferior (beneficio) alineado en todos */}
                   <div className="flex flex-wrap justify-center gap-2 w-full">
                     {[
-                      { num: '01', name: 'Recepción', icon: Users, color: 'from-amber-500 to-amber-600', flujo: ['Cliente entra', 'Abrir/crear ficha', 'Ver historial', 'Ver pendientes'], beneficio: 'Información completa del cliente al instante', isLast: false },
-                      { num: '02', name: 'Medidas', icon: Ruler, color: 'from-amber-500 to-amber-600', flujo: ['Seleccionar prenda', 'Campos automáticos', 'Guardar medidas', 'Artesanal/Industrial'], beneficio: 'Medidas siempre actualizadas y accesibles', isLast: false },
-                      { num: '03', name: 'Tejido', icon: Shirt, color: 'from-amber-500 to-amber-600', flujo: ['Consulta stock', 'Reserva automática', 'Pedido automático', 'Email auto proveedor'], beneficio: 'Sin roturas de stock ni pedidos manuales', isLast: false },
-                      { num: '04', name: 'Pedido', icon: FileText, color: 'from-amber-500 to-amber-600', flujo: ['Ficha técnica auto', 'Firma en tablet', 'Email confirmación', 'Registro estado'], beneficio: 'Documentación perfecta sin errores', isLast: false },
-                      { num: '05', name: 'Producción', icon: Settings, color: 'from-amber-500 to-amber-600', flujo: ['Tejido pedido', 'Tejido recibido', 'En confección', 'Prueba/Ajustes'], beneficio: 'Trazabilidad total de cada pedido', isLast: false },
+                      { num: '01', name: 'Recepción', icon: Users, color: 'from-orange-500 to-orange-600', flujo: ['Cliente entra', 'Abrir/crear ficha', 'Ver historial', 'Ver pendientes'], beneficio: 'Información completa del cliente al instante', isLast: false },
+                      { num: '02', name: 'Medidas', icon: Ruler, color: 'from-orange-500 to-orange-600', flujo: ['Seleccionar prenda', 'Campos automáticos', 'Guardar medidas', 'Artesanal/Industrial'], beneficio: 'Medidas siempre actualizadas y accesibles', isLast: false },
+                      { num: '03', name: 'Tejido', icon: Shirt, color: 'from-orange-500 to-orange-600', flujo: ['Consulta stock', 'Reserva automática', 'Pedido automático', 'Email auto proveedor'], beneficio: 'Sin roturas de stock ni pedidos manuales', isLast: false },
+                      { num: '04', name: 'Pedido', icon: FileText, color: 'from-orange-500 to-orange-600', flujo: ['Ficha técnica auto', 'Firma en tablet', 'Email confirmación', 'Registro estado'], beneficio: 'Documentación perfecta sin errores', isLast: false },
+                      { num: '05', name: 'Producción', icon: Settings, color: 'from-orange-500 to-orange-600', flujo: ['Tejido pedido', 'Tejido recibido', 'En confección', 'Prueba/Ajustes'], beneficio: 'Trazabilidad total de cada pedido', isLast: false },
                       { num: '06', name: 'Entrega', icon: BadgeCheck, color: 'from-green-500 to-green-600', flujo: ['Notificación auto', 'Cobro TPV', 'Factura automática', 'Rentabilidad calc.'], beneficio: 'Cierre perfecto con datos financieros', isLast: true },
                     ].map((phase, idx) => (
-                      <div key={idx} className={`w-[15%] min-w-[140px] rounded-xl overflow-hidden ${phase.isLast ? 'border border-green-500/30' : 'border border-gray-700/50'} bg-gray-800/50`}>
-                        {/* Icono, número y nombre de fase dentro del card */}
-                        <div className={`p-2.5 ${phase.isLast ? 'bg-green-500/10' : 'bg-gray-800/50'}`}>
-                          <div className="flex items-center gap-2 mb-2">
+                      <div key={idx} className={`w-[15%] min-w-[140px] min-h-[280px] rounded-xl overflow-hidden flex flex-col ${phase.isLast ? 'border border-green-500/30' : 'border border-orange-200'} bg-white`}>
+                        {/* Icono, número y nombre de fase */}
+                        <div className={`p-3 flex flex-col flex-1 min-h-0 ${phase.isLast ? 'bg-green-500/10' : 'bg-white'}`}>
+                          <div className="flex items-center gap-2 mb-2 flex-shrink-0">
                             <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
                               <phase.icon className="w-4 h-4 text-white" />
                             </div>
                             <div className="min-w-0 flex-1">
-                              <span className={`text-[10px] font-bold block ${phase.isLast ? 'text-green-400' : 'text-amber-400'}`}>{phase.num}</span>
-                              <p className="text-xs font-semibold text-white leading-tight">{phase.name}</p>
+                              <span className={`text-xs font-bold block ${phase.isLast ? 'text-green-400' : 'text-orange-400'}`}>{phase.num}</span>
+                              <p className="text-base font-semibold text-gray-900 leading-tight">{phase.name}</p>
                             </div>
                           </div>
-                          {/* Flujo */}
-                          <p className="text-[10px] text-gray-400 mb-1 font-medium">Flujo:</p>
-                          <ul className="space-y-0.5 mb-2">
-                            {phase.flujo.map((item, i) => (
-                              <li key={i} className="flex items-center gap-1 text-[11px] text-gray-300">
-                                <CheckCircle2 className={`w-2.5 h-2.5 flex-shrink-0 ${phase.isLast ? 'text-green-500' : 'text-amber-500'}`} />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                          {/* Beneficio */}
-                          <div className={`p-1.5 rounded-lg ${phase.isLast ? 'bg-green-500/20' : 'bg-amber-500/10'}`}>
-                            <p className={`text-[11px] leading-tight ${phase.isLast ? 'text-green-400' : 'text-amber-400'}`}>
-                              <Star className="w-3 h-3 inline mr-1 flex-shrink-0" />
-                              {phase.beneficio}
-                            </p>
+                          {/* Flujo — zona flexible para que el beneficio quede abajo alineado en todos */}
+                          <div className="flex-1 flex flex-col min-h-0">
+                            <p className="text-sm text-gray-600 mb-1 font-medium">Flujo:</p>
+                            <ul className="space-y-0.5 mb-2">
+                              {phase.flujo.map((item, i) => (
+                                <li key={i} className="flex items-center gap-1 text-base text-gray-700">
+                                  <CheckCircle2 className={`w-3 h-3 flex-shrink-0 ${phase.isLast ? 'text-green-500' : 'text-orange-500'}`} />
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                            {/* Beneficio — siempre al final del card, alineado entre todos */}
+                            <div className={`mt-auto p-2 rounded-lg ${phase.isLast ? 'bg-green-500/20' : 'bg-orange-500/10'}`}>
+                              <p className={`text-base leading-tight ${phase.isLast ? 'text-green-700' : 'text-gray-800'}`}>
+                                <Star className="w-3.5 h-3.5 inline mr-1 flex-shrink-0" />
+                                {phase.beneficio}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Cards de beneficios generales — una sola línea, estilo verde */}
-                  <div className="grid grid-cols-5 gap-3 mt-3">
+                  {/* Cards de beneficios generales — más separados de los 6 de arriba */}
+                  <div className="grid grid-cols-5 gap-3 mt-8">
                     {[
                       { icon: Eye, text: 'Control total de pedidos' },
                       { icon: ShoppingCart, text: 'Sin perder ventas' },
@@ -1033,7 +1061,7 @@ export default function PresentacionPratsPage() {
                     ].map((item, idx) => (
                       <div key={idx} className="flex flex-col items-center justify-center bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-lg px-2 py-2.5 text-center min-h-0">
                         <item.icon className="w-5 h-5 text-green-500 mb-1.5 flex-shrink-0" />
-                        <p className="text-[11px] text-gray-300 leading-tight">{item.text}</p>
+                        <p className="text-[11px] text-gray-700 leading-tight">{item.text}</p>
                       </div>
                     ))}
                   </div>
@@ -1048,24 +1076,24 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-amber-500 rotate-[-20deg]" opacity={0.1} />
-                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-amber-600" opacity={0.08} />
+                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-orange-500 rotate-[-20deg]" opacity={0.1} />
+                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Truck className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Automatización de Proveedores</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Automatización de Proveedores</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-2 gap-5">
                   <div className="space-y-4">
-                    <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-5">
-                      <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-                        <Database className="w-5 h-5 text-amber-500" />
+                    <div className="bg-white border border-orange-200 rounded-xl p-5">
+                      <h4 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
+                        <Database className="w-5 h-5 text-orange-500" />
                         Base de Datos (200-500 proveedores)
                       </h4>
                       <div className="grid grid-cols-2 gap-2">
@@ -1077,17 +1105,17 @@ export default function PresentacionPratsPage() {
                           { icon: Calendar, text: 'Calendario vencimientos' },
                           { icon: TrendingUp, text: 'Análisis rentabilidad' },
                         ].map((item, idx) => (
-                          <div key={idx} className="flex items-center gap-2 p-2 bg-gray-700/30 rounded-lg">
-                            <item.icon className="w-4 h-4 text-amber-500" />
-                            <span className="text-xs text-gray-300">{item.text}</span>
+                          <div key={idx} className="flex items-center gap-2 p-2 bg-orange-100/80 rounded-lg">
+                            <item.icon className="w-4 h-4 text-orange-500" />
+                            <span className="text-base text-gray-700">{item.text}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-5">
-                      <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-                        <Bell className="w-5 h-5 text-amber-500" />
+                    <div className="bg-white border border-orange-200 rounded-xl p-5">
+                      <h4 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
+                        <Bell className="w-5 h-5 text-orange-500" />
                         Alertas y Comunicación
                       </h4>
                       <div className="space-y-2">
@@ -1098,9 +1126,9 @@ export default function PresentacionPratsPage() {
                           { icon: FileQuestion, text: 'Consultas rápidas' },
                           { icon: TrendingUp, text: 'Comparativa rentabilidad' },
                         ].map((item, idx) => (
-                          <div key={idx} className="flex items-center gap-2 p-2 bg-gray-700/30 rounded-lg">
-                            <item.icon className="w-4 h-4 text-amber-500" />
-                            <span className="text-xs text-gray-300">{item.text}</span>
+                          <div key={idx} className="flex items-center gap-2 p-2 bg-orange-100/80 rounded-lg">
+                            <item.icon className="w-4 h-4 text-orange-500" />
+                            <span className="text-base text-gray-700">{item.text}</span>
                           </div>
                         ))}
                       </div>
@@ -1109,16 +1137,16 @@ export default function PresentacionPratsPage() {
                     <div className="p-4 bg-green-500/10 rounded-xl border border-green-500/30">
                       <div className="flex items-center gap-2 mb-2">
                         <TrendingUp className="w-5 h-5 text-green-500" />
-                        <span className="text-white font-semibold">Resultado</span>
+                        <span className="text-gray-900 font-semibold">Resultado</span>
                       </div>
-                      <p className="text-sm text-gray-300">Pedidos sin errores, consolidados, con trazabilidad completa y comunicación fluida</p>
+                      <p className="text-base text-gray-700">Pedidos sin errores, consolidados, con trazabilidad completa y comunicación fluida</p>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-5">
-                      <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-                        <Zap className="w-5 h-5 text-amber-500" />
+                    <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-5">
+                      <h4 className="text-gray-900 font-semibold mb-4 flex items-center gap-2">
+                        <Zap className="w-5 h-5 text-orange-500" />
                         Automatización Total
                       </h4>
                       <div className="space-y-3">
@@ -1128,15 +1156,14 @@ export default function PresentacionPratsPage() {
                           { icon: Boxes, title: 'Consolidación inteligente', desc: 'Varios clientes = 1 pedido' },
                           { icon: PackageCheck, title: 'Consulta stock proveedor', desc: 'Disponibilidad en tiempo real' },
                           { icon: Timer, title: 'Registro de tiempos', desc: 'Análisis de respuesta' },
-                          { icon: Truck, title: 'Gestión de envío con transportes', desc: 'Automatización con empresa de transportes' },
                           { icon: Tags, title: 'Sistema de etiquetado', desc: 'Automatización de etiquetado' },
                         ].map((item, idx) => (
-                          <div key={idx} className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                          <div key={idx} className="p-3 bg-white rounded-lg border border-orange-200">
                             <div className="flex items-center gap-2 mb-1">
-                              <item.icon className="w-4 h-4 text-amber-500" />
-                              <span className="text-sm text-white font-medium">{item.title}</span>
+                              <item.icon className="w-4 h-4 text-orange-500" />
+                              <span className="text-base text-gray-900 font-medium">{item.title}</span>
                             </div>
-                            <p className="text-xs text-gray-400 ml-6">{item.desc}</p>
+                            <p className="text-base text-gray-700 ml-6">{item.desc}</p>
                           </div>
                         ))}
                       </div>
@@ -1153,29 +1180,29 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-amber-500" opacity={0.1} />
-                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-amber-500" opacity={0.1} />
+                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-orange-500" opacity={0.1} />
+                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-orange-500" opacity={0.1} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Warehouse className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Gestión de Stock</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Gestión de Stock</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-3 gap-3">
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-3">
-                      <Store className="w-5 h-5 text-amber-500" />
-                      <h4 className="text-white font-semibold">Control 3 Tiendas</h4>
+                      <Store className="w-5 h-5 text-orange-500" />
+                      <h4 className="text-gray-900 font-semibold">Control 3 Tiendas</h4>
                     </div>
                     <div className="flex gap-1 mb-3">
-                      <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full">Wellington</span>
-                      <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full">H. Pinzón</span>
-                      <span className="px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded-full">Web</span>
+                      <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full">Wellington</span>
+                      <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full">H. Pinzón</span>
+                      <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full">Web</span>
                     </div>
                     <div className="space-y-2">
                       {[
@@ -1186,18 +1213,18 @@ export default function PresentacionPratsPage() {
                         { icon: ArrowDownUp, text: 'Traspasos entre tiendas' },
                         { icon: Fingerprint, text: 'Trazabilidad movimientos' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-3">
-                      <Box className="w-5 h-5 text-amber-500" />
-                      <h4 className="text-white font-semibold">Gestión Completa</h4>
+                      <Box className="w-5 h-5 text-orange-500" />
+                      <h4 className="text-gray-900 font-semibold">Gestión Completa</h4>
                     </div>
                     <div className="space-y-2">
                       {[
@@ -1210,18 +1237,18 @@ export default function PresentacionPratsPage() {
                         { icon: FileSpreadsheet, text: 'Inventarios programados' },
                         { icon: BarChart, text: 'Valoración de stock' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-3">
+                  <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-3">
-                      <Bell className="w-5 h-5 text-amber-500" />
-                      <h4 className="text-white font-semibold">Alertas Inteligentes</h4>
+                      <Bell className="w-5 h-5 text-orange-500" />
+                      <h4 className="text-gray-900 font-semibold">Alertas Inteligentes</h4>
                     </div>
                     <div className="space-y-2">
                       {[
@@ -1234,8 +1261,8 @@ export default function PresentacionPratsPage() {
                         { icon: Store, text: 'Comparativa entre tiendas' },
                         { icon: Percent, text: 'Margen por producto o proveedor' },
                       ].map((item, idx) => (
-                        <div key={idx} className={`flex items-center gap-2 text-xs ${item.alert ? 'text-amber-400' : 'text-gray-300'}`}>
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className={`flex items-center gap-2 text-base ${item.alert ? 'text-orange-600' : 'text-gray-700'}`}>
+                          <item.icon className="w-4 h-4 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
@@ -1244,7 +1271,7 @@ export default function PresentacionPratsPage() {
                 </div>
 
                 <div className="mt-4 p-4 bg-green-500/10 rounded-xl border border-green-500/30">
-                  <p className="text-center text-gray-300 text-sm">
+                  <p className="text-center text-gray-700 text-base">
                     <span className="text-green-400 font-semibold">Resultado:</span> Control absoluto del inventario en las 3 tiendas, sin productos olvidados, con alertas proactivas
                   </p>
                 </div>
@@ -1258,25 +1285,25 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-amber-500 rotate-[8deg]" opacity={0.12} />
-                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-amber-600" opacity={0.08} />
+                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-orange-500 rotate-[8deg]" opacity={0.12} />
+                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <CreditCard className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Gestión de Caja y Cobros</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Gestión de Caja y Cobros</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-3 gap-3">
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <Receipt className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">TPV Multiplataforma</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">TPV Multiplataforma</h4>
                     <div className="grid grid-cols-2 gap-2 mb-3">
                       {[
                         { icon: Laptop, label: 'PC' },
@@ -1284,9 +1311,9 @@ export default function PresentacionPratsPage() {
                         { icon: Smartphone, label: 'Móvil' },
                         { icon: Globe, label: 'Web' },
                       ].map((item, idx) => (
-                        <div key={idx} className="p-2 bg-gray-700/30 rounded-lg text-center">
-                          <item.icon className="w-5 h-5 text-amber-500 mx-auto mb-1" />
-                          <p className="text-xs text-gray-300">{item.label}</p>
+                        <div key={idx} className="p-2 bg-orange-100/80 rounded-lg text-center">
+                          <item.icon className="w-5 h-5 text-orange-500 mx-auto mb-1" />
+                          <p className="text-base text-gray-700">{item.label}</p>
                         </div>
                       ))}
                     </div>
@@ -1298,19 +1325,19 @@ export default function PresentacionPratsPage() {
                         { icon: QrCode, text: 'Escaneo código barras' },
                         { icon: Percent, text: 'Descuentos y promos' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <Banknote className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Control de Cobros</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Control de Cobros</h4>
                     <div className="space-y-1.5">
                       {[
                         { icon: Eye, text: 'Pendientes por cliente' },
@@ -1322,22 +1349,22 @@ export default function PresentacionPratsPage() {
                         { icon: FileText, text: 'Notas en cada cobro' },
                         { icon: ShieldCheck, text: 'Bloqueo por impago' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <FileCheck className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Integración Facturación</h4>
-                    <div className="p-3 bg-gray-800/50 rounded-lg mb-3">
-                      <p className="text-sm text-gray-300 mb-2 text-center">API programa externo</p>
-                      <div className="flex items-center justify-center gap-2 text-xs text-amber-400">
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Integración Facturación</h4>
+                    <div className="p-3 bg-white rounded-lg mb-3">
+                      <p className="text-base text-gray-700 mb-2 text-center">API programa externo</p>
+                      <div className="flex items-center justify-center gap-2 text-base text-orange-400">
                         <Zap className="w-3 h-3" />
                         Sincronización automática
                       </div>
@@ -1350,7 +1377,7 @@ export default function PresentacionPratsPage() {
                         'Datos fiscales auto',
                         'Exportación contable',
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-green-400">
+                        <div key={idx} className="flex items-center gap-2 text-base text-green-400">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           {item}
                         </div>
@@ -1360,7 +1387,7 @@ export default function PresentacionPratsPage() {
                 </div>
 
                 <div className="mt-4 p-4 bg-green-500/10 rounded-xl border border-green-500/30">
-                  <p className="text-center text-gray-300 text-sm">
+                  <p className="text-center text-gray-700 text-sm">
                     <span className="text-green-400 font-semibold">Resultado:</span> Cobros controlados desde cualquier dispositivo, impagos detectados automáticamente, facturación sincronizada
                   </p>
                 </div>
@@ -1374,25 +1401,25 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-amber-500" opacity={0.1} />
-                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-amber-500 rotate-[-12deg]" opacity={0.12} />
+                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-orange-500" opacity={0.1} />
+                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-orange-500 rotate-[-12deg]" opacity={0.12} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <BarChart className="w-6 h-6 text-white" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white">Analíticas, Reporting y Usuarios</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Analíticas, Reporting y Usuarios</h2>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-3 gap-3">
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <CircleDollarSign className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Rentabilidad</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Rentabilidad</h4>
                     <div className="space-y-2">
                       {[
                         { icon: Shirt, text: 'Margen por prenda detallado' },
@@ -1402,64 +1429,64 @@ export default function PresentacionPratsPage() {
                         { icon: Store, text: 'Rentabilidad por tienda' },
                         { icon: Calendar, text: 'Evolución mensual/anual' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
-                    <div className="mt-3 p-2 bg-gray-700/30 rounded-lg">
-                      <p className="text-xs text-gray-400 mb-1">Por tienda</p>
+                    <div className="mt-3 p-2 bg-orange-100/80 rounded-lg">
+                      <p className="text-base text-gray-700 mb-1">Por tienda</p>
                       <div className="flex gap-1 flex-wrap">
-                        <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Wellington</span>
-                        <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">H.Pinzón</span>
-                        <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded">Web</span>
+                        <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-sm rounded">Wellington</span>
+                        <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-sm rounded">H.Pinzón</span>
+                        <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-sm rounded">Web</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <LayoutDashboard className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Informes Segmentados</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Informes Segmentados</h4>
                     <div className="space-y-2">
-                      <div className="p-2 bg-gray-700/30 rounded-lg">
+                      <div className="p-2 bg-orange-100/80 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
-                          <Calendar className="w-3 h-3 text-amber-500" />
-                          <p className="text-xs text-amber-400 font-medium">Por Fechas</p>
+                          <Calendar className="w-3 h-3 text-orange-500" />
+                          <p className="text-base text-orange-400 font-medium">Por Fechas</p>
                         </div>
-                        <p className="text-xs text-gray-400">Día, semana, mes, año, personalizado</p>
+                        <p className="text-base text-gray-700">Día, semana, mes, año, personalizado</p>
                       </div>
-                      <div className="p-2 bg-gray-700/30 rounded-lg">
+                      <div className="p-2 bg-orange-100/80 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
-                          <Users className="w-3 h-3 text-amber-500" />
-                          <p className="text-xs text-amber-400 font-medium">Por Cliente</p>
+                          <Users className="w-3 h-3 text-orange-500" />
+                          <p className="text-base text-orange-400 font-medium">Por Cliente</p>
                         </div>
-                        <p className="text-xs text-gray-400">Historial, frecuencia, ticket medio</p>
+                        <p className="text-base text-gray-700">Historial, frecuencia, ticket medio</p>
                       </div>
-                      <div className="p-2 bg-gray-700/30 rounded-lg">
+                      <div className="p-2 bg-orange-100/80 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
-                          <Shirt className="w-3 h-3 text-amber-500" />
-                          <p className="text-xs text-amber-400 font-medium">Por Producto</p>
+                          <Shirt className="w-3 h-3 text-orange-500" />
+                          <p className="text-base text-orange-400 font-medium">Por Producto</p>
                         </div>
-                        <p className="text-xs text-gray-400">Más/menos vendidos, estancados</p>
+                        <p className="text-base text-gray-700">Más/menos vendidos, estancados</p>
                       </div>
-                      <div className="p-2 bg-gray-700/30 rounded-lg">
+                      <div className="p-2 bg-orange-100/80 rounded-lg">
                         <div className="flex items-center gap-2 mb-1">
-                          <Truck className="w-3 h-3 text-amber-500" />
-                          <p className="text-xs text-amber-400 font-medium">Por Proveedor</p>
+                          <Truck className="w-3 h-3 text-orange-500" />
+                          <p className="text-base text-orange-400 font-medium">Por Proveedor</p>
                         </div>
-                        <p className="text-xs text-gray-400">Tiempos, costes, incidencias</p>
+                        <p className="text-base text-gray-700">Tiempos, costes, incidencias</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <UserCog className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Usuarios y Roles</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Usuarios y Roles</h4>
                     <div className="space-y-2">
                       {[
                         { level: '1', role: 'Administrador', desc: 'Acceso total, configuración' },
@@ -1467,13 +1494,13 @@ export default function PresentacionPratsPage() {
                         { level: '3', role: 'Sastre', desc: 'Pedidos y medidas' },
                         { level: '4', role: 'Vendedor', desc: 'TPV y consultas' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 p-2 bg-gray-800/50 rounded-lg">
-                          <div className="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center text-amber-400 text-xs font-bold">
+                        <div key={idx} className="flex items-center gap-2 p-2 bg-white rounded-lg">
+                          <div className="w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 text-base font-bold">
                             {item.level}
                           </div>
                           <div className="flex-1">
-                            <p className="text-xs text-white font-medium">{item.role}</p>
-                            <p className="text-xs text-gray-400">{item.desc}</p>
+                            <p className="text-base text-gray-900 font-medium">{item.role}</p>
+                            <p className="text-base text-gray-700">{item.desc}</p>
                           </div>
                         </div>
                       ))}
@@ -1484,8 +1511,8 @@ export default function PresentacionPratsPage() {
                         { icon: Fingerprint, text: 'Trazabilidad acciones' },
                         { icon: Shield, text: 'Permisos configurables' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3 h-3 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3 h-3 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
@@ -1502,28 +1529,28 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-amber-500 rotate-[-20deg]" opacity={0.1} />
-                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-amber-600" opacity={0.08} />
+                <ScissorsSilhouette className="absolute -left-2 bottom-8 w-16 h-32 text-orange-500 rotate-[-20deg]" opacity={0.1} />
+                <VestSilhouette className="absolute -right-3 top-16 w-36 h-48 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-4 mb-5">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <ShoppingCart className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-3xl font-bold text-white">Tienda Online y Marketing</h2>
-                      <p className="text-sm text-amber-400">Estilo Suit Supply</p>
+                      <h2 className="text-3xl font-bold text-gray-900">Tienda Online y Marketing</h2>
+                      <p className="text-base text-orange-400">Estilo Suit Supply</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex-1 grid grid-cols-3 gap-3">
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <Globe className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">E-commerce Premium</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">E-commerce Premium</h4>
                     <div className="space-y-1.5">
                       {[
                         { icon: Sparkles, text: 'Diseño tipo Suit Supply' },
@@ -1535,19 +1562,19 @@ export default function PresentacionPratsPage() {
                         { icon: Bell, text: 'Lista de interés' },
                         { icon: Workflow, text: 'Estados de pedido' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-white border border-orange-200 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <Search className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">SEO y Tecnología</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">SEO y Tecnología</h4>
                     <div className="space-y-1.5">
                       {[
                         { icon: Search, text: 'SEO optimizado Google' },
@@ -1556,26 +1583,26 @@ export default function PresentacionPratsPage() {
                         { icon: Zap, text: 'PWA (tipo app)' },
                         { icon: Globe, text: 'Multiidioma ES + EN' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
                     </div>
-                    <div className="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                    <div className="mt-4 p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
                       <div className="flex items-center gap-2 mb-1">
-                        <Brain className="w-4 h-4 text-amber-500" />
-                        <p className="text-xs text-amber-400 font-medium">Búsquedas IA</p>
+                        <Brain className="w-4 h-4 text-orange-500" />
+                        <p className="text-base text-orange-400 font-medium">Búsquedas IA</p>
                       </div>
-                      <p className="text-xs text-gray-400">"sastrería Madrid", "trajes a medida"</p>
+                      <p className="text-base text-gray-700">"sastrería Madrid", "trajes a medida"</p>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/30 rounded-xl p-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
+                  <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/30 rounded-xl p-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-3 mx-auto shadow-lg">
                       <Megaphone className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-white font-semibold mb-3 text-center">Marketing (Resend)</h4>
+                    <h4 className="text-gray-900 font-semibold mb-3 text-center">Marketing (Resend)</h4>
                     <div className="space-y-1.5">
                       {[
                         { icon: FileText, text: 'Plantillas personalizables' },
@@ -1588,8 +1615,8 @@ export default function PresentacionPratsPage() {
                         { icon: Eye, text: 'Tasa de apertura' },
                         { icon: TrendingUp, text: 'Análisis de clics' },
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <item.icon className="w-3.5 h-3.5 text-amber-500" />
+                        <div key={idx} className="flex items-center gap-2 text-base text-gray-700">
+                          <item.icon className="w-3.5 h-3.5 text-orange-500" />
                           {item.text}
                         </div>
                       ))}
@@ -1606,18 +1633,18 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-amber-500" opacity={0.1} />
-                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-amber-500" opacity={0.1} />
+                <TuxedoSilhouette className="absolute -right-6 bottom-10 w-52 h-64 text-orange-500" opacity={0.1} />
+                <BowTieSilhouette className="absolute left-4 bottom-20 w-24 h-12 text-orange-500" opacity={0.1} />
                 {/* Cabecera arriba a la izquierda, misma altura que el resto de slides */}
                 <div className="flex items-center gap-4 mb-5 flex-shrink-0">
-                  <div className="w-1.5 h-14 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-14 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Calendar className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h2 className="text-3xl font-bold text-white">Planificación del Proyecto</h2>
-                      <p className="text-xs text-amber-400">Duración total: ~12 semanas</p>
+                      <h2 className="text-3xl font-bold text-gray-900">Planificación del Proyecto</h2>
+                      <p className="text-base text-orange-400">Duración total: ~12 semanas</p>
                     </div>
                   </div>
                 </div>
@@ -1629,28 +1656,28 @@ export default function PresentacionPratsPage() {
                     {[
                       { num: '01', name: 'Discovery', title: 'Discovery + Auditoría', icon: Lightbulb, color: 'from-emerald-500 to-emerald-600', weeks: '1-2 sem', items: ['Análisis del negocio actual', 'Requisitos de usuarios', 'Definición de procesos', 'Stack tecnológico', 'Roadmap con Quick Wins', 'Product Brief'] },
                       { num: '02', name: 'Diseño', title: 'Diseño + Arquitectura', icon: PenTool, color: 'from-cyan-500 to-cyan-600', weeks: '2-3 sem', items: ['Wireframes navegables', 'Prototipos interactivos', 'Design System completo', 'Arquitectura de datos', 'Flujo de información', 'Validación con cliente'] },
-                      { num: '03', name: 'Desarrollo', title: 'Desarrollo + IA', icon: Code, color: 'from-amber-500 to-amber-600', weeks: '4-6 sem', items: ['Sprints de 2 semanas', 'MVP funcional iterativo', 'Integraciones APIs', 'Backend + Frontend', 'Automatizaciones', 'Entregas continuas'] },
+                      { num: '03', name: 'Desarrollo', title: 'Desarrollo + IA', icon: Code, color: 'from-orange-500 to-orange-600', weeks: '4-6 sem', items: ['Sprints de 2 semanas', 'MVP funcional iterativo', 'Integraciones APIs', 'Backend + Frontend', 'Automatizaciones', 'Entregas continuas'] },
                       { num: '04', name: 'Testing', title: 'Testing + QA', icon: Bug, color: 'from-violet-500 to-violet-600', weeks: '1-2 sem', items: ['Tests funcionales', 'Pruebas de rendimiento', 'Auditoría seguridad', 'Optimización UX', 'Corrección de bugs', 'Validación final'] },
                       { num: '05', name: 'Lanzamiento', title: 'Lanzamiento', icon: Upload, color: 'from-rose-500 to-rose-600', weeks: '1 sem', items: ['Deploy en producción', 'Configuración servidores', 'Monitorización 24/7', 'Documentación técnica', 'Formación equipo', 'Soporte intensivo'] },
                       { num: '06', name: 'Evolución', title: 'Evolución Continua', icon: Repeat, color: 'from-gray-500 to-gray-600', weeks: 'Ongoing', items: ['Analytics y métricas', 'Mejoras basadas en datos', 'Nuevas funcionalidades', 'Optimización continua', 'Soporte y manten.', 'Escalado según necesidad'] },
                     ].map((phase, idx) => (
-                      <div key={idx} className="rounded-xl p-3.5 bg-gray-800/50 border border-gray-700/50">
+                      <div key={idx} className="rounded-xl p-3.5 bg-white border border-orange-200">
                         {/* Icono, número y nombre de fase dentro del card */}
                         <div className="flex items-center gap-2 mb-3">
                           <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${phase.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
                             <phase.icon className="w-4 h-4 text-white" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <span className="text-[10px] font-bold text-amber-400 block">{phase.num}</span>
-                            <p className="text-xs font-semibold text-white leading-tight">{phase.name}</p>
-                            <p className="text-[10px] text-gray-500">{phase.weeks}</p>
+                            <span className="text-[10px] font-bold text-orange-400 block">{phase.num}</span>
+                            <p className="text-base font-semibold text-gray-900 leading-tight">{phase.name}</p>
+                            <p className="text-[10px] text-gray-600">{phase.weeks}</p>
                           </div>
                         </div>
-                        <h5 className="text-[11px] font-semibold text-gray-300 mb-2 border-t border-gray-700/50 pt-2">{phase.title}</h5>
+                        <h5 className="text-[11px] font-semibold text-gray-700 mb-2 border-t border-orange-200 pt-2">{phase.title}</h5>
                         <ul className="space-y-1.5">
                           {phase.items.map((item, i) => (
-                            <li key={i} className="flex items-start gap-1.5 text-xs text-gray-400">
-                              <CheckCircle2 className="w-2.5 h-2.5 text-amber-500 flex-shrink-0 mt-0.5" />
+                            <li key={i} className="flex items-start gap-1.5 text-base text-gray-700">
+                              <CheckCircle2 className="w-2.5 h-2.5 text-orange-500 flex-shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -1660,17 +1687,17 @@ export default function PresentacionPratsPage() {
                   </div>
 
                   {/* Footer */}
-                  <div className="mt-3 p-3 bg-gradient-to-r from-amber-500/10 to-amber-600/5 rounded-xl border border-amber-500/30">
+                  <div className="mt-3 p-3 bg-gradient-to-r from-orange-500/10 to-orange-600/5 rounded-xl border border-orange-500/30">
                   <div className="flex items-center justify-center gap-8">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-amber-500" />
-                      <span className="text-white font-semibold">Plazo de entrega aproximado:</span>
-                      <span className="text-2xl font-bold text-amber-500">12 semanas</span>
+                      <Clock className="w-5 h-5 text-orange-500" />
+                      <span className="text-gray-900 font-semibold">Plazo de entrega aproximado:</span>
+                      <span className="text-2xl font-bold text-orange-500">12 semanas</span>
                     </div>
-                    <div className="h-6 w-px bg-gray-600"></div>
+                    <div className="h-6 w-px bg-orange-200"></div>
                     <div className="flex items-center gap-2">
                       <CalendarCheck className="w-5 h-5 text-green-500" />
-                      <span className="text-gray-300">Entregas cada 2 semanas</span>
+                      <span className="text-gray-700">Entregas cada 2 semanas</span>
                     </div>
                   </div>
                 </div>
@@ -1685,33 +1712,33 @@ export default function PresentacionPratsPage() {
               <div className="h-full flex flex-col relative z-10 min-h-0">
                 <LogoFastIA logoUrl={logoUrl} />
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-amber-500 rotate-[8deg]" opacity={0.12} />
-                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-amber-600" opacity={0.08} />
+                <StripedTieSilhouette className="absolute right-5 top-24 w-12 h-36 text-orange-500 rotate-[8deg]" opacity={0.12} />
+                <BusinessmanSilhouette className="absolute -left-4 bottom-0 w-40 h-72 text-orange-600" opacity={0.08} />
                 
                 <div className="flex items-center gap-3 mb-2 flex-shrink-0">
-                  <div className="w-1.5 h-10 bg-gradient-to-b from-amber-500 to-amber-600 rounded-full"></div>
+                  <div className="w-1.5 h-10 bg-gradient-to-b from-orange-500 to-orange-600 rounded-full"></div>
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <div className="w-9 h-9 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                       <Euro className="w-5 h-5 text-white" />
                     </div>
-                    <h2 className="text-xl font-bold text-white">Inversión del Proyecto</h2>
+                    <h2 className="text-xl font-bold text-gray-900">Inversión del Proyecto</h2>
                   </div>
                 </div>
 
                 {/* 3 Módulos */}
                 <div className="grid grid-cols-3 gap-3 mb-2 flex-1 min-h-0">
                   {/* PLATAFORMA 360 */}
-                  <div className="bg-gray-800/50 border border-amber-500/30 rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
+                  <div className="bg-white border border-orange-500/30 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                         <Database className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">Plataforma 360</h4>
-                        <p className="text-[10px] text-gray-400">Core del sistema</p>
+                        <h4 className="text-lg font-bold text-gray-900">Plataforma 360</h4>
+                        <p className="text-sm text-gray-600">Core del sistema</p>
                       </div>
                     </div>
-                    <ul className="space-y-0.5 mb-2 text-[11px] text-gray-300">
+                    <ul className="space-y-1 mb-3 text-sm text-gray-700">
                       {[
                         'Gestión usuarios y roles',
                         'Ficha cliente 360°',
@@ -1725,36 +1752,36 @@ export default function PresentacionPratsPage() {
                         'Multiplataforma',
                       ].map((item, idx) => (
                         <li key={idx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3 h-3 text-amber-500 flex-shrink-0" />
+                          <CheckCircle2 className="w-3 h-3 text-orange-500 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
                     </ul>
-                    <div className="pt-2 border-t border-gray-700 flex-shrink-0">
-                      <div className="text-center mb-0.5">
-                        <span className="text-[10px] text-gray-500 block">Precio sin descuento</span>
+                    <div className="pt-3 border-t border-orange-200 flex-shrink-0">
+                      <div className="text-center mb-1">
+                        <span className="text-sm text-gray-600 block">Precio sin descuento</span>
                         <span className="text-lg text-red-400 line-through font-bold">15.000 €</span>
                       </div>
-                      <div className="flex items-center justify-center gap-1 mb-0.5">
-                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">-51% DTO</span>
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-base font-bold rounded-full">-51% DTO</span>
                       </div>
-                      <div className="text-2xl font-bold text-amber-500 text-center">7.368 €</div>
-                      <div className="text-[10px] text-gray-400 text-center">IVA no incluido</div>
+                      <div className="text-2xl font-bold text-orange-500 text-center">7.368 €</div>
+                      <div className="text-sm text-gray-600 text-center">IVA no incluido</div>
                     </div>
                   </div>
 
                   {/* TIENDA ONLINE (Web) */}
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
+                  <div className="bg-white border border-orange-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                         <ShoppingCart className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">Tienda Online (Web)</h4>
-                        <p className="text-[10px] text-gray-400">E-commerce premium (Web)</p>
+                        <h4 className="text-lg font-bold text-gray-900">Tienda Online (Web)</h4>
+                        <p className="text-sm text-gray-600">E-commerce premium (Web)</p>
                       </div>
                     </div>
-                    <ul className="space-y-0.5 mb-2 text-[11px] text-gray-300">
+                    <ul className="space-y-1 mb-3 text-sm text-gray-700">
                       {[
                         'Diseño Suit Supply',
                         'Catálogo productos',
@@ -1768,36 +1795,36 @@ export default function PresentacionPratsPage() {
                         'Tax Free integrado',
                       ].map((item, idx) => (
                         <li key={idx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3 h-3 text-amber-500 flex-shrink-0" />
+                          <CheckCircle2 className="w-3 h-3 text-orange-500 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
                     </ul>
-                    <div className="pt-2 border-t border-gray-700 flex-shrink-0">
-                      <div className="text-center mb-0.5">
-                        <span className="text-[10px] text-gray-500 block">Precio sin descuento</span>
+                    <div className="pt-3 border-t border-orange-200 flex-shrink-0">
+                      <div className="text-center mb-1">
+                        <span className="text-sm text-gray-600 block">Precio sin descuento</span>
                         <span className="text-lg text-red-400 line-through font-bold">1.500 €</span>
                       </div>
-                      <div className="flex items-center justify-center gap-1 mb-0.5">
-                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">-51% DTO</span>
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-base font-bold rounded-full">-51% DTO</span>
                       </div>
-                      <div className="text-2xl font-bold text-amber-500 text-center">737 €</div>
-                      <div className="text-[10px] text-gray-400 text-center">IVA no incluido</div>
+                      <div className="text-2xl font-bold text-orange-500 text-center">737 €</div>
+                      <div className="text-sm text-gray-600 text-center">IVA no incluido</div>
                     </div>
                   </div>
 
                   {/* INTEGRACIONES Y MARKETING */}
-                  <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
+                  <div className="bg-white border border-orange-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
                         <Mail className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">Integraciones y Marketing</h4>
-                        <p className="text-[10px] text-gray-400">Comunicación e integraciones</p>
+                        <h4 className="text-lg font-bold text-gray-900">Integraciones y Marketing</h4>
+                        <p className="text-sm text-gray-600">Comunicación e integraciones</p>
                       </div>
                     </div>
-                    <ul className="space-y-0.5 mb-2 text-[11px] text-gray-300">
+                    <ul className="space-y-1 mb-3 text-sm text-gray-700">
                       {[
                         'Sistema emails (Resend)',
                         'Plantillas personalizables',
@@ -1811,66 +1838,66 @@ export default function PresentacionPratsPage() {
                         'Segmentación',
                       ].map((item, idx) => (
                         <li key={idx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3 h-3 text-amber-500 flex-shrink-0" />
+                          <CheckCircle2 className="w-3 h-3 text-orange-500 flex-shrink-0" />
                           {item}
                         </li>
                       ))}
                     </ul>
-                    <div className="pt-2 border-t border-gray-700 flex-shrink-0">
-                      <div className="text-center mb-0.5">
-                        <span className="text-[10px] text-gray-500 block">Precio sin descuento</span>
+                    <div className="pt-3 border-t border-orange-200 flex-shrink-0">
+                      <div className="text-center mb-1">
+                        <span className="text-sm text-gray-600 block">Precio sin descuento</span>
                         <span className="text-lg text-red-400 line-through font-bold">600 €</span>
                       </div>
-                      <div className="flex items-center justify-center gap-1 mb-0.5">
-                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">-51% DTO</span>
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-base font-bold rounded-full">-51% DTO</span>
                       </div>
-                      <div className="text-2xl font-bold text-amber-500 text-center">295 €</div>
-                      <div className="text-[10px] text-gray-400 text-center">IVA no incluido</div>
+                      <div className="text-2xl font-bold text-orange-500 text-center">295 €</div>
+                      <div className="text-sm text-gray-600 text-center">IVA no incluido</div>
                     </div>
                   </div>
                 </div>
 
                 {/* TOTAL + Forma de pago — compactos */}
                 <div className="flex-shrink-0 space-y-2">
-                  <div className="bg-gradient-to-r from-amber-500/20 to-amber-600/10 border-2 border-amber-500/50 rounded-xl p-3">
+                  <div className="bg-gradient-to-r from-orange-500/20 to-orange-600/10 border-2 border-orange-500/50 rounded-xl p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                           <Sparkles className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h4 className="text-base font-bold text-white">INVERSIÓN TOTAL</h4>
-                          <p className="text-xs text-gray-300">Plataforma 360 + Tienda + Integraciones y Marketing</p>
+                          <h4 className="text-base font-bold text-gray-900">INVERSIÓN TOTAL</h4>
+                          <p className="text-base text-gray-700">Plataforma 360 + Tienda + Integraciones y Marketing</p>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center gap-2 mb-0.5 justify-end">
-                          <span className="text-[10px] text-gray-500">Precio sin descuento</span>
+                          <span className="text-[10px] text-gray-600">Precio sin descuento</span>
                           <span className="text-lg text-red-400 line-through font-bold">17.100 €</span>
-                          <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm font-bold rounded-full">-51% DTO</span>
+                          <span className="px-3 py-1 bg-green-500/20 text-green-400 text-base font-bold rounded-full">-51% DTO</span>
                         </div>
-                        <div className="text-3xl font-bold text-amber-500">8.400 €</div>
-                        <div className="text-xs text-gray-400">IVA no incluido</div>
+                        <div className="text-3xl font-bold text-orange-500">8.400 €</div>
+                        <div className="text-base text-gray-700">IVA no incluido</div>
                       </div>
                     </div>
                   </div>
 
                   {/* Forma de pago */}
-                  <div className="p-2 bg-gray-800/50 rounded-xl border border-gray-700/50">
+                  <div className="p-2 bg-white rounded-xl border border-orange-200">
                     <div className="flex items-center justify-center gap-4 flex-wrap">
                       <div className="flex items-center gap-2">
-                        <Banknote className="w-4 h-4 text-amber-500" />
-                        <span className="text-white font-semibold text-sm">Forma de pago:</span>
+                        <Banknote className="w-4 h-4 text-orange-500" />
+                        <span className="text-gray-900 font-semibold text-sm">Forma de pago:</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="px-3 py-1.5 bg-amber-500/10 rounded-lg border border-amber-500/30">
-                          <span className="text-amber-400 font-bold text-sm">60%</span>
-                          <span className="text-gray-300 ml-1.5 text-sm">a la formalización</span>
+                        <div className="px-3 py-1.5 bg-orange-500/10 rounded-lg border border-orange-500/30">
+                          <span className="text-orange-400 font-bold text-sm">60%</span>
+                          <span className="text-gray-700 ml-1.5 text-sm">a la formalización</span>
                         </div>
-                        <span className="text-gray-500 text-sm">+</span>
-                        <div className="px-3 py-1.5 bg-amber-500/10 rounded-lg border border-amber-500/30">
-                          <span className="text-amber-400 font-bold text-sm">40%</span>
-                          <span className="text-gray-300 ml-1.5 text-sm">a la entrega</span>
+                        <span className="text-gray-600 text-sm">+</span>
+                        <div className="px-3 py-1.5 bg-orange-500/10 rounded-lg border border-orange-500/30">
+                          <span className="text-orange-400 font-bold text-sm">40%</span>
+                          <span className="text-gray-700 ml-1.5 text-sm">a la entrega</span>
                         </div>
                       </div>
                     </div>
@@ -1884,15 +1911,15 @@ export default function PresentacionPratsPage() {
           {(currentSlide === 13 || isPrintMode) && (
           <SlideWrapper isPrintMode={isPrintMode}>
               <div className="h-full flex flex-col items-center justify-center text-center relative z-10">
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600"></div>
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600"></div>
                 {/* Siluetas sastrería — limpias y elegantes */}
-                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-amber-500" opacity={0.1} />
-                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-amber-500 rotate-[-12deg]" opacity={0.12} />
+                <SuitOnHangerSilhouette className="absolute -right-5 bottom-5 w-48 h-60 text-orange-500" opacity={0.1} />
+                <TieSilhouette className="absolute left-3 top-20 w-10 h-32 text-orange-500 rotate-[-12deg]" opacity={0.12} />
                 
                 {/* Logo FastIA — solo el logo, sin caja */}
                 <div className="mb-10 flex items-center justify-center">
                   {logoUrl ? (
-                    <div className="relative w-52 h-20">
+                    <div className="relative w-52 h-20" style={{ filter: 'brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(1deg) brightness(98%) contrast(101%)' }}>
                       <Image
                         src={logoUrl}
                         alt="FastIA"
@@ -1905,39 +1932,39 @@ export default function PresentacionPratsPage() {
                   ) : null}
                 </div>
                 
-                <h2 className="text-4xl font-bold text-white mb-8">
+                <h2 className="text-4xl font-bold text-gray-900 mb-8">
                   ¿Empezamos?
                 </h2>
                 
-                <div className="w-32 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mb-10"></div>
+                <div className="w-32 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent mb-10"></div>
                 
                 {/* Contacto */}
                 <div className="flex items-center gap-12 mb-10">
-                  <div className="flex items-center gap-4 p-6 bg-gray-800/50 rounded-xl border border-amber-500/20">
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <div className="flex items-center gap-4 p-6 bg-white rounded-xl border border-orange-500/20">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                       <Phone className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-left">
-                      <p className="text-sm text-gray-400">Teléfono</p>
-                      <p className="text-2xl text-white font-bold">+34 656 396 657</p>
+                      <p className="text-base text-gray-700">Teléfono</p>
+                      <p className="text-2xl text-gray-900 font-bold">+34 656 396 657</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-4 p-6 bg-gray-800/50 rounded-xl border border-amber-500/20">
-                    <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <div className="flex items-center gap-4 p-6 bg-white rounded-xl border border-orange-500/20">
+                    <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                       <Mail className="w-7 h-7 text-white" />
                     </div>
                     <div className="text-left">
-                      <p className="text-sm text-gray-400">Email</p>
-                      <p className="text-2xl text-white font-bold">hola@fastia.es</p>
+                      <p className="text-base text-gray-700">Email</p>
+                      <p className="text-2xl text-gray-900 font-bold">hola@fastia.es</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Página web */}
-                <div className="flex items-center justify-center gap-2 text-amber-400">
+                <div className="flex items-center justify-center gap-2 text-orange-400">
                   <Globe className="w-5 h-5" />
-                  <a href="https://www.fastia.es" target="_blank" rel="noopener noreferrer" className="text-xl font-semibold hover:text-amber-300 transition-colors">
+                  <a href="https://www.fastia.es" target="_blank" rel="noopener noreferrer" className="text-xl font-semibold hover:text-orange-300 transition-colors">
                     www.fastia.es
                   </a>
                 </div>

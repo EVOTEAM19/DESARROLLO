@@ -1,164 +1,69 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
-import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { getHomeContent } from '@/lib/content'
+import { motion } from 'framer-motion'
+import { ChevronRight } from 'lucide-react'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.05 + i * 0.1, ease: [0.28, 0.11, 0.32, 1] as const },
+  }),
+}
 
 export function HeroContent() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [heroData, setHeroData] = useState<any>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
-
-  useEffect(() => {
-    loadContent()
-  }, [])
-
-  const loadContent = async () => {
-    try {
-      const content = await getHomeContent()
-      if (content?.hero) {
-        setHeroData(content.hero)
-      } else {
-        // Fallback a datos por defecto
-        setHeroData({
-          badge: 'FastIA',
-          title: 'Nacidos para la era de la IA',
-          subtitle: 'Automatizando empresas con IA desde hace más de 6 años.',
-          cta_primary_text: 'Hablemos de tu proyecto',
-          cta_primary_link: '/contacto',
-          cta_secondary_text: 'Ver servicios',
-          cta_secondary_link: '/the-modal',
-        })
-      }
-    } catch (error) {
-      console.error('Error cargando contenido hero:', error)
-        setHeroData({
-          badge: 'FastIA',
-          title: 'Nacidos para la era de la IA',
-          subtitle: 'Automatizando empresas con IA desde hace más de 6 años.',
-        cta_primary_text: 'Hablemos de tu proyecto',
-        cta_primary_link: '/contacto',
-        cta_secondary_text: 'Ver servicios',
-        cta_secondary_link: '/the-modal',
-      })
-    }
-  }
-
-  // Transformar scroll a color del título
-  const titleColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.5, 0.7, 1],
-    ['#FFFFFF', '#FF6B35', '#FFFFFF', '#FF6B35', '#1A1A1A']
-  )
-
-  // Opacidad del contenido según scroll
-  const contentOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.5, 0.7],
-    [1, 0.8, 0]
-  )
-
-  if (!heroData) {
-    return (
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-400">Cargando...</p>
-        </div>
-      </div>
-    )
-  }
-
-  const titleWords = (heroData.title || 'Transformamos ideas en soluciones inteligentes').split(' ')
-
   return (
-    <motion.div
-      ref={ref}
-      style={{ opacity: contentOpacity }}
-      className="relative z-10 min-h-screen flex items-center justify-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="relative max-w-6xl mx-auto px-4 lg:px-6 text-center">
-        {/* Título con animación letra por letra */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[7rem] font-display font-bold mb-6 leading-tight tracking-tight">
-          {titleWords.map((word: string, i: number) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.15 }}
-              style={{ color: titleColor }}
-              className="inline-block mr-2 sm:mr-4"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
+    <div className="mx-auto max-w-4xl text-center">
+      <motion.div custom={0} variants={fadeUp} initial="hidden" animate="show" className="flex justify-center">
+        <span className="pill">Agencia de desarrollo de software a medida</span>
+      </motion.div>
 
-        {/* Subtítulo con fade-in */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="text-xl sm:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed"
+      <motion.h1
+        custom={1}
+        variants={fadeUp}
+        initial="hidden"
+        animate="show"
+        className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tightest text-gray-900 sm:text-6xl md:text-7xl"
+      >
+        Lo que imaginas,
+        <br />
+        <span className="text-gradient">hecho software.</span>
+      </motion.h1>
+
+      <motion.p
+        custom={2}
+        variants={fadeUp}
+        initial="hidden"
+        animate="show"
+        className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-gray-600 sm:text-xl"
+      >
+        Convertimos tu idea en una app, web o plataforma a medida.
+        <span className="text-gray-900"> Desde 2.000 €</span> y en tiempo récord.
+      </motion.p>
+
+      <motion.div
+        custom={3}
+        variants={fadeUp}
+        initial="hidden"
+        animate="show"
+        className="mt-8 flex flex-col items-center justify-center gap-x-6 gap-y-3 sm:flex-row"
+      >
+        <Link
+          href="/contacto"
+          className="inline-flex items-center justify-center rounded-full bg-blue-500 px-7 py-3 text-base font-medium text-white transition-colors hover:bg-blue-600"
         >
-          <p>Automatizando empresas con IA desde hace más de 6 años.</p>
-        </motion.div>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          Cuéntanos tu idea
+        </Link>
+        <Link
+          href="/servicios"
+          className="group inline-flex items-center gap-0.5 text-base font-medium text-blue-600 transition-colors hover:text-blue-500"
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              href={heroData.cta_primary_link || '/contacto'}
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-accent-orange-500 via-accent-orange-600 to-accent-orange-700 text-white rounded-xl font-bold text-lg hover:opacity-90 transition-all duration-300 shadow-2xl hover:shadow-accent-orange-500/50 group relative overflow-hidden"
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                animate={{
-                  x: ['-100%', '100%'],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 1,
-                  ease: 'easeInOut',
-                }}
-              />
-              <span className="relative z-10">{heroData.cta_primary_text || 'Hablemos de tu proyecto'}</span>
-              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              href={heroData.cta_secondary_link || '/the-modal'}
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-2xl hover:shadow-white/50 group relative overflow-hidden bg-white/5 backdrop-blur-sm"
-            >
-              <span className="relative z-10">{heroData.cta_secondary_text || 'Ver servicios'}</span>
-              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </motion.div>
-        </motion.div>
-      </div>
-    </motion.div>
+          Cómo trabajamos
+          <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </motion.div>
+    </div>
   )
 }

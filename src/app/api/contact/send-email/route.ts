@@ -46,9 +46,9 @@ interface ContactMessage {
   phone?: string
   company?: string
   project_type?: string
-  budget_range?: string
   message: string
   start_timeframe?: string
+  attachments?: { filename: string; content: string }[]
 }
 
 /**
@@ -80,7 +80,7 @@ function generateEmailHTML(message: ContactMessage): string {
             <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
               <!-- Header -->
               <tr>
-                <td style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); padding: 30px 20px; text-align: center;">
+                <td style="background: linear-gradient(135deg, #0062c4 0%, #0a84ff 100%); padding: 30px 20px; text-align: center;">
                   <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">Nuevo Mensaje de Contacto</h1>
                   <p style="margin: 8px 0 0 0; color: #fed7aa; font-size: 14px;">FastIA - Formulario de Contacto</p>
                 </td>
@@ -99,7 +99,6 @@ function generateEmailHTML(message: ContactMessage): string {
                     ${formatField('Teléfono', message.phone)}
                     ${formatField('Empresa', message.company)}
                     ${formatField('Tipo de proyecto', message.project_type)}
-                    ${formatField('Presupuesto', message.budget_range)}
                     ${formatField('Tiempo de inicio', message.start_timeframe)}
                   </table>
                   
@@ -179,7 +178,6 @@ export async function POST(request: NextRequest) {
         phone: message.phone,
         company: message.company,
         project_type: message.project_type,
-        budget_range: message.budget_range,
         start_timeframe: message.start_timeframe,
         message: message.message,
       })
@@ -206,12 +204,18 @@ export async function POST(request: NextRequest) {
 
     try {
       // to puede ser string o string[]; usamos string según la doc
+      const attachments = (message.attachments || [])
+        .filter((a) => a && a.filename && a.content)
+        .slice(0, 6)
+        .map((a) => ({ filename: a.filename, content: a.content }))
+
       const { data, error } = await resend.emails.send({
         from: fromEmail,
         to: CONTACT_EMAIL,
         replyTo: message.email,
         subject: `Nuevo mensaje de contacto de ${message.name}${message.company ? ` - ${message.company}` : ''}`,
         html: generateEmailHTML(message),
+        ...(attachments.length ? { attachments } : {}),
       })
 
       if (error) {

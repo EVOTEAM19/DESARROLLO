@@ -15,6 +15,8 @@ import {
   Phone,
   Mail,
   Clock,
+  Paperclip,
+  X,
 } from 'lucide-react'
 import { createBrowserClient } from '@/lib/supabase'
 import { trackFormSubmit, trackConversion, trackMetaPixelEvent, trackLinkedInEvent } from '@/lib/analytics'
@@ -44,10 +46,6 @@ const contactSchema = z.object({
   project_type: z
     .string()
     .min(1, 'Por favor, selecciona qué necesitas'),
-  budget_range: z
-    .string()
-    .optional()
-    .or(z.literal('')),
   message: z
     .string()
     .min(10, 'El mensaje debe tener al menos 10 caracteres')
@@ -68,23 +66,27 @@ type ContactFormData = z.infer<typeof contactSchema>
 type FormState = 'idle' | 'loading' | 'success' | 'error'
 
 const defaultProjectTypes = [
-  'Automatización con IA (chatbots, workflows)',
-  'Desarrollo de software con IA integrada',
-  'CTO especializado en IA',
-  'Análisis predictivo y Machine Learning',
-  'Migración cloud + optimización IA',
-  'Consultoría estratégica de IA',
+  'Web o landing a medida',
+  'App móvil (iOS / Android)',
+  'Plataforma web / SaaS',
+  'Software interno (ERP, CRM, herramienta)',
+  'Automatización & IA',
+  'MVP para startup',
+  'Aún no lo tengo claro',
   'Otro',
 ]
 
-const defaultBudgetRanges = [
-  '< 10.000€',
-  '10.000€ - 30.000€',
-  '30.000€ - 50.000€',
-  '50.000€ - 100.000€',
-  '+100.000€',
-  'No lo sé aún',
-]
+const MAX_FILES = 5
+const MAX_TOTAL_BYTES = 6 * 1024 * 1024 // 6 MB
+
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '')
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
 
 const defaultStartTimeframes = [
   'Lo antes posible',
@@ -100,6 +102,25 @@ export function ContactForm() {
   const [emailNotificationFailed, setEmailNotificationFailed] = useState(false)
   const [content, setContent] = useState<any>(null)
   const [isLoadingContent, setIsLoadingContent] = useState(true)
+  const [files, setFiles] = useState<File[]>([])
+  const [fileError, setFileError] = useState<string>('')
+
+  const onFilesSelected = (selected: FileList | null) => {
+    if (!selected) return
+    setFileError('')
+    const next = [...files, ...Array.from(selected)].slice(0, MAX_FILES)
+    const total = next.reduce((acc, f) => acc + f.size, 0)
+    if (total > MAX_TOTAL_BYTES) {
+      setFileError('Los archivos superan el límite de 6 MB en total.')
+      return
+    }
+    if ([...files, ...Array.from(selected)].length > MAX_FILES) {
+      setFileError(`Máximo ${MAX_FILES} archivos.`)
+    }
+    setFiles(next)
+  }
+
+  const removeFile = (idx: number) => setFiles((prev) => prev.filter((_, i) => i !== idx))
 
   useEffect(() => {
     loadContent()
@@ -119,10 +140,9 @@ export function ContactForm() {
   }
 
   const projectTypes = content?.form?.project_types || defaultProjectTypes
-  const budgetRanges = content?.form?.budget_ranges || defaultBudgetRanges
   const startTimeframes = content?.form?.start_timeframes || defaultStartTimeframes
-  const formTitle = content?.form?.title || '¿Listo para revolucionar tu negocio con IA?'
-  const formDescription = content?.form?.description || 'Agenda una consultoría gratuita. Analizamos tu negocio y te mostramos exactamente cómo la IA puede multiplicar tus resultados.'
+  const formTitle = content?.form?.title || 'Cuéntanos tu idea'
+  const formDescription = content?.form?.description || 'Rellena el formulario y te respondemos en menos de 24h con una idea clara de cómo construirlo, cuánto cuesta y en cuánto tiempo. Sin compromiso.'
   const successMessage = content?.form?.success_message || '¡Mensaje enviado! Te responderemos pronto.'
   const errorMessageText = content?.form?.error_message || 'Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.'
   
@@ -166,7 +186,6 @@ export function ContactForm() {
         phone: data.phone ? sanitizeInput(data.phone) : null,
         company: data.company ? sanitizeInput(data.company) : null,
         project_type: data.project_type || null,
-        budget_range: data.budget_range || null,
         message: sanitizeInput(data.message),
         start_timeframe: data.start_timeframe || null,
         automation_process: data.automation_process ? sanitizeInput(data.automation_process) : null,
@@ -187,16 +206,19 @@ export function ContactForm() {
 
       // Enviar notificación por correo a hola@fastia.es vía Resend (no bloquea el éxito del formulario)
       try {
+        const attachments = await Promise.all(
+          files.map(async (f) => ({ filename: f.name, content: await fileToBase64(f) }))
+        )
         const emailPayload = {
           name: sanitizedData.name,
           email: sanitizedData.email,
           phone: sanitizedData.phone ?? undefined,
           company: sanitizedData.company ?? undefined,
           project_type: sanitizedData.project_type ?? undefined,
-          budget_range: sanitizedData.budget_range ?? undefined,
           message: sanitizedData.message,
           start_timeframe: sanitizedData.start_timeframe ?? undefined,
           automation_process: sanitizedData.automation_process ?? undefined,
+          attachments,
         }
         const url = typeof window !== 'undefined' ? `${window.location.origin}/api/contact/send-email` : '/api/contact/send-email'
         const res = await fetch(url, {
@@ -220,7 +242,6 @@ export function ContactForm() {
       // Tracking de analytics en todos los sistemas
       trackFormSubmit('contact_form', {
         project_type: sanitizedData.project_type,
-        budget_range: sanitizedData.budget_range,
       })
       trackConversion('contact_form_submit', 1)
       trackMetaPixelEvent('Lead', {
@@ -287,9 +308,9 @@ export function ContactForm() {
                     Dirección
                   </h3>
                   <div className="text-base text-foreground space-y-1">
-                    <p><strong className="text-white">Madrid (Sede Central):</strong> {contactInfo.address_madrid}</p>
-                    <p><strong className="text-white">Barcelona</strong></p>
-                    <p><strong className="text-white">Sevilla</strong></p>
+                    <p><strong className="text-gray-900">Madrid (Sede Central):</strong> {contactInfo.address_madrid}</p>
+                    <p><strong className="text-gray-900">Barcelona</strong></p>
+                    <p><strong className="text-gray-900">Sevilla</strong></p>
                   </div>
                 </div>
               </div>
@@ -591,45 +612,6 @@ export function ContactForm() {
                   )}
                 </div>
 
-                {/* Campo: Presupuesto estimado */}
-                <div>
-                  <label
-                    htmlFor="budget_range"
-                    className="block text-sm font-semibold mb-2 text-foreground"
-                  >
-                    Presupuesto estimado <span className="text-foreground-muted text-xs">(opcional)</span>
-                  </label>
-                  <select
-                    {...register('budget_range')}
-                    id="budget_range"
-                    name="budget_range"
-                    aria-invalid={errors.budget_range ? 'true' : 'false'}
-                    className={`w-full px-4 py-3 rounded-lg border transition-all duration-200 bg-background text-foreground focus:outline-none focus:ring-2 ${
-                      errors.budget_range
-                        ? 'border-error focus:ring-error/20 focus:border-error'
-                        : 'border-foreground/20 focus:ring-accent-orange-500/20 focus:border-accent-orange-500'
-                    }`}
-                  >
-                    <option value="">Selecciona una opción</option>
-                    {budgetRanges.map((range: string) => (
-                      <option key={range} value={range}>
-                        {range}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.budget_range && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-2 text-sm text-error flex items-center gap-1.5"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-4 h-4" />
-                      {errors.budget_range.message}
-                    </motion.p>
-                  )}
-                </div>
-
                 {/* Campo: Cuéntanos tu proyecto */}
                 <div>
                   <label
@@ -663,6 +645,56 @@ export function ContactForm() {
                       {errors.message.message}
                     </motion.p>
                   )}
+
+                  {/* Adjuntar archivos */}
+                  <div className="mt-3">
+                    <label
+                      htmlFor="attachments"
+                      className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-foreground/25 bg-background px-4 py-3 text-sm text-foreground-muted transition-colors hover:border-accent-orange-500/60 hover:text-foreground"
+                    >
+                      <Paperclip className="h-4 w-4" />
+                      Adjunta archivos (opcional · máx. 5, 6 MB)
+                    </label>
+                    <input
+                      id="attachments"
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => {
+                        onFilesSelected(e.target.files)
+                        e.target.value = ''
+                      }}
+                    />
+                    {fileError && (
+                      <p className="mt-2 flex items-center gap-1.5 text-sm text-error" role="alert">
+                        <AlertCircle className="h-4 w-4" />
+                        {fileError}
+                      </p>
+                    )}
+                    {files.length > 0 && (
+                      <ul className="mt-3 space-y-2">
+                        {files.map((f, i) => (
+                          <li
+                            key={`${f.name}-${i}`}
+                            className="flex items-center justify-between gap-3 rounded-lg border border-foreground/10 bg-background-secondary px-3 py-2 text-sm"
+                          >
+                            <span className="truncate text-foreground">
+                              {f.name}{' '}
+                              <span className="text-foreground-muted">({(f.size / 1024 / 1024).toFixed(2)} MB)</span>
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeFile(i)}
+                              className="flex-shrink-0 text-foreground-muted transition-colors hover:text-error"
+                              aria-label={`Quitar ${f.name}`}
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
 
                 {/* Campo: ¿Cuándo necesitas empezar? */}
@@ -710,7 +742,7 @@ export function ContactForm() {
                     htmlFor="automation_process"
                     className="block text-sm font-semibold mb-2 text-foreground"
                   >
-                    ¿Qué proceso quieres automatizar con IA? <span className="text-foreground-muted text-xs">(opcional)</span>
+                    ¿Algún detalle o referencia que nos ayude? <span className="text-foreground-muted text-xs">(opcional)</span>
                   </label>
                   <textarea
                     {...register('automation_process')}
@@ -723,7 +755,7 @@ export function ContactForm() {
                         ? 'border-error focus:ring-error/20 focus:border-error'
                         : 'border-foreground/20 focus:ring-accent-orange-500/20 focus:border-accent-orange-500'
                     }`}
-                    placeholder="Ej: Atención al cliente, análisis de datos, generación de contenido..."
+                    placeholder="Ej: una app parecida a X, integrar nuestro CRM, webs de referencia que te gusten..."
                   />
                   {errors.automation_process && (
                     <motion.p

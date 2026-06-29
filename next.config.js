@@ -50,9 +50,14 @@ const nextConfig = {
     } : false,
   },
 
-  // Optimización de paquetes
-  experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
+  // En desarrollo, usar caché de webpack en memoria para evitar
+  // fallos de "rename ...0.pack.gz" (antivirus/sync en Windows) que
+  // provocan recompilaciones en bucle y bloqueos del dev server.
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = { type: 'memory' }
+    }
+    return config
   },
 
   // Headers de seguridad y performance
@@ -117,12 +122,10 @@ const nextConfig = {
   
   // Powerd by header
   poweredByHeader: false,
-  
-  // Forzar renderizado dinámico en todas las páginas
+
+  // Optimización de paquetes
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion', '@supabase/supabase-js'],
-    // Desactivar generación estática automática
-    isrMemoryCacheSize: 0,
   },
 }
 

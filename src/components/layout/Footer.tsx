@@ -1,168 +1,110 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from 'lucide-react'
-import { getLogoUrl } from '@/lib/logo'
-import { getContactoContent } from '@/lib/content'
+import { Linkedin, Github, Mail, ArrowUpRight } from 'lucide-react'
+import { Logo } from './Logo'
 
-const locations = [
-  { city: 'Madrid', label: 'Sede Central', address: 'Calle Columela, 9 28001 Madrid' },
-  { city: 'Barcelona', label: 'Barcelona', address: null },
-  { city: 'Sevilla', label: 'Sevilla', address: null }
+const COLUMNS = [
+  {
+    title: 'Servicios',
+    links: [
+      { href: '/servicios', label: 'Software a medida' },
+      { href: '/servicios', label: 'Apps móviles' },
+      { href: '/servicios', label: 'Plataformas web' },
+      { href: '/servicios', label: 'Automatización & IA' },
+    ],
+  },
+  {
+    title: 'Empresa',
+    links: [
+      { href: '/nosotros', label: 'Nosotros' },
+      { href: '/#proyectos', label: 'Proyectos' },
+      { href: '/reflexiones', label: 'Blog' },
+      { href: '/contacto', label: 'Contacto' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/legal/terms', label: 'Aviso legal' },
+      { href: '/legal/privacy', label: 'Privacidad' },
+      { href: '/legal/cookies', label: 'Cookies' },
+    ],
+  },
 ]
 
 export function Footer() {
-  const [logoUrl, setLogoUrl] = useState<string | null>(null)
-  const [phone, setPhone] = useState<string>('+34 910 123 456')
-
-  useEffect(() => {
-    loadLogo()
-    loadContactInfo()
-  }, [])
-
-  const loadLogo = async () => {
-    const url = await getLogoUrl()
-    setLogoUrl(url)
-  }
-
-  const loadContactInfo = async () => {
-    try {
-      const contactoContent = await getContactoContent()
-      if (contactoContent?.contact_info?.phone) {
-        setPhone(contactoContent.contact_info.phone)
-      }
-    } catch (error) {
-      console.error('Error cargando información de contacto:', error)
-    }
-  }
-
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-12">
-          {/* Company info */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              {logoUrl ? (
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden">
-                  <Image
-                    src={logoUrl}
-                    alt="FastIA Logo"
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
-                </div>
-              ) : (
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center font-bold text-white text-2xl">
-                  F
-                </div>
-              )}
-              <span className="text-2xl font-bold text-white">FastIA</span>
-            </Link>
-            
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Desarrollamos apps móviles, plataformas web y software con Inteligencia Artificial integrada. 
-              Especialistas en automatización, reducción de costes y escalado de negocios. 
-              8+ años transformando empresas con tecnología de vanguardia.
+    <footer className="relative overflow-hidden border-t border-gray-200 bg-background">
+      <div className="pointer-events-none absolute -bottom-32 left-1/2 h-64 w-[80%] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
+
+      <div className="container-tight relative py-16">
+        <div className="grid gap-12 lg:grid-cols-12">
+          {/* Marca + CTA */}
+          <div className="lg:col-span-5">
+            <Logo />
+            <p className="mt-5 max-w-sm leading-relaxed text-foreground-muted">
+              Agencia de desarrollo de software a medida. Convertimos tu idea en una app, web o plataforma —
+              desde 2.000 € y en tiempo récord.
             </p>
-            
-            {/* Locations */}
-            <div className="space-y-3 text-sm mb-6">
-              {locations.map((location, i) => (
-                <div key={i} className="flex items-start gap-3 text-gray-400">
-                  <MapPin className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                  <span>
-                    <strong className="text-white">{location.label}</strong>
-                    {location.address && <span>: {location.address}</span>}
-                  </span>
-                </div>
-              ))}
-            </div>
-            
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center gap-3 text-gray-400">
-                <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <a href={`tel:${phone.replace(/\s/g, '')}`} className="hover:text-orange-500 transition-colors">
-                  {phone}
-                </a>
-              </div>
-              
-              <div className="flex items-center gap-3 text-gray-400">
-                <Mail className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <a href="mailto:hola@fastia.es" className="hover:text-orange-500 transition-colors">
-                  hola@fastia.es
-                </a>
-              </div>
-            </div>
-            
-            {/* Social links */}
-            <div className="flex gap-4 mt-6">
-              <a href="https://linkedin.com/company/fastia" target="_blank" className="p-2 bg-gray-800 hover:bg-orange-500 rounded-lg transition-colors">
-                <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
+            <Link
+              href="/contacto"
+              className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-blue-700"
+            >
+              Empieza tu proyecto
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+
+            <div className="mt-8 flex items-center gap-3">
+              <a
+                href="https://linkedin.com/company/fastia"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-foreground-muted transition-all hover:border-indigo-500/40 hover:text-gray-900"
+              >
+                <Linkedin className="h-5 w-5" />
               </a>
-              <a href="https://twitter.com/fastia" target="_blank" className="p-2 bg-gray-800 hover:bg-orange-500 rounded-lg transition-colors">
-                <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
+              <a
+                href="https://github.com/fastia"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-foreground-muted transition-all hover:border-indigo-500/40 hover:text-gray-900"
+              >
+                <Github className="h-5 w-5" />
               </a>
-              <a href="https://github.com/fastia" target="_blank" className="p-2 bg-gray-800 hover:bg-orange-500 rounded-lg transition-colors">
-                <Github className="w-5 h-5 text-gray-400 hover:text-white" />
+              <a
+                href="mailto:hola@fastia.es"
+                aria-label="Email"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-foreground-muted transition-all hover:border-indigo-500/40 hover:text-gray-900"
+              >
+                <Mail className="h-5 w-5" />
               </a>
             </div>
-          </div>
-          
-          {/* Servicios Freelance */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Servicios Freelance</h3>
-            <ul className="space-y-3 text-sm">
-              <li><Link href="/freelance" className="text-gray-400 hover:text-orange-500 transition-colors">Developers Freelance</Link></li>
-              <li><Link href="/cto-as-a-service" className="text-gray-400 hover:text-orange-500 transition-colors">CTO as a Service</Link></li>
-              <li><Link href="/freelance#developers" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo App Móvil</Link></li>
-              <li><Link href="/freelance#developers" className="text-gray-400 hover:text-orange-500 transition-colors">Desarrollo Web</Link></li>
-              <li><Link href="/freelance#precios" className="text-gray-400 hover:text-orange-500 transition-colors">MVP Rápido</Link></li>
-            </ul>
           </div>
 
-          {/* The Modal */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">The Modal</h3>
-            <ul className="space-y-3 text-sm">
-              <li><Link href="/servicios/ia-conversacional" className="text-gray-400 hover:text-orange-500 transition-colors">IA Conversacional</Link></li>
-              <li><Link href="/servicios/analisis-predictivo" className="text-gray-400 hover:text-orange-500 transition-colors">Análisis Predictivo</Link></li>
-              <li><Link href="/servicios/procesamiento-datos" className="text-gray-400 hover:text-orange-500 transition-colors">Procesamiento de Datos</Link></li>
-              <li><Link href="/servicios/automatizacion-inteligente" className="text-gray-400 hover:text-orange-500 transition-colors">Automatización Inteligente</Link></li>
-              <li><Link href="/servicios/seguridad-ia" className="text-gray-400 hover:text-orange-500 transition-colors">Seguridad con IA</Link></li>
-            </ul>
-          </div>
-          
-          {/* Empresa */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Empresa</h3>
-            <ul className="space-y-3 text-sm">
-              <li><Link href="/nosotros" className="text-gray-400 hover:text-orange-500 transition-colors">Nosotros</Link></li>
-              <li><Link href="/sectores" className="text-gray-400 hover:text-orange-500 transition-colors">Sectores</Link></li>
-              <li><Link href="/contacto" className="text-gray-400 hover:text-orange-500 transition-colors">Contacto</Link></li>
-            </ul>
-          </div>
-          
-          {/* Recursos */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Recursos</h3>
-            <ul className="space-y-3 text-sm">
-              <li><Link href="/reflexiones" className="text-gray-400 hover:text-orange-500 transition-colors">Reflexiones</Link></li>
-              <li><Link href="/legal/terms" className="text-gray-400 hover:text-orange-500 transition-colors">Aviso Legal</Link></li>
-              <li><Link href="/legal/privacy" className="text-gray-400 hover:text-orange-500 transition-colors">Privacidad</Link></li>
-              <li><Link href="/legal/cookies" className="text-gray-400 hover:text-orange-500 transition-colors">Cookies</Link></li>
-            </ul>
+          {/* Columnas de enlaces */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">{col.title}</h3>
+                <ul className="mt-4 space-y-3">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href} className="text-sm text-foreground-muted transition-colors hover:text-gray-900">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-      
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <p className="text-center text-sm text-gray-400">
-            © 2025 FastIA. Todos los derechos reservados. Madrid · Barcelona · Sevilla
+
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-8 text-sm text-foreground-muted sm:flex-row">
+          <p>© {new Date().getFullYear()} FastIA. Todos los derechos reservados.</p>
+          <p className="flex items-center gap-2">
+            Hecho con <span className="text-indigo-400">♦</span> en España
           </p>
         </div>
       </div>

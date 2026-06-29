@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ==================== CSS RESET ==================== */
+/* ==================== RESET ==================== */
 *,
 *::before,
 *::after {
@@ -58,524 +58,229 @@ ol {
   list-style: none;
 }
 
-/* ==================== VARIABLES CSS FASTIA ==================== */
+/* ==================== VARIABLES · APPLE LIGHT ==================== */
 :root {
-  /* Colores de fondo oscuros FastIA */
-  --background: #1A1A1A;
-  --background-secondary: #2D2D2D;
-  --background-tertiary: #4A4A4A;
-  
-  /* Colores de texto FastIA */
-  --foreground: #E5E5E5;
-  --foreground-secondary: #FFFFFF;
-  --foreground-muted: #9CA3AF;
-  
-  /* Acentos naranja FastIA */
-  --accent: #FF6B35;
-  --accent-light: #FF8C5A;
-  --accent-dark: #E55525;
-  
-  /* Colores naranja FastIA */
-  --color-primary: #FF6B35;
-  --color-primary-hover: #FF8C5A;
-  --color-primary-dark: #E55525;
-  --accent-orange-500: #FF6B35;
-  --accent-orange-600: #FF8C5A;
-  --accent-orange-700: #E55525;
-  
-  /* Colores gris FastIA */
-  --color-bg-dark: #1A1A1A;
-  --color-bg-medium: #2D2D2D;
-  --color-bg-light: #4A4A4A;
-  
-  /* Fuentes */
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
-  --font-jetbrains-mono: 'JetBrains Mono', 'Courier New', monospace;
-  
-  /* Espaciado */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-  
-  /* Sombras */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
-  
-  /* Transiciones */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Modo claro (opcional, si quieres soportar ambos) */
-.light {
   --background: #ffffff;
-  --background-secondary: #f9fafb;
-  --background-tertiary: #f3f4f6;
-  --foreground: #111827;
-  --foreground-secondary: #374151;
-  --foreground-muted: #6b7280;
+  --background-secondary: #f5f5f7;
+  --background-tertiary: #fbfbfd;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+
+  --foreground: #1d1d1f;
+  --foreground-secondary: #000000;
+  --foreground-muted: #6e6e73;
+
+  --accent: #0071e3;
+  --accent-light: #3aa0ff;
+  --accent-dark: #0062c4;
+
+  /* Compat. heredada */
+  --color-primary: #0071e3;
+  --color-primary-hover: #0077ed;
+  --color-primary-dark: #0062c4;
+  --accent-orange-500: #0071e3;
+  --accent-orange-600: #0077ed;
+  --accent-orange-700: #0062c4;
+  --color-bg-dark: #ffffff;
+  --color-bg-medium: #f5f5f7;
+  --color-bg-light: #fbfbfd;
+
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-space-grotesk: 'Inter', system-ui, sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --shadow-glow: 0 10px 30px -10px rgba(0, 113, 227, 0.35);
+
+  --transition-fast: 150ms cubic-bezier(0.28, 0.11, 0.32, 1);
+  --transition-base: 300ms cubic-bezier(0.28, 0.11, 0.32, 1);
+  --transition-slow: 500ms cubic-bezier(0.28, 0.11, 0.32, 1);
 }
 
-/* ==================== ESTILOS BASE ==================== */
+/* ==================== BASE ==================== */
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-inter);
-  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
-/* ==================== SCROLLBAR PERSONALIZADO FASTIA ==================== */
+::selection {
+  background: rgba(0, 113, 227, 0.16);
+  color: #1d1d1f;
+}
+
+/* ==================== SCROLLBAR ==================== */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--background-secondary);
-  border-radius: 10px;
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--accent-orange-700), var(--accent-orange-500));
-  border-radius: 10px;
-  border: 2px solid var(--background-secondary);
-  transition: background var(--transition-base);
+  background: #c7c7cc;
+  border-radius: 999px;
+  border: 3px solid #ffffff;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--accent-orange-600), var(--accent-orange-500));
+  background: #aeaeb2;
 }
-
-/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-orange-600) var(--background-secondary);
+  scrollbar-color: #c7c7cc transparent;
 }
 
-/* ==================== KEYFRAMES PERSONALIZADOS ==================== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideLeft {
-  from {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideRight {
-  from {
-    transform: translateX(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* ==================== ANIMACIONES HERO (FLOAT / SPIN) ==================== */
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow:
-      0 0 40px rgba(255, 107, 53, 0.5),
-      0 0 80px rgba(255, 107, 53, 0.3),
-      0 0 120px rgba(255, 107, 53, 0.1);
-  }
-  50% {
-    box-shadow:
-      0 0 60px rgba(255, 107, 53, 0.8),
-      0 0 120px rgba(255, 107, 53, 0.5),
-      0 0 180px rgba(255, 107, 53, 0.3);
-  }
-}
-
+/* ==================== KEYFRAMES ==================== */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(-100px) translateX(20px);
-    opacity: 0.8;
-  }
-  90% {
-    opacity: 0.3;
-  }
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+  50% { transform: translateY(-40px) translateX(16px); opacity: 0.8; }
+}
+@keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes aurora {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate3d(3%, -2%, 0) scale(1.1); opacity: 0.8; }
 }
 
-.animate-float {
-  animation: float 10s ease-in-out infinite;
-}
+.animate-float { animation: float 12s ease-in-out infinite; }
+.animate-float-slow { animation: floatSlow 16s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 18s linear infinite; }
+.animate-aurora { animation: aurora 18s ease-in-out infinite; }
+.animate-marquee { animation: marquee 38s linear infinite; }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-@keyframes spin-reverse {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes orbit {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg) translateX(150px) rotate(-360deg);
-  }
-}
-
-@keyframes explode {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(
-      calc(-50% + var(--tx, 0)),
-      calc(-50% + var(--ty, 0))
-    ) scale(0);
-    opacity: 0;
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-spin-reverse {
-  animation: spin-reverse linear infinite;
-}
-
-.animate-orbit {
-  animation: orbit linear infinite;
-}
-
-.animate-explode {
-  animation: explode 1s ease-out forwards;
-}
-
-/* Gradiente radial para Tailwind stops */
-.bg-gradient-radial {
-  background: radial-gradient(circle, var(--tw-gradient-stops));
-}
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleOut {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes glowPulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* ==================== CLASES UTILITARIAS PERSONALIZADAS FASTIA ==================== */
+/* ==================== UTILIDADES ==================== */
 @layer utilities {
-  /* Texto */
-  .text-balance {
-    text-wrap: balance;
-  }
-  
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
   .text-gradient {
-    background: linear-gradient(135deg, #FF6B35, #FF8C5A, #E55525);
+    background: linear-gradient(120deg, #0071e3 0%, #0a84ff 50%, #5e9eff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    background-size: 200% 200%;
-    animation: gradientShift 3s ease infinite;
   }
-  
+  .text-gradient-animated {
+    background: linear-gradient(120deg, #0071e3, #0a84ff, #5e9eff, #0071e3);
+    background-size: 250% 250%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 7s ease infinite;
+  }
   .text-gradient-orange {
-    background: linear-gradient(135deg, #FF8C5A, #FF6B35);
+    background: linear-gradient(120deg, #0a84ff, #0071e3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
-  /* Fondos */
+  .text-glow { text-shadow: none; }
+
   .bg-mesh {
-    background: radial-gradient(at 0% 0%, rgba(255, 107, 53, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(255, 140, 90, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(229, 85, 37, 0.1) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(255, 107, 53, 0.1) 0px, transparent 50%);
+    background:
+      radial-gradient(at 0% 0%, rgba(0, 113, 227, 0.06) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(58, 160, 255, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(0, 113, 227, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(124, 192, 255, 0.05) 0px, transparent 50%);
   }
-  
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .bg-grid-fade {
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
+  }
+  .bg-gradient-radial { background: radial-gradient(circle, var(--tw-gradient-stops)); }
+
   .bg-glass {
-    background: rgba(26, 26, 26, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
   }
-  
-  /* Bordes */
-  .border-gradient {
-    border-image: linear-gradient(135deg, #FF6B35, #FF8C5A, #E55525) 1;
-  }
-  
-  /* Efectos hover */
-  .hover-glow {
-    transition: box-shadow var(--transition-base);
-  }
-  
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
-  }
-  
-  .hover-lift {
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
-  }
-  
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  /* Scroll reveal */
+
+  .hover-lift { transition: transform var(--transition-base), box-shadow var(--transition-base); }
+  .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.22); }
+
+  .glow-orange, .glow-indigo, .glow-violet { box-shadow: 0 10px 30px -10px rgba(0, 113, 227, 0.4); }
+
   .scroll-reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
   }
-  
-  .scroll-reveal.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  /* Shimmer effect */
+  .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+
   .shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.04), transparent);
     background-size: 1000px 100%;
-    animation: shimmer 2s linear infinite;
+    animation: shimmer 2.4s linear infinite;
   }
-  
-  /* Glow effects */
-  .glow-orange {
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
-  }
-  
-  /* Focus states */
-  .focus-ring {
-    outline: none;
-    transition: box-shadow var(--transition-fast);
-  }
-  
-  .focus-ring:focus {
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
-  }
-  
-  /* Smooth transitions */
-  .transition-smooth {
-    transition: all var(--transition-base);
-  }
-  
-  .transition-fast {
-    transition: all var(--transition-fast);
-  }
-  
-  .transition-slow {
-    transition: all var(--transition-slow);
-  }
+
+  .focus-ring { outline: none; transition: box-shadow var(--transition-fast); }
+  .focus-ring:focus-visible { box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.25); }
+
+  .transition-smooth { transition: all var(--transition-base); }
 }
 
-/* ==================== COMPONENTES PERSONALIZADOS FASTIA ==================== */
+/* ==================== COMPONENTES ==================== */
 @layer components {
-  /* Botones */
   .btn-primary {
-    @apply px-6 py-3 bg-accent-orange-500 text-white font-semibold rounded-lg;
-    @apply hover:bg-accent-orange-600 transition-colors;
-    @apply focus-ring;
+    @apply px-6 py-3 bg-blue-500 text-white font-medium rounded-full;
+    @apply hover:bg-blue-600 transition-colors focus-ring;
   }
-  
   .btn-secondary {
-    @apply px-6 py-3 bg-background-secondary text-foreground font-semibold rounded-lg;
-    @apply hover:bg-background-tertiary transition-colors;
-    @apply border border-accent-orange-500 text-accent-orange-500;
-    @apply hover:bg-accent-orange-500 hover:text-white;
-    @apply focus-ring;
+    @apply px-6 py-3 bg-gray-100 text-foreground font-medium rounded-full border border-black/5;
+    @apply hover:bg-gray-200 transition-colors focus-ring;
   }
-  
-  /* Cards */
+
   .card {
-    @apply bg-background-secondary rounded-xl p-6 border transition-smooth;
-    border-color: rgb(163 163 163 / 0.2);
+    @apply bg-white rounded-3xl p-6 border transition-smooth;
+    border-color: var(--border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px -16px rgba(0, 0, 0, 0.12);
   }
-  
   .card-hover {
-    @apply card hover:border-accent-orange-500/50 hover:shadow-glow;
-    @apply hover-lift;
+    @apply card hover:-translate-y-1.5;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
-  
-  /* Inputs */
+  .card-hover:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 24px 48px -20px rgba(0, 0, 0, 0.2);
+  }
+
   .input {
-    @apply w-full px-4 py-2 bg-background-secondary border rounded-lg;
-    border-color: rgb(163 163 163 / 0.2);
+    @apply w-full px-4 py-3 bg-gray-100 border rounded-xl;
+    border-color: var(--border);
     @apply text-foreground placeholder:text-foreground-muted;
-    @apply focus:border-accent-orange-500 focus:ring-2 focus:ring-accent-orange-500/20;
+    @apply focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 focus:bg-white;
     @apply transition-smooth;
   }
-  
-  /* Links */
+
   .link {
-    @apply text-accent-orange-500 hover:text-accent-orange-600;
-    @apply transition-colors underline-offset-4 hover:underline;
+    @apply text-blue-600 hover:text-blue-500 transition-colors;
+  }
+
+  .section { @apply py-24 sm:py-32; }
+  .container-tight { @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8; }
+
+  .pill {
+    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium;
+    @apply bg-gray-100 border border-black/5 text-foreground-muted;
   }
 }
 
-/* ==================== SMOOTH SCROLL BEHAVIOR ==================== */
-html {
-  scroll-behavior: smooth;
-}
-
-/* ==================== ANIMACIONES PERSONALIZADAS ==================== */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) translateX(10px);
-    opacity: 0.8;
-  }
-}
-
+/* ==================== REDUCED MOTION ==================== */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  
+  html { scroll-behavior: auto; }
   *,
   *::before,
   *::after {

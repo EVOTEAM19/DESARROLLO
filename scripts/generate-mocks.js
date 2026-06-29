@@ -1,0 +1,12 @@
+const https=require('https'),fs=require('fs'),path=require('path');
+function env(){if(process.env.GOOGLE_AI_API_KEY)return;const t=fs.readFileSync(path.join(__dirname,'..','.env.local'),'utf8');const m=t.match(/GOOGLE_AI_API_KEY\s*=\s*(.+)/);if(m)process.env.GOOGLE_AI_API_KEY=m[1].trim();}
+env();const KEY=process.env.GOOGLE_AI_API_KEY;
+const OUT=path.join(__dirname,'..','public','generated','mocks');fs.mkdirSync(OUT,{recursive:true});
+const S='Ultra realistic, crisp UI screenshot, light theme, white background, soft blue (#0071e3) accents, clean modern minimal design, sharp legible layout, high detail. Flat front view filling the whole frame. No device frame, no browser chrome, no shadow.';
+const items=[
+ {name:'mock-web',prompt:'A tall vertical screenshot of a complete modern SaaS web application page: top navbar, a hero with a heading and a chart, KPI cards, a data table with rows, and a footer. Light, blue accents. Portrait 9:16 tall layout.'},
+ {name:'mock-app',prompt:'A tall vertical smartphone app screen: a status bar, a greeting header, a balance/summary card with blue accent, a horizontal row of category icons, and a vertical list of items with small avatars and amounts. Light, modern, clean. Portrait 9:19 phone layout.'},
+ {name:'mock-store',prompt:'A tall vertical screenshot of a modern e-commerce store admin / product dashboard: sidebar, product grid with image placeholders and prices, sales chart, order list. Light, blue accents. Portrait tall layout.'},
+];
+function gen(it){return new Promise(r=>{const body=JSON.stringify({contents:[{parts:[{text:it.prompt+'\n\n'+S}]}]});const req=https.request({hostname:'generativelanguage.googleapis.com',path:`/v1beta/models/gemini-3-pro-image:generateContent?key=${KEY}`,method:'POST',headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}},res=>{let d='';res.on('data',c=>d+=c);res.on('end',()=>{try{const p=(JSON.parse(d)?.candidates?.[0]?.content?.parts||[]).find(x=>x.inlineData?.data);if(p){const ext=p.inlineData.mimeType.includes('png')?'png':'jpg';fs.writeFileSync(path.join(OUT,it.name+'.'+ext),Buffer.from(p.inlineData.data,'base64'));console.log('OK',it.name,ext);}else console.log('NOIMG',it.name,d.slice(0,150));}catch(e){console.log('ERR',it.name,e.message);}r();});});req.on('error',e=>{console.log('REQERR',e.message);r();});req.write(body);req.end();});}
+(async()=>{for(const it of items){await gen(it);}console.log('done');})();
