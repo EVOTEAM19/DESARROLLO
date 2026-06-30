@@ -46,10 +46,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.fastia.es'),
   title: {
-    default: 'FastIA — Software a medida desde 2.000 € | Agencia de desarrollo',
+    default: 'FastIA — Software a medida | Agencia de desarrollo',
     template: '%s | FastIA',
   },
-  description: 'Agencia de desarrollo de software a medida. Convertimos tu idea en una app, web o plataforma — desde 2.000 € y en tiempo récord. Precio cerrado, código tuyo, producto terminado en semanas.',
+  description: 'Agencia de desarrollo de software a medida. Convertimos tu idea en una app, web o plataforma a medida y en tiempo récord. Precio cerrado, código tuyo, producto terminado en semanas.',
   keywords: [
     'agencia de desarrollo de software',
     'software a medida',
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     url: '/',
     siteName: 'FastIA',
-    title: 'FastIA — Software a medida desde 2.000 €',
+    title: 'FastIA — Software a medida',
     description: 'Tú imaginas, nosotros lo construimos. Apps, webs y plataformas a medida con precio cerrado y entrega en tiempo récord.',
     images: [
       {
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FastIA — Software a medida desde 2.000 €',
+    title: 'FastIA — Software a medida',
     description: 'Tú imaginas, nosotros lo construimos. Apps, webs y plataformas a medida, en tiempo récord.',
     images: ['/generated/og-image.png'],
   },

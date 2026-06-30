@@ -6,7 +6,7 @@ import { SectionHeading, Reveal, Eyebrow } from './_shared'
 
 const VALUES = [
   { icon: MessageSquare, title: 'Cercanía real', desc: 'Hablas directamente con quien diseña y programa tu producto. Sin capas, sin intermediarios, sin tickets.' },
-  { icon: Wallet, title: 'Precio justo', desc: 'Presupuesto cerrado desde 2.000 €. Crees que el buen software tiene que costar una fortuna: no es verdad.' },
+  { icon: Wallet, title: 'Precio justo', desc: 'Presupuesto cerrado y sin sorpresas. Crees que el buen software tiene que costar una fortuna: no es verdad.' },
   { icon: Gauge, title: 'Velocidad', desc: 'Trabajamos en sprints y entregamos pronto: un producto terminado y perfecto en semanas, no en meses.' },
   { icon: Code2, title: 'Es tuyo', desc: 'Te entregamos el código fuente completo. Sin ataduras ni dependencias forzadas con nosotros.' },
   { icon: ShieldCheck, title: 'Calidad seria', desc: 'Código limpio, probado y escalable. Tu producto nace terminado y preparado para crecer contigo.' },
@@ -34,7 +34,7 @@ export function AboutSections() {
                 <p>
                   Así que montamos FastIA con una premisa simple: <span className="text-gray-900">tú imaginas, nosotros
                   lo construimos.</span> Una web, una app, una plataforma o esa herramienta interna que llevas meses
-                  necesitando — desde 2.000 € y en tiempo récord.
+                  necesitando — a medida y en tiempo récord.
                 </p>
                 <p>Sin letra pequeña, sin cajas negras y con el código en tus manos desde el primer día.</p>
               </div>

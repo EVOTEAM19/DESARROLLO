@@ -43,7 +43,7 @@ export function Footer() {
             <Logo />
             <p className="mt-5 max-w-sm leading-relaxed text-foreground-muted">
               Agencia de desarrollo de software a medida. Convertimos tu idea en una app, web o plataforma —
-              desde 2.000 € y en tiempo récord.
+              hecha realidad en tiempo récord.
             </p>
             <Link
               href="/contacto"

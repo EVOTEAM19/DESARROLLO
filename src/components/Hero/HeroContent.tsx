@@ -40,7 +40,7 @@ export function HeroContent() {
         className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-gray-600 sm:text-xl"
       >
         Convertimos tu idea en una app, web o plataforma a medida.
-        <span className="text-gray-900"> Desde 2.000 €</span> y en tiempo récord.
+        <span className="text-gray-900"> Hecha realidad</span> en tiempo récord.
       </motion.p>
 
       <motion.div

@@ -8,7 +8,7 @@ import { SectionHeading, Reveal } from './_shared'
 const FAQS = [
   {
     q: '¿Cuánto cuesta un proyecto?',
-    a: 'La mayoría de proyectos arrancan desde 2.000 € y casi todos quedan por debajo de 6.000 €, siempre con precio cerrado. En la primera llamada definimos el alcance y te damos un presupuesto exacto, sin compromiso.',
+    a: 'Cada proyecto es a medida, así que depende del alcance — y siempre con precio cerrado, sin sorpresas. En una primera llamada de 10 minutos definimos qué necesitas y te damos un presupuesto exacto, sin compromiso.',
   },
   {
     q: '¿Cuánto tarda mi proyecto?',

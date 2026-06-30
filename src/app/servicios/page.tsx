@@ -9,7 +9,7 @@ import { FinalCta } from '@/components/sections/v2/FinalCta'
 export const metadata: Metadata = {
   title: 'Servicios | FastIA — Desarrollo de software a medida',
   description:
-    'Software a medida, apps móviles, plataformas web, webs y automatización con IA. Precio cerrado desde 2.000 € y entrega en tiempo récord.',
+    'Software a medida, apps móviles, plataformas web, webs y automatización con IA. Precio cerrado y entrega en tiempo récord.',
 }
 
 export default function ServicesPage() {

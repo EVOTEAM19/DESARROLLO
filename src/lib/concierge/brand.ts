@@ -17,7 +17,7 @@ export const CONCIERGE = {
   accentGradient: 'linear-gradient(135deg, #0062c4 0%, #0a84ff 100%)',
   /** Saludo inicial proactivo al abrir el chat. */
   greeting:
-    'Hola, soy Maite, de FastIA. Convertimos tu idea en software a medida desde 2.000 € y en semanas. ¿Qué necesitas?',
+    'Hola, soy Maite, de FastIA. Convertimos tu idea en software a medida, terminado y 100% tuyo, en semanas. ¿Qué necesitas?',
   /** Sugerencias rápidas (chips) bajo el saludo. Categorías para arrancar con un clic. */
   quickReplies: [
     'Software a medida',

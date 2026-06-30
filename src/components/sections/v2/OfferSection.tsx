@@ -24,9 +24,9 @@ export function OfferSection() {
 
             <div className="relative grid items-center gap-12 lg:grid-cols-2">
               <div>
-                <span className="pill">Oferta de lanzamiento</span>
+                <span className="pill">Empieza hoy</span>
                 <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tightest text-gray-900 sm:text-5xl">
-                  Tu proyecto, desde <span className="text-gradient">2.000 €</span>
+                  Tu proyecto, <span className="text-gradient">hecho realidad</span>
                 </h2>
                 <p className="mt-5 text-lg leading-relaxed text-foreground-muted">
                   Un precio cerrado, un equipo senior y un plazo claro. Llevamos tu idea a producción sin

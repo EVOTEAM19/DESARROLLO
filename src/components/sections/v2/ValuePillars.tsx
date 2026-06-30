@@ -7,7 +7,7 @@ const PILLARS = [
   {
     icon: Tag,
     title: 'Precio cerrado',
-    desc: 'Proyectos a medida desde 2.000 €. Sabes lo que pagas antes de empezar. Sin sorpresas ni facturas infladas.',
+    desc: 'Sabes lo que pagas antes de empezar. Presupuesto cerrado, sin sorpresas ni facturas infladas.',
   },
   {
     icon: Gauge,

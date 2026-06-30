@@ -3,7 +3,7 @@
 import { Reveal } from './_shared'
 
 const STATS = [
-  { value: 'desde 2.000 €', label: 'Proyecto a medida con precio cerrado' },
+  { value: 'Sin límites', label: 'En lo que construimos para ti' },
   { value: '2–8', label: 'Semanas del brief al lanzamiento' },
   { value: '100%', label: 'Del código fuente es tuyo' },
   { value: '1 a 1', label: 'Hablas con quien programa' },

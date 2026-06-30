@@ -7,7 +7,7 @@ import { FinalCta } from '@/components/sections/v2/FinalCta'
 export const metadata: Metadata = {
   title: 'Nosotros | FastIA — Agencia de desarrollo a medida',
   description:
-    'Somos una agencia de desarrollo de software a medida. Tú imaginas, nosotros lo construimos: desde 2.000 € y en tiempo récord. Conoce cómo trabajamos.',
+    'Somos una agencia de desarrollo de software a medida. Tú imaginas, nosotros lo construimos: a medida y en tiempo récord. Conoce cómo trabajamos.',
 }
 
 export default function NosotrosPage() {

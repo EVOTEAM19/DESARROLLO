@@ -36,7 +36,7 @@ export function Header() {
       <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white">
         <div className="container-tight flex h-10 items-center justify-center gap-x-2 text-center text-[13px] font-medium sm:gap-x-3">
           <Zap className="hidden h-3.5 w-3.5 shrink-0 sm:block" />
-          <span>Software a medida <strong className="font-semibold">desde 2.000 €</strong></span>
+          <span>Software a medida <strong className="font-semibold">para lo que imagines</strong></span>
           <span className="text-white/50">·</span>
           <span><strong className="font-semibold">Sin cuotas mensuales</strong></span>
           <span className="hidden text-white/50 sm:inline">·</span>

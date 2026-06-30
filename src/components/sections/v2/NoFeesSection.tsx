@@ -13,7 +13,7 @@ const MENSUAL = [
 ]
 
 const PROPIO = [
-  'Lo pagas una vez, desde 2.000 €',
+  'Una sola inversión, para siempre tuyo',
   'Cero cuotas mensuales, para siempre',
   '100% tuyo: el código y los datos',
   'Hecho a la medida exacta de tu negocio',
@@ -88,7 +88,7 @@ export function NoFeesSection() {
           <div className="mt-8 flex flex-col items-center justify-between gap-6 rounded-3xl border border-gray-200 bg-white p-8 text-center sm:flex-row sm:text-left">
             <p className="text-lg leading-relaxed text-foreground">
               <span className="font-semibold text-gray-900">150 €/mes son 9.000 € en 5 años.</span>{' '}
-              Tu plataforma a medida, desde <span className="text-gradient font-semibold">2.000 € una sola vez</span>. Haz números.
+              Tu plataforma a medida la pagas <span className="text-gradient font-semibold">una sola vez</span> y es tuya para siempre. Haz números.
             </p>
             <Link
               href="/contacto"
