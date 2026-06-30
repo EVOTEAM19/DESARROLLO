@@ -313,7 +313,7 @@ export function Hero() {
   const hintOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0])
 
   return (
-    <section ref={sectionRef} className="relative h-[340vh] bg-white">
+    <section ref={sectionRef} className="relative h-[215vh] bg-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-grid bg-grid-fade opacity-40" />
 
